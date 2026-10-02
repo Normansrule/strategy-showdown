@@ -1,5 +1,5 @@
 # Top-level Python dev dependencies. requirements-dev.txt is the hash-locked version of this file.
-numpy==2.4.4
+numpy==2.5.3
 scipy==1.17.1
 pandas==3.0.2
 statsmodels==0.15.0
