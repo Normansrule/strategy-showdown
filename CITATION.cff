@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "Strategy Showdown: side-by-side backtests of publicly documented trading algorithms"
+type: software
+authors:
+  - family-names: Norman
+    given-names: Aleksander
+license: MIT
+version: 0.2.0
+date-released: "2026-10-02"
+repository-code: "https://github.com/Normansrule/strategy-showdown"
+url: "https://normansrule.github.io/strategy-showdown/"
+abstract: >-
+  An open-source educational website and local desktop mode that backtests publicly documented
+  trading algorithms under identical conditions and reports honest metrics (costs, deflated Sharpe
+  ratios, factor attribution). Every parameter is traced to its published source.
+keywords:
+  - backtesting
+  - quantitative finance
+  - education
+  - reproducibility
+  - momentum

@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>Strategy Showdown</title>
+  <meta name="description" content="Publicly documented trading rules, run side by side on identical data and costs, with honest statistics. Educational tool; hypothetical results; not investment advice.">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <script src="assets/js/theme-init.js"></script>
+  <script src="vendor/echarts/echarts.min.js" defer></script>
+  <script type="module" src="assets/js/showdown.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#results">Skip to results</a>
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand" href="index.html"><img src="assets/img/favicon.svg" alt="" width="26" height="26">Strategy Showdown</a>
+      <nav class="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="index.html" aria-current="page">Showdown</a></li>
+          <li><a href="strategies.html">Strategies</a></li>
+          <li><a href="market-making.html">Market making</a></li>
+          <li><a href="overfitting.html">Overfitting</a></li>
+          <li><a href="metrics.html">Metrics</a></li>
+          <li><a href="sources.html">Sources</a></li>
+          <li><a href="disclaimer.html">Disclaimer</a></li>
+        </ul>
+      </nav>
+      <button type="button" class="theme-toggle" id="theme-toggle">Dark theme</button>
+    </div>
+  </header>
+  <div class="notice" role="note">
+    <div class="notice__inner">Educational tool · hypothetical results · not investment advice · no trading. <a href="disclaimer.html">Read the disclaimer</a></div>
+  </div>
+
+  <main id="main">
+    <div class="wrap">
+      <div class="page-intro">
+        <h1>Same data, same months, same costs</h1>
+        <p>Pick trading rules that researchers have published, and this page runs them side by side on one dataset, over one evaluation window, under one cost model. The statistics include the corrections that are usually left out: uncertainty ranges, costs, and a penalty for trying many variants. Every number is a <strong>hypothetical backtest</strong>: what the rule would have done on past data, not what anyone earned.</p>
+      </div>
+
+      <div class="lab">
+        <!-- Controls -->
+        <div class="lab__controls" aria-label="Inputs">
+          <section class="panel" id="data-panel" aria-labelledby="data-h">
+            <div class="panel__head"><h2 id="data-h"><span class="step-no" aria-hidden="true">1</span>Data</h2></div>
+            <div id="dataset-card" class="dataset-card" aria-live="polite"><p class="muted small">Looking for a local dataset…</p></div>
+            <div id="data-error" class="error-box" role="alert"></div>
+            <div class="loader-paths">
+              <details id="drop-details">
+                <summary>Use real data from the Kenneth R. French Data Library</summary>
+                <p class="small">This site does not ship market data: the library publishes no licence, so redistribution rights are unclear. Download these files from the library yourself, then drop them here. They are read in your browser and never uploaded.</p>
+                <ul class="filelist" id="french-files"></ul>
+                <div class="dropzone" id="dropzone">
+                  <p>Drop the .zip or .csv files here, or <label for="file-input">choose files</label>.</p>
+                  <input type="file" id="file-input" class="visually-hidden" multiple accept=".zip,.csv,.txt,application/zip,text/csv">
+                </div>
+                <button type="button" class="btn btn--quiet" id="clear-files" hidden>Remove added files</button>
+              </details>
+              <details>
+                <summary>Run it on your own computer</summary>
+                <p class="small">With a copy of the repository, run <code>python scripts/fetch_french.py</code>. It writes <code>docs/data/local/french.json</code>, which this page loads automatically when served locally. That file is ignored by git and never published.</p>
+                <p class="small">Or install the desktop app from the project's <a href="https://github.com/Normansrule/strategy-showdown/releases">releases page</a> and choose <strong>Data → Download French Data Library files…</strong>. The files are saved only on your computer.</p>
+              </details>
+              <div class="row">
+                <button type="button" class="btn" id="use-synthetic">Try the synthetic dataset</button>
+                <button type="button" class="btn" id="use-local" hidden>Reload the local dataset</button>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel" id="strategy-panel" aria-labelledby="strat-h">
+            <div class="panel__head">
+              <h2 id="strat-h"><span class="step-no" aria-hidden="true">2</span>Strategies</h2>
+              <a class="small" href="strategies.html">Read every strategy card</a>
+            </div>
+            <p class="small muted">Each line style belongs to one strategy on every chart. Parameters start at the published values; the source of each is shown under the input.</p>
+            <div class="strategy-list" id="strategy-list"></div>
+          </section>
+
+          <section class="panel" id="conditions-panel" aria-labelledby="cond-h">
+            <div class="panel__head"><h2 id="cond-h"><span class="step-no" aria-hidden="true">3</span>Conditions</h2></div>
+            <div class="conditions-grid">
+              <div class="grid-2">
+                <div class="field">
+                  <label for="start">Start month</label>
+                  <input type="month" id="start" placeholder="YYYY-MM" pattern="\d{4}-\d{2}">
+                </div>
+                <div class="field">
+                  <label for="end">End month</label>
+                  <input type="month" id="end" placeholder="YYYY-MM" pattern="\d{4}-\d{2}">
+                </div>
+              </div>
+              <p class="field__hint">Evaluation never starts before every selected strategy has enough history (its warm-up).</p>
+              <div class="field">
+                <span class="field__label" id="cost-label">Cost model</span>
+                <div class="segmented" role="group" aria-labelledby="cost-label">
+                  <button type="button" data-cost="naive" aria-pressed="false">Naive</button>
+                  <button type="button" data-cost="realistic" aria-pressed="true">Realistic</button>
+                  <button type="button" data-cost="custom" aria-pressed="false" hidden>Custom</button>
+                </div>
+              </div>
+              <p class="assume">These costs are assumptions, not measurements. Adjust them and watch the rankings move.</p>
+              <div class="grid-2">
+                <div class="field">
+                  <label for="trade-cost">Trading cost (bps per unit turnover)</label>
+                  <input type="number" id="trade-cost" min="0" max="500" step="1" value="10" inputmode="decimal">
+                  <span class="field__hint">1 bp = 0.01%. Charged on every dollar bought or sold.</span>
+                </div>
+                <div class="field">
+                  <label for="borrow-cost">Borrow cost (bps per year on shorts)</label>
+                  <input type="number" id="borrow-cost" min="0" max="2000" step="5" value="50" inputmode="decimal">
+                  <span class="field__hint">Fee for borrowing what you sell short.</span>
+                </div>
+              </div>
+              <div class="field">
+                <label for="benchmark">Benchmark for the significance test</label>
+                <select id="benchmark"></select>
+              </div>
+              <a class="btn btn--primary jump-results" href="#results">See the results</a>
+              <div class="trials" aria-live="polite">
+                <div class="field__label">Configurations tried this session</div>
+                <div class="row">
+                  <span class="trials__count" id="trial-count">0</span>
+                  <button type="button" class="btn btn--quiet" id="reset-trials">Reset count</button>
+                </div>
+                <p>Try enough variants and one will look good by luck alone. The deflated Sharpe ratio in the results counts every configuration you tried here and discounts the best one accordingly.</p>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- Results -->
+        <div class="lab__results" id="results" tabindex="-1">
+          <div class="results-status" id="status" data-state="idle" role="status" aria-live="polite"><span class="dot" aria-hidden="true"></span><span id="status-text">Waiting for data</span></div>
+          <div id="synthetic-banner" class="synthetic-banner" hidden role="alert">
+            <div><strong>Synthetic data: these results say nothing about real markets.</strong>
+            <span>The returns below are random numbers from a documented model with no built-in patterns. Use them to learn the mechanics. For real history, load the French library files in step 1.</span></div>
+          </div>
+          <div id="run-error" class="error-box" role="alert"></div>
+          <div id="results-body">
+            <section class="conditions-tag" id="conditions-tag" aria-labelledby="cond-tag-h">
+              <div class="conditions-tag__stub">
+                <b id="cond-tag-h">Identical conditions</b>
+                <span class="conditions-tag__hash" id="cond-hash">—</span>
+                <span class="chip chip--hyp">Hypothetical</span>
+              </div>
+              <dl class="conditions-tag__body" id="cond-body"></dl>
+            </section>
+
+            <section class="fig" aria-labelledby="table-h">
+              <div class="fig__head">
+                <div>
+                  <h2 class="fig__title" id="table-h">Scoreboard</h2>
+                  <p class="fig__sub">One row per strategy, all measured over the same months. Press <b>?</b> in any column header for a plain-language definition.</p>
+                </div>
+                <span class="chip chip--hyp">Hypothetical backtest</span>
+              </div>
+              <div id="ruin-alerts"></div>
+              <div class="table-scroll" id="metrics-table-wrap"></div>
+              <p class="fig__caption" id="metrics-caption"></p>
+            </section>
+
+            <div class="figs">
+              <figure class="fig" aria-labelledby="eq-h">
+                <div class="fig__head">
+                  <div>
+                    <h2 class="fig__title" id="eq-h">Growth of $1</h2>
+                    <p class="fig__sub" id="eq-sub">Log scale, so equal vertical distances mean equal percentage changes.</p>
+                  </div>
+                  <div class="fig__tools">
+                    <div class="segmented" role="group" aria-label="Cost lines shown">
+                      <button type="button" id="eq-alt-toggle" aria-pressed="false">Overlay naive costs</button>
+                    </div>
+                    <button type="button" class="btn btn--quiet" id="eq-table-btn">Show as table</button>
+                  </div>
+                </div>
+                <div class="legend-html" id="eq-legend"></div>
+                <div class="chart chart--tall" id="chart-equity" role="img" aria-label="Growth of one dollar for each strategy, log scale"></div>
+                <div class="table-view" id="eq-table" hidden></div>
+              </figure>
+
+              <figure class="fig" aria-labelledby="rank-h">
+                <div class="fig__head">
+                  <div>
+                    <h2 class="fig__title" id="rank-h">Does the ranking survive costs?</h2>
+                    <p class="fig__sub" id="rank-sub">Sharpe ratio of each strategy with zero costs (left) and with the current cost assumptions (right). Crossing lines mean the ranking changed.</p>
+                  </div>
+                  <span class="chip chip--hyp">Hypothetical</span>
+                </div>
+                <div class="chart chart--short" id="chart-rank" role="img" aria-label="Sharpe ratio under naive and current costs"></div>
+              </figure>
+
+              <div class="figs figs--2">
+                <figure class="fig" aria-labelledby="dd-h">
+                  <div class="fig__head">
+                    <div>
+                      <h2 class="fig__title" id="dd-h">Drawdown</h2>
+                      <p class="fig__sub">How far each strategy sat below its own previous peak. −50% means half the money was gone at that point.</p>
+                    </div>
+                    <button type="button" class="btn btn--quiet" id="dd-table-btn">Show as table</button>
+                  </div>
+                  <div class="chart" id="chart-dd" role="img" aria-label="Drawdown from previous peak for each strategy"></div>
+                  <div class="table-view" id="dd-table" hidden></div>
+                </figure>
+                <figure class="fig" aria-labelledby="roll-h">
+                  <div class="fig__head">
+                    <div>
+                      <h2 class="fig__title" id="roll-h">Rolling 36-month Sharpe ratio</h2>
+                      <p class="fig__sub">Return per unit of risk over each trailing 3-year window. It shows whether a result is steady or comes from a few good years.</p>
+                    </div>
+                    <button type="button" class="btn btn--quiet" id="roll-table-btn">Show as table</button>
+                  </div>
+                  <div class="chart" id="chart-roll" role="img" aria-label="Rolling 36-month Sharpe ratio for each strategy"></div>
+                  <div class="table-view" id="roll-table" hidden></div>
+                </figure>
+              </div>
+
+              <div class="figs figs--corr">
+                <figure class="fig" aria-labelledby="corr-h">
+                  <div class="fig__head">
+                    <div>
+                      <h2 class="fig__title" id="corr-h">How similar are they?</h2>
+                      <p class="fig__sub">Correlation of monthly excess returns: +1 means they move in lockstep, 0 unrelated, −1 opposite. Two “different” strategies with a correlation near 1 are one bet counted twice.</p>
+                    </div>
+                  </div>
+                  <div class="chart chart--heat" id="chart-corr" role="img" aria-label="Correlation matrix of strategy returns"></div>
+                </figure>
+                <section class="fig" aria-labelledby="attr-h">
+                  <div class="fig__head">
+                    <div>
+                      <h2 class="fig__title" id="attr-h">What is it really exposed to?</h2>
+                      <p class="fig__sub">A regression of each strategy’s excess return on standard risk factors. A beta is how much the strategy moves when that factor moves by 1. Alpha is the average monthly return the factors do not explain.</p>
+                    </div>
+                  </div>
+                  <div class="table-scroll" id="attr-wrap"></div>
+                  <p class="fig__caption" id="attr-caption"></p>
+                </section>
+              </div>
+
+              <figure class="fig" aria-labelledby="exp-h">
+                <div class="fig__head">
+                  <div>
+                    <h2 class="fig__title" id="exp-h">What does it hold?</h2>
+                    <p class="fig__sub">Top: total position size. Gross exposure adds up all positions (long and short); net exposure is longs minus shorts. Bottom: each position’s weight over time, blue for long (owned) and red for short (borrowed and sold).</p>
+                  </div>
+                  <div class="field">
+                    <label for="exp-select">Strategy</label>
+                    <select id="exp-select"></select>
+                  </div>
+                </div>
+                <div class="chart chart--short" id="chart-exposure" role="img" aria-label="Gross and net exposure over time"></div>
+                <div class="chart chart--tall" id="chart-weights" role="img" aria-label="Portfolio weights over time as a heat map"></div>
+                <p class="fig__caption" id="weights-caption"></p>
+              </figure>
+
+              <section class="fig" aria-labelledby="notes-h">
+                <div class="fig__head">
+                  <div>
+                    <h2 class="fig__title" id="notes-h">Engine notes</h2>
+                    <p class="fig__sub">Events the engine recorded while running each strategy: fallbacks, degenerate estimates, wipe-outs.</p>
+                  </div>
+                </div>
+                <div id="notes"></div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>Strategy Showdown: open-source and educational. Hypothetical results; not investment advice; no trading.</span>
+      <a href="sources.html">Sources</a>
+      <a href="disclaimer.html">Disclaimer and data attribution</a>
+    </div>
+  </footer>
+</body>
+</html>

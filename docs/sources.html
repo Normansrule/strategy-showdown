@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>Sources</title>
+  <meta name="description" content="Bibliography, evidence labels and confirmation levels for every parameter used on Strategy Showdown.">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <script src="assets/js/theme-init.js"></script>
+  <script type="module" src="assets/js/sources-page.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand" href="index.html"><img src="assets/img/favicon.svg" alt="" width="26" height="26">Strategy Showdown</a>
+      <nav class="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="index.html">Showdown</a></li>
+          <li><a href="strategies.html">Strategies</a></li>
+          <li><a href="market-making.html">Market making</a></li>
+          <li><a href="overfitting.html">Overfitting</a></li>
+          <li><a href="metrics.html">Metrics</a></li>
+          <li><a href="sources.html" aria-current="page">Sources</a></li>
+          <li><a href="disclaimer.html">Disclaimer</a></li>
+        </ul>
+      </nav>
+      <button type="button" class="theme-toggle" id="theme-toggle">Dark theme</button>
+    </div>
+  </header>
+  <div class="notice" role="note">
+    <div class="notice__inner">Educational tool · hypothetical results · not investment advice · no trading. <a href="disclaimer.html">Read the disclaimer</a></div>
+  </div>
+
+  <main id="main">
+    <div class="wrap">
+      <div class="page-intro">
+        <h1>Sources</h1>
+        <p>Every paper the site relies on, with how its details were checked. Bibliographic data were confirmed against Crossref or the publisher; the notes say which version of each paper was actually read.</p>
+      </div>
+      <nav aria-label="Sections on this page"><ul class="toc">
+        <li><a href="#bibliography">Bibliography</a></li>
+        <li><a href="#evidence-policy">Evidence labels</a></li>
+        <li><a href="#confirmation">Confirmation levels</a></li>
+      </ul></nav>
+
+      <section id="bibliography" aria-labelledby="bib-h">
+        <h2 id="bib-h">Bibliography</h2>
+        <div class="filters">
+          <div class="field"><label for="bib-filter">Filter</label><input type="text" id="bib-filter" class="input" placeholder="Author, title, journal, key"></div>
+          <div class="field"><label for="bib-sort">Sort by</label>
+            <select id="bib-sort"><option value="author">First author</option><option value="year">Year, newest first</option><option value="year-asc">Year, oldest first</option><option value="journal">Journal</option></select></div>
+          <div class="field"><label for="bib-verif">Checked against</label>
+            <select id="bib-verif"><option value="">Any</option><option value="crossref">Crossref</option><option value="publisher">Publisher page</option></select></div>
+          <p class="small muted" id="bib-count" role="status" aria-live="polite"></p>
+        </div>
+        <ol class="bib" id="bib"><li class="muted">Loading references…</li></ol>
+      </section>
+
+      <section id="evidence-policy" class="card" aria-labelledby="ev-h">
+        <h2 id="ev-h">Evidence labels</h2>
+        <p class="prose">Every strategy carries one of four labels, so you can tell how close the version here is to what was published.</p>
+        <div class="table-scroll"><table class="data">
+          <thead><tr><th scope="col">Label</th><th scope="col" class="txt">Meaning</th><th scope="col" class="txt">What it lets you conclude</th></tr></thead>
+          <tbody>
+            <tr><th scope="row" class="txt"><span class="chip chip--evidence chip--ev-published-replicable">Published, replicable</span></th><td class="txt">The method is public and can be reproduced on data we can use.</td><td class="txt">Our numbers can be checked against the paper’s.</td></tr>
+            <tr><th scope="row" class="txt"><span class="chip chip--evidence chip--ev-published-data-restricted">Published, data restricted</span></th><td class="txt">The method is public, but the paper used licensed data (for example CRSP stock files), so ours differ.</td><td class="txt">A test of the published idea on different data, not a replication.</td></tr>
+            <tr><th scope="row" class="txt"><span class="chip chip--evidence chip--ev-public-description">Public description only</span></th><td class="txt">Only what a firm says about itself; never code or parameters.</td><td class="txt">Nothing about performance. No strategy on this site currently carries this label.</td></tr>
+            <tr><th scope="row" class="txt"><span class="chip chip--evidence chip--ev-definition">Definition</span></th><td class="txt">A benchmark defined by construction.</td><td class="txt">A yardstick; it makes no claim.</td></tr>
+          </tbody>
+        </table></div>
+        <p class="small">Rules the site follows: nothing that cannot be checked is presented as fact; every backtest is labelled hypothetical and every simulation labelled as a simulation; when a detail of a paper could not be confirmed, the page says so instead of guessing.</p>
+      </section>
+
+      <section id="confirmation" class="card" aria-labelledby="conf-h">
+        <h2 id="conf-h">Confirmation levels for each parameter</h2>
+        <p class="prose">For each number or rule we use: was it confirmed from the paper’s own text, only from a secondary source, or not at all? Our own adaptations, needed because monthly industry data differ from the papers’ data, are listed too. Checked on 30 September 2026.</p>
+        <div class="filters">
+          <div class="field"><label for="conf-level">Show</label>
+            <select id="conf-level"><option value="">All levels</option><option value="paper">Paper text</option><option value="publisher">Publisher page</option><option value="secondary">Secondary source</option><option value="unverified">Unverified</option><option value="adaptation">Our adaptation</option></select></div>
+          <p class="small muted" id="conf-count" role="status" aria-live="polite"></p>
+        </div>
+        <div class="table-scroll"><table class="data" id="conf-table"></table></div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>Strategy Showdown: open-source and educational. Hypothetical results; not investment advice; no trading.</span>
+      <a href="sources.html">Sources</a>
+      <a href="disclaimer.html">Disclaimer and data attribution</a>
+    </div>
+  </footer>
+</body>
+</html>

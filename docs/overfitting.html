@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>Backtest overfitting</title>
+  <meta name="description" content="How likely is it that the best of many backtests is a fluke? The probability of backtest overfitting (CSCV) and the deflated Sharpe ratio, run live.">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <script src="assets/js/theme-init.js"></script>
+  <script src="vendor/katex/katex.min.js" defer></script>
+  <script src="vendor/echarts/echarts.min.js" defer></script>
+  <script type="module" src="assets/js/overfitting.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand" href="index.html"><img src="assets/img/favicon.svg" alt="" width="26" height="26">Strategy Showdown</a>
+      <nav class="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="index.html">Showdown</a></li>
+          <li><a href="strategies.html">Strategies</a></li>
+          <li><a href="market-making.html">Market making</a></li>
+          <li><a href="overfitting.html" aria-current="page">Overfitting</a></li>
+          <li><a href="metrics.html">Metrics</a></li>
+          <li><a href="sources.html">Sources</a></li>
+          <li><a href="disclaimer.html">Disclaimer</a></li>
+        </ul>
+      </nav>
+      <button type="button" class="theme-toggle" id="theme-toggle">Dark theme</button>
+    </div>
+  </header>
+  <div class="notice" role="note">
+    <div class="notice__inner">Educational tool · hypothetical results · not investment advice · no trading. <a href="disclaimer.html">Read the disclaimer</a></div>
+  </div>
+
+  <main id="main">
+    <div class="wrap">
+      <div class="page-intro">
+        <h1>Is the best backtest a fluke?</h1>
+        <p>Try enough settings of any rule and one of them will look good on past data by luck alone. This page runs every setting of one strategy on the same months, picks the winner the way a researcher would, and measures how often that winner disappoints on months it was not chosen on. That share is the <b>probability of backtest overfitting</b> (Bailey, Borwein, López de Prado &amp; Zhu 2017).</p>
+      </div>
+      <div id="synthetic-banner" class="synthetic-banner" hidden role="alert">
+        <div><strong>Synthetic data: these results say nothing about real markets.</strong>
+        <span>The returns are random numbers. The synthetic market does have a built-in positive average return, so settings that stay invested longer can win in both halves for that reason alone; beyond that, every difference between settings is luck. For real history, use the desktop app or a local copy (see the Showdown page, step 1).</span></div>
+      </div>
+
+      <section class="panel" aria-labelledby="of-controls-h">
+        <div class="panel__head"><h2 id="of-controls-h">Experiment</h2><span class="chip chip--hyp">Hypothetical backtests</span></div>
+        <div class="mm-controls">
+          <div class="field">
+            <label for="experiment">Settings to try</label>
+            <select id="experiment"></select>
+            <span class="field__hint" id="experiment-hint"></span>
+          </div>
+          <div class="field">
+            <span class="field__label" id="costs-label">Costs</span>
+            <div class="segmented" role="group" aria-labelledby="costs-label" id="costs">
+              <button type="button" data-costs="naive" aria-pressed="false">Zero</button>
+              <button type="button" data-costs="realistic" aria-pressed="true">Realistic</button>
+            </div>
+          </div>
+          <div class="field">
+            <label for="blocks">Blocks S</label>
+            <select id="blocks">
+              <option value="8">8 (70 splits)</option>
+              <option value="10">10 (252 splits)</option>
+              <option value="12">12 (924 splits)</option>
+              <option value="16" selected>16 (12,870 splits, as in the paper)</option>
+            </select>
+            <span class="field__hint">The months are cut into S equal blocks; every way of choosing half of them is one split.</span>
+          </div>
+        </div>
+        <p class="results-status" id="of-status" data-state="idle" role="status" aria-live="polite"><span class="dot" aria-hidden="true"></span><span id="of-status-text">Ready</span></p>
+        <p class="small" id="of-data"></p>
+      </section>
+
+      <div class="stat-row" id="stats"></div>
+      <p class="callout" id="of-note" hidden></p>
+      <div id="of-error" class="error-box" role="alert"></div>
+
+      <div class="figs">
+        <figure class="fig" aria-labelledby="split-h">
+          <div class="fig__head">
+            <div>
+              <h2 class="fig__title" id="split-h">Pick the winner on the first half, check it on the second</h2>
+              <p class="fig__sub">Each column is one setting, sorted by its Sharpe ratio in the first half of the months (filled bar). The outline shows the same setting in the second half. If the first-half ranking were skill, the outlines would fall from left to right too.</p>
+            </div>
+            <span class="chip chip--hyp">Hypothetical</span>
+          </div>
+          <div class="chart chart--tall" id="chart-split" role="img" aria-label="Sharpe ratio of every setting in the first and second half of the months"></div>
+        </figure>
+        <figure class="fig" aria-labelledby="lambda-h">
+          <div class="fig__head">
+            <div>
+              <h2 class="fig__title" id="lambda-h">Where the in-sample winner lands out of sample, over every split</h2>
+              <p class="fig__sub">λ is the logit of the winner’s relative rank among all settings on the other half of the months. λ &gt; 0: it stayed in the top half. λ ≤ 0: it fell to the bottom half. The share of splits with λ ≤ 0 is the probability of backtest overfitting.</p>
+            </div>
+          </div>
+          <div class="chart" id="chart-lambda" role="img" aria-label="Histogram of lambda across all splits"></div>
+        </figure>
+        <figure class="fig" aria-labelledby="deg-h">
+          <div class="fig__head">
+            <div>
+              <h2 class="fig__title" id="deg-h">The better it looked in sample, the better out of sample?</h2>
+              <p class="fig__sub">One dot per split: the winner’s in-sample Sharpe ratio (across) against its out-of-sample Sharpe ratio (up), annualized. A flat or falling line means a higher in-sample score buys nothing out of sample.</p>
+            </div>
+          </div>
+          <div class="chart" id="chart-deg" role="img" aria-label="In-sample against out-of-sample Sharpe ratio of the winner across splits"></div>
+        </figure>
+        <section class="fig" aria-labelledby="eq-of-h">
+          <h2 class="fig__title" id="eq-of-h">How it is computed</h2>
+          <div class="two-up">
+            <div class="eq"><div id="eq-omega"></div><p class="eq__where">For one split: n* is the setting with the best in-sample Sharpe ratio; ρ is its rank (1 = worst) among the N settings on the out-of-sample months; ω is that rank as a fraction; λ is its logit.</p></div>
+            <div class="eq"><div id="eq-pbo"></div><p class="eq__where">PBO is the share of all C(S, S/2) splits in which the in-sample winner ranks in the bottom half out of sample. With pure noise it is about 50% (slightly more with an odd number of settings); a genuinely better setting pushes it towards 0.</p></div>
+          </div>
+          <p class="small">The panel above also shows the <a href="metrics.html">deflated Sharpe ratio</a> of the best setting over the full period, which discounts it for the number of settings tried (Bailey &amp; López de Prado 2014). Neighbouring settings are highly correlated, so counting each one as a separate try overstates the number of independent tries and makes that discount conservative. Exact steps, including how ties and leftover months are handled: <a href="https://github.com/Normansrule/strategy-showdown/blob/main/docs/ENGINE_SPEC.md#8-probability-of-backtest-overfitting-docsengineoverfitjs">ENGINE_SPEC §8</a>.</p>
+          <div class="callout callout--caution" role="note"><p><b>How firmly this is confirmed.</b> The steps follow Bailey, Borwein, López de Prado &amp; Zhu (2017), Sec. 2, as summarized publicly and implemented in the R package <i>pbo</i>; the full paper could not be re-read while building this page, so edge cases (ties, λ = 0) are labelled “secondary source” on the <a href="sources.html">Sources</a> page. Two independent implementations (JavaScript here, Python in the tests) agree to 1e−9 on every split of the tested sweeps (S = 6 to 16, synthetic test data).</p></div>
+          <p class="small">Source: <a href="sources.html#ref-bailey2017pbo">Bailey, Borwein, López de Prado &amp; Zhu (2017), Journal of Computational Finance 20(4)</a>; <a href="sources.html#ref-bailey2014deflated">Bailey &amp; López de Prado (2014)</a>.</p>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>Strategy Showdown: open-source and educational. Hypothetical results; not investment advice; no trading.</span>
+      <a href="sources.html">Sources</a>
+      <a href="disclaimer.html">Disclaimer and data attribution</a>
+    </div>
+  </footer>
+</body>
+</html>

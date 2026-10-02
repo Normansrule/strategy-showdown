@@ -1,0 +1,94 @@
+{
+  "name": "strategy-showdown",
+  "version": "0.2.0",
+  "description": "Side-by-side backtests of publicly documented trading algorithms, with honest metrics and verified sources.",
+  "scripts": {
+    "test": "node --test \"tests/js/**/*.test.mjs\"",
+    "serve": "node desktop/server.mjs",
+    "vendor": "node scripts/vendor.mjs",
+    "desktop": "electron .",
+    "desktop:dist": "electron-builder --publish never"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "echarts": "6.1.0",
+    "electron": "44.5.1",
+    "electron-builder": "26.15.3",
+    "katex": "0.18.10",
+    "playwright": "1.56.0"
+  },
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  },
+  "author": "Aleksander Norman",
+  "main": "desktop/electron/main.mjs",
+  "homepage": "https://github.com/Normansrule/strategy-showdown",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Normansrule/strategy-showdown.git"
+  },
+  "build": {
+    "appId": "io.github.normansrule.strategyshowdown",
+    "productName": "Strategy Showdown",
+    "artifactName": "strategy-showdown-${version}-${os}-${arch}.${ext}",
+    "directories": {
+      "output": "dist-desktop",
+      "buildResources": "desktop/build"
+    },
+    "files": [
+      "package.json",
+      "desktop/server.mjs",
+      "desktop/electron/**",
+      "docs/**",
+      "!docs/data/local/**",
+      "!**/.*"
+    ],
+    "asar": true,
+    "electronFuses": {
+      "runAsNode": false,
+      "enableCookieEncryption": true,
+      "enableNodeOptionsEnvironmentVariable": false,
+      "enableNodeCliInspectArguments": false,
+      "enableEmbeddedAsarIntegrityValidation": true,
+      "onlyLoadAppFromAsar": true
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "artifactName": "strategy-showdown-${version}-win-${arch}-setup.${ext}"
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "category": "public.app-category.education",
+      "identity": null
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "category": "Education",
+      "maintainer": "Aleksander Norman",
+      "desktop": {
+        "entry": {
+          "StartupWMClass": "strategy-showdown"
+        }
+      }
+    },
+    "portable": {
+      "artifactName": "strategy-showdown-${version}-win-${arch}-portable.${ext}"
+    }
+  },
+  "desktopName": "strategy-showdown.desktop"
+}

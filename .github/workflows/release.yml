@@ -1,0 +1,128 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+jobs:
+  desktop:
+    name: Desktop installer (${{ matrix.os }})
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - os: ubuntu-24.04
+            target: --linux AppImage deb
+          - os: windows-2025
+            target: --win nsis portable
+          - os: macos-15
+            target: --mac dmg
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install (lockfile only)
+        run: npm ci --ignore-scripts
+      - name: Build installer (unsigned)
+        shell: bash
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: "false" # no code-signing certificate yet: installers are unsigned
+        run: npx --no-install electron-builder ${{ matrix.target }} --publish never
+      - name: The installer contains no French data
+        shell: bash
+        run: |
+          npx --no-install asar list dist-desktop/*-unpacked/resources/app.asar 2>/dev/null > files.txt \
+            || npx --no-install asar list "dist-desktop/mac/Strategy Showdown.app/Contents/Resources/app.asar" > files.txt \
+            || npx --no-install asar list "dist-desktop/mac-arm64/Strategy Showdown.app/Contents/Resources/app.asar" > files.txt
+          if grep -E '^/docs/data/local' files.txt; then echo "::error::French data found in the app bundle"; exit 1; fi
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: desktop-${{ matrix.os }}
+          path: |
+            dist-desktop/*.AppImage
+            dist-desktop/*.deb
+            dist-desktop/*.exe
+            dist-desktop/*.dmg
+          if-no-files-found: error
+          retention-days: 7
+
+  release:
+    needs: desktop
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: write # create the GitHub release
+      id-token: write # sign the provenance attestation (Sigstore)
+      attestations: write # store the attestation
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Tag must be vX.Y.Z and match package.json
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          [[ "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "::error::tag $TAG is not vX.Y.Z"; exit 1; }
+          pkg="v$(node -p 'require("./package.json").version')"
+          [ "$pkg" = "$TAG" ] || { echo "::error::package.json says $pkg, tag is $TAG"; exit 1; }
+
+      - name: Source archive (tracked files only; no data)
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          mkdir -p dist
+          name="strategy-showdown-${TAG}"
+          git archive --format=zip --prefix="${name}/" -o "dist/${name}.zip" HEAD
+          if unzip -l "dist/${name}.zip" | grep -E 'docs/data/local/|_CSV\.zip$' | grep -v 'tests/fixtures/french/'; then
+            echo "::error::data files found in the archive"; exit 1
+          fi
+          echo "ARCHIVE=dist/${name}.zip" >> "$GITHUB_ENV"
+          echo "NAME=${name}" >> "$GITHUB_ENV"
+
+      - name: Collect desktop installers
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          pattern: desktop-*
+          path: dist/
+          merge-multiple: true
+
+      - name: SBOM (SPDX JSON)
+        uses: anchore/sbom-action@3ad7283483fc7af8ff2b4ea19663c2d5ca935e26 # v0.24.2
+        with:
+          path: .
+          format: spdx-json
+          output-file: dist/${{ env.NAME }}.spdx.json
+          upload-artifact: false
+          upload-release-assets: false
+
+      - name: SHA-256 checksums
+        working-directory: dist
+        run: sha256sum -- *.zip *.spdx.json *.AppImage *.deb *.exe *.dmg | tee SHA256SUMS.txt
+
+      - name: Build provenance attestation
+        uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
+        with:
+          subject-path: |
+            ${{ env.ARCHIVE }}
+            dist/*.AppImage
+            dist/*.deb
+            dist/*.exe
+            dist/*.dmg
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --title "$TAG" --verify-tag --generate-notes \
+            "$ARCHIVE" "dist/${NAME}.spdx.json" dist/SHA256SUMS.txt dist/*.AppImage dist/*.deb dist/*.exe dist/*.dmg

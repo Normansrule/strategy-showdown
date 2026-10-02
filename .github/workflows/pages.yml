@@ -1,0 +1,54 @@
+name: Deploy site to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Verify vendored libraries
+        run: sha256sum --check --strict docs/vendor/SHA256SUMS
+      - name: Stage docs/ WITHOUT docs/data/local/ (French data is never deployed)
+        run: |
+          site="$RUNNER_TEMP/site"
+          cp -a docs "$site"
+          rm -rf "$site/data/local"
+          find "$site" -name '.*' -mindepth 1 -prune -exec rm -rf {} +
+          if [ -e "$RUNNER_TEMP/site/data/local" ]; then echo "::error::data/local leaked into the site"; exit 1; fi
+          if find "$RUNNER_TEMP/site" -iname '*.zip' -o -iname '*.csv' | grep -q .; then
+            echo "::error::zip/csv files found in the site"; exit 1
+          fi
+          touch "$RUNNER_TEMP/site/.nojekyll"
+          echo "SITE_DIR=$RUNNER_TEMP/site" >> "$GITHUB_ENV"
+      - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: ${{ env.SITE_DIR }}
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

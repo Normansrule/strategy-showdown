@@ -1,0 +1,7 @@
+docs/data/local/
+__pycache__/
+node_modules/
+.pytest_cache/
+*.pyc
+dist/
+dist-desktop/

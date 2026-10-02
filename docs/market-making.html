@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>Market-making simulator</title>
+  <meta name="description" content="Simulation of the Avellaneda–Stoikov (2008) market-making model, compared with the paper’s published tables.">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <script src="assets/js/theme-init.js"></script>
+  <script src="vendor/katex/katex.min.js" defer></script>
+  <script src="vendor/echarts/echarts.min.js" defer></script>
+  <script type="module" src="assets/js/market-making.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand" href="index.html"><img src="assets/img/favicon.svg" alt="" width="26" height="26">Strategy Showdown</a>
+      <nav class="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="index.html">Showdown</a></li>
+          <li><a href="strategies.html">Strategies</a></li>
+          <li><a href="market-making.html" aria-current="page">Market making</a></li>
+          <li><a href="overfitting.html">Overfitting</a></li>
+          <li><a href="metrics.html">Metrics</a></li>
+          <li><a href="sources.html">Sources</a></li>
+          <li><a href="disclaimer.html">Disclaimer</a></li>
+        </ul>
+      </nav>
+      <button type="button" class="theme-toggle" id="theme-toggle">Dark theme</button>
+    </div>
+  </header>
+  <div class="notice" role="note">
+    <div class="notice__inner">Educational tool · hypothetical results · not investment advice · no trading. <a href="disclaimer.html">Read the disclaimer</a></div>
+  </div>
+
+  <main id="main">
+    <div class="wrap">
+      <div class="page-intro">
+        <h1>Market making, simulated</h1>
+        <p>A market maker always offers two prices: a bid (the price at which it will buy) and an ask (the price at which it will sell). It earns the gap when both sides trade, and loses if the price moves against the stock it is left holding. Avellaneda and Stoikov (2008) worked out where to put the two quotes. This page re-runs the simulation from their paper.</p>
+      </div>
+      <div class="callout callout--caution" role="note">
+        <p><b>Simulation, not a backtest.</b> Everything here happens in the paper’s stylized market: the price moves up or down by a fixed step, and a quote gets filled at random, with a probability that falls the further the quote is from the mid price. Market making cannot be honestly backtested on monthly (or even daily) price bars, because whether a quote is filled depends on the full order book, the queue, and who else is trading, and none of that is in bar data.</p>
+      </div>
+
+      <section class="panel" aria-labelledby="mm-controls-h">
+        <div class="panel__head"><h2 id="mm-controls-h">Settings</h2><span class="chip chip--sim">Simulation</span></div>
+        <div class="mm-controls">
+          <div class="field">
+            <span class="field__label" id="gamma-presets-label">Risk aversion γ: the paper’s values</span>
+            <div class="segmented" role="group" aria-labelledby="gamma-presets-label" id="gamma-presets">
+              <button type="button" data-gamma="0.01" aria-pressed="false">0.01</button>
+              <button type="button" data-gamma="0.1" aria-pressed="true">0.1</button>
+              <button type="button" data-gamma="1" aria-pressed="false">1</button>
+            </div>
+          </div>
+          <div class="field">
+            <label for="gamma">Risk aversion γ = <output id="gamma-out" for="gamma">0.1</output></label>
+            <input type="range" id="gamma" min="-2" max="0" step="0.01" value="-1" aria-describedby="gamma-hint">
+            <span class="field__hint" id="gamma-hint">Log scale from 0.01 to 1. Higher γ: the maker dislikes holding inventory more.</span>
+          </div>
+          <div class="field">
+            <label for="seed">Random seed</label>
+            <input type="number" id="seed" min="1" max="999999" step="1" value="1">
+            <span class="field__hint">Same seed, same random paths.</span>
+          </div>
+          <div class="field">
+            <label for="nsims">Number of simulated sessions</label>
+            <select id="nsims">
+              <option value="200">200 (fast)</option>
+              <option value="1000" selected>1000 (as in the paper)</option>
+              <option value="3000">3000</option>
+            </select>
+          </div>
+        </div>
+        <p class="results-status" id="mm-status" data-state="idle" role="status" aria-live="polite"><span class="dot" aria-hidden="true"></span><span id="mm-status-text">Ready</span></p>
+      </section>
+
+      <div class="stat-row" id="stats"></div>
+
+      <div class="figs">
+        <figure class="fig" aria-labelledby="path-h">
+          <div class="fig__head">
+            <div>
+              <h2 class="fig__title" id="path-h">One simulated session: quotes around the price</h2>
+              <p class="fig__sub" id="path-sub">The first simulated session with the inventory strategy. The reservation price is where the maker would be indifferent to trading; the bid and ask sit symmetrically around it.</p>
+            </div>
+            <span class="chip chip--sim">Simulation</span>
+          </div>
+          <div class="chart chart--tall" id="chart-path" role="img" aria-label="Mid price, bid, ask and reservation price over one simulated session"></div>
+        </figure>
+        <figure class="fig" aria-labelledby="inv-h">
+          <div class="fig__head">
+            <div>
+              <h2 class="fig__title" id="inv-h">Inventory during that session</h2>
+              <p class="fig__sub">Shares held. Positive: the maker has bought more than it sold. When inventory is high, the reservation price (above) drops below the mid, making a sale more likely than a purchase.</p>
+            </div>
+          </div>
+          <div class="chart chart--short" id="chart-inv" role="img" aria-label="Inventory over one simulated session"></div>
+        </figure>
+        <figure class="fig" aria-labelledby="hist-h">
+          <div class="fig__head">
+            <div>
+              <h2 class="fig__title" id="hist-h">Profit across all sessions</h2>
+              <p class="fig__sub">How often each end-of-session profit occurred. The inventory strategy gives up a little average profit in exchange for a much narrower spread of outcomes; that trade-off is the paper’s main result.</p>
+            </div>
+            <span class="chip chip--sim">Simulation</span>
+          </div>
+          <div class="chart" id="chart-hist" role="img" aria-label="Histogram of profit for the inventory and symmetric strategies"></div>
+        </figure>
+        <section class="fig" aria-labelledby="tab-h">
+          <div class="fig__head">
+            <div>
+              <h2 class="fig__title" id="tab-h">Our simulation vs the paper’s tables</h2>
+              <p class="fig__sub" id="tab-sub">The paper reports 1000 sessions for each γ (Tables 1–3). Monte Carlo results vary with the seed, so small differences are expected. Differences of roughly two standard errors or less are consistent with the paper.</p>
+            </div>
+          </div>
+          <div class="table-scroll" id="compare-table"></div>
+        </section>
+        <section class="fig" aria-labelledby="eq-mm-h">
+          <h2 class="fig__title" id="eq-mm-h">The two equations</h2>
+          <div class="two-up">
+            <div class="eq"><div id="eq-r"></div><p class="eq__where">Reservation price, Eq. (8)/(29). s = mid price, q = inventory (shares), γ = risk aversion, σ = volatility of the price per unit time, T − t = time left in the session. With long inventory (q &gt; 0) the maker values the stock below the mid, so it quotes lower.</p></div>
+            <div class="eq"><div id="eq-s"></div><p class="eq__where">Total spread (ask minus bid), Eq. (30). k measures how quickly the chance of being filled falls as a quote moves away from the mid. The first term shrinks as the session ends; the second is the spread a maker would charge with no inventory risk.</p></div>
+          </div>
+          <p class="small">A note on reading Eq. (30): our copy of the paper’s text was garbled at this point. The reading shown, with γσ²(T − t) as the first term, is the one that reproduces the paper’s own average spreads (1.49, 1.35 and 3.02 for γ = 0.1, 0.01, 1). A version with 2γσ²(T − t) gives 1.69, 1.37 and 5.02 instead. Settings used for every run: s₀ = 100, T = 1, σ = 2, dt = 0.005, q₀ = 0, k = 1.5, A = 140 (paper Sec. 3.3).</p>
+          <p class="small">Source: <a href="sources.html#ref-avellaneda2008hft">Avellaneda &amp; Stoikov (2008), Quantitative Finance 8(3)</a>. See also the <a href="strategies.html#avellaneda-stoikov">strategy card</a>.</p>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>Strategy Showdown: open-source and educational. Hypothetical results; not investment advice; no trading.</span>
+      <a href="sources.html">Sources</a>
+      <a href="disclaimer.html">Disclaimer and data attribution</a>
+    </div>
+  </footer>
+</body>
+</html>

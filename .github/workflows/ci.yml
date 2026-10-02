@@ -1,0 +1,101 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: No French Data Library files are tracked (docs/data/local/ must stay local)
+        run: |
+          tracked="$(git ls-files -- docs/data/local/ '*French*.zip' '*_CSV.zip' ':!tests/fixtures/french/**')"
+          if [ -n "$tracked" ]; then
+            echo "::error::These files must not be committed (French data redistribution rights are unclear):"
+            echo "$tracked"
+            exit 1
+          fi
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
+
+      - name: Install (lockfiles only)
+        run: |
+          npm ci --ignore-scripts
+          python -m pip install --require-hashes -r requirements-dev.txt
+
+      - name: Vendored libraries match docs/vendor/SHA256SUMS
+        run: sha256sum --check --strict docs/vendor/SHA256SUMS
+
+      # Local-only French snapshot (from the linearmodels package) so the real-data cross-check runs in CI.
+      # It is written to the gitignored docs/data/local/ and is never committed, uploaded or deployed.
+      - name: Build local French snapshot (not committed or deployed)
+        run: python scripts/build_snapshot.py
+
+      - name: JavaScript tests
+        run: npm test
+
+      - name: Python tests
+        run: python -m pytest tests/python -q
+
+      - name: Citations (offline schema check)
+        run: python scripts/check_citations.py --offline
+
+      - name: The snapshot is still untracked
+        run: test -z "$(git ls-files -- docs/data/local/)"
+
+  desktop:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install (lockfile only), then fetch the pinned Electron binary
+        run: |
+          npm ci --ignore-scripts
+          node node_modules/electron/install.js
+      - name: Launch the desktop app and check it (sandboxed page, no network, app-data dataset)
+        run: xvfb-run -a node tests/desktop/launch.spec.mjs
+
+  secrets-scan:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: read # gitleaks-action lists PR commits
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e # v3.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_ENABLE_UPLOAD_ARTIFACT: "false"

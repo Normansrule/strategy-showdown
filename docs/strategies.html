@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>Strategy cards</title>
+  <meta name="description" content="Every strategy on Strategy Showdown: the rule, its equations, its sources, and how our version differs from the paper.">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <script src="assets/js/theme-init.js"></script>
+  <script src="vendor/katex/katex.min.js" defer></script>
+  <script type="module" src="assets/js/strategies-page.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand" href="index.html"><img src="assets/img/favicon.svg" alt="" width="26" height="26">Strategy Showdown</a>
+      <nav class="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="index.html">Showdown</a></li>
+          <li><a href="strategies.html" aria-current="page">Strategies</a></li>
+          <li><a href="market-making.html">Market making</a></li>
+          <li><a href="overfitting.html">Overfitting</a></li>
+          <li><a href="metrics.html">Metrics</a></li>
+          <li><a href="sources.html">Sources</a></li>
+          <li><a href="disclaimer.html">Disclaimer</a></li>
+        </ul>
+      </nav>
+      <button type="button" class="theme-toggle" id="theme-toggle">Dark theme</button>
+    </div>
+  </header>
+  <div class="notice" role="note">
+    <div class="notice__inner">Educational tool · hypothetical results · not investment advice · no trading. <a href="disclaimer.html">Read the disclaimer</a></div>
+  </div>
+
+  <main id="main">
+    <div class="wrap">
+      <div class="page-intro">
+        <h1>Strategy cards</h1>
+        <p>Each card gives the rule in words, the equations, the papers it comes from, and, most importantly, how our version differs from the paper. Where the data or the text did not let us copy a paper exactly, the card says so.</p>
+      </div>
+      <nav aria-label="Strategies on this page"><ul class="toc" id="toc"></ul></nav>
+      <details class="card" id="evidence-key">
+        <summary><b>How to read the evidence labels</b></summary>
+        <dl class="symbols">
+          <dt><span class="chip chip--evidence chip--ev-published-replicable">Published, replicable</span></dt><dd>The method is public and can be reproduced on data we can use.</dd>
+          <dt><span class="chip chip--evidence chip--ev-published-data-restricted">Published, data restricted</span></dt><dd>The method is public, but the paper’s data are licensed, so our data differ from theirs.</dd>
+          <dt><span class="chip chip--evidence chip--ev-public-description">Public description only</span></dt><dd>Only what a firm says about itself; never code or parameters.</dd>
+          <dt><span class="chip chip--evidence chip--ev-definition">Definition</span></dt><dd>A benchmark defined by construction; it makes no claim about markets.</dd>
+        </dl>
+        <p class="small">Confirmation levels for each parameter (paper text, secondary source, unverified) are listed on every card and collected on the <a href="sources.html#confirmation">Sources page</a>.</p>
+      </details>
+      <div id="cards"><p class="muted">Loading the strategy cards…</p></div>
+      <section class="card" id="not-shown" aria-labelledby="not-shown-h">
+        <h2 id="not-shown-h">What we don’t show</h2>
+        <div class="prose">
+          <p>The trading algorithms that firms such as Jane Street, Citadel Securities, Virtu, Two Sigma or Renaissance Technologies actually run are trade secrets. Their code, parameters and results are not public, so nothing on this site describes or imitates them.</p>
+          <p>What is public are broad <em>categories</em> of strategy that academics have written down: trend following, momentum, mean reversion, portfolio optimization, and market making. This site runs published, simplified versions of those categories. Real firms differ in data, speed, execution, risk control and costs, and nothing here says how they perform.</p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>Strategy Showdown: open-source and educational. Hypothetical results; not investment advice; no trading.</span>
+      <a href="sources.html">Sources</a>
+      <a href="disclaimer.html">Disclaimer and data attribution</a>
+    </div>
+  </footer>
+</body>
+</html>

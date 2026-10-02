@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>Disclaimer</title>
+  <meta name="description" content="Strategy Showdown is educational: hypothetical results, no investment advice, no trading, no data collection.">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <script src="assets/js/theme-init.js"></script>
+  <script type="module" src="assets/js/plain-page.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand" href="index.html"><img src="assets/img/favicon.svg" alt="" width="26" height="26">Strategy Showdown</a>
+      <nav class="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="index.html">Showdown</a></li>
+          <li><a href="strategies.html">Strategies</a></li>
+          <li><a href="market-making.html">Market making</a></li>
+          <li><a href="overfitting.html">Overfitting</a></li>
+          <li><a href="metrics.html">Metrics</a></li>
+          <li><a href="sources.html">Sources</a></li>
+          <li><a href="disclaimer.html" aria-current="page">Disclaimer</a></li>
+        </ul>
+      </nav>
+      <button type="button" class="theme-toggle" id="theme-toggle">Dark theme</button>
+    </div>
+  </header>
+  <div class="notice" role="note">
+    <div class="notice__inner">Educational tool · hypothetical results · not investment advice · no trading. <a href="disclaimer.html" aria-current="page">Read the disclaimer</a></div>
+  </div>
+
+  <main id="main">
+    <div class="wrap">
+      <div class="page-intro">
+        <h1>Disclaimer</h1>
+        <p>Please read this before drawing any conclusion from the site.</p>
+      </div>
+      <div class="card prose">
+        <h2>Not investment advice</h2>
+        <p>Strategy Showdown is an educational tool. Nothing on it is a recommendation to buy, sell or hold anything, or to follow any strategy. It does not know your circumstances, and it was not written by a licensed adviser.</p>
+        <h2>Hypothetical results</h2>
+        <p>Every backtest shown is hypothetical: it computes what a written-down rule would have done on past data. No money was invested. Hypothetical results have well-known limits: the rules were chosen with hindsight, costs and trading frictions are assumptions, and past patterns can disappear, sometimes because people start trading on them. The market-making page is a simulation of a stylized model, not of any real market.</p>
+        <p>Trying many variants and keeping the best is a reliable way to find something that worked by luck. The site counts the configurations you try and reports a deflated Sharpe ratio for that reason, but no statistic fully removes the problem.</p>
+        <h2>No trading</h2>
+        <p>The site does not connect to any broker or exchange, cannot place orders, and handles no money. There is nothing to sign up for.</p>
+        <h2>Data attribution</h2>
+        <p>Real-data results use the <a href="https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html" rel="noopener noreferrer">Kenneth R. French Data Library</a> (Tuck School of Business at Dartmouth). Data courtesy of Kenneth R. French. The library publishes no licence, so redistribution rights are unclear, and this site does <strong>not</strong> ship or redistribute that data. You can download the files from the library yourself and load them into the page, or run the project locally, where a script fetches them to your own computer. French revises past returns when the underlying CRSP data are updated, so results depend on the download date.</p>
+        <p>Strategy descriptions summarize published academic papers, cited on each card and on the <a href="sources.html">Sources</a> page. Private firms’ actual trading algorithms are trade secrets and are not described or imitated here.</p>
+        <h2>Privacy</h2>
+        <p>No accounts, no cookies, no analytics, no third-party requests. Pages load only files from this site. Files you add are read inside your browser and never uploaded. The page stores two small things in your own browser: your light/dark theme choice, and, for the current browser session only, the list of configurations you tried (for the deflated Sharpe ratio). You can clear both at any time with your browser’s site-data settings, or with the “Reset count” button.</p>
+        <h2>Corrections</h2>
+        <p>Found a mistake in an equation, a citation or a number? Please open an issue on the project’s GitHub repository with the page, what you expected, and a source. Corrections are welcome and will be credited.</p>
+        <h2>Licences</h2>
+        <p>Charts use <a href="vendor/echarts/LICENSE">Apache ECharts</a> (Apache License 2.0) and equations use <a href="vendor/katex/LICENSE">KaTeX</a> (MIT), both served from this site.</p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>Strategy Showdown: open-source and educational. Hypothetical results; not investment advice; no trading.</span>
+      <a href="sources.html">Sources</a>
+      <a href="disclaimer.html">Disclaimer and data attribution</a>
+    </div>
+  </footer>
+</body>
+</html>
