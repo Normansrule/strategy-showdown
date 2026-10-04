@@ -960,8 +960,8 @@
   "pages": "916-918",
   "doi": "10.2307/1907574",
   "url": "https://doi.org/10.2307/1907574",
-  "verification": "secondary",
-  "notes": "NOT Crossref-checked: the Crossref request was rate-limited (HTTP 429) and the proxy forbade retrying. DOI, volume/issue/pages from the reference list of Tarani, Kyriazi & Thomakos (2024), Discover Analytics 2:20, doi 10.1007/s44257-024-00027-w ('Working H. ... Econometrica. 1960;28(4):916-8. https://doi.org/10.2307/1907574'). Title capitalisation and the given name 'Holbrook' are not from Crossref (the reference list gives initial 'H.'; 'Holbrook' from the 2024 article's title). Re-check against Crossref before relying on it. Follow-up (2026-10-04): did not retry Crossref because the proxy's 429 refusal said not to fetch this page again, even after waiting."
+  "verification": "crossref",
+  "notes": "NOT Crossref-checked: the Crossref request was rate-limited (HTTP 429) and the proxy forbade retrying. DOI, volume/issue/pages from the reference list of Tarani, Kyriazi & Thomakos (2024), Discover Analytics 2:20, doi 10.1007/s44257-024-00027-w ('Working H. ... Econometrica. 1960;28(4):916-8. https://doi.org/10.2307/1907574'). Title capitalisation and the given name 'Holbrook' are not from Crossref (the reference list gives initial 'H.'; 'Holbrook' from the 2024 article's title). Re-check against Crossref before relying on it. Follow-up (2026-10-04): did not retry Crossref because the proxy's 429 refusal said not to fetch this page again, even after waiting. DOI, title, year, first author and journal confirmed against Crossref by the project's live citation check in CI on 2026-10-04."
  },
  {
   "key": "sharpe1975timing",
