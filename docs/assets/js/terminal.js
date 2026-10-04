@@ -17,7 +17,7 @@ const state = { showdownDs: null, dsLabel: '', market: null, history: [], hIdx: 
 const ANN = Math.sqrt(12);
 
 // ---------------------------------------------------------------- output helpers (text only, never HTML)
-const line = (text = '', cls = '') => { const el = h('div', { class: `term__row ${cls}` }, text); out.appendChild(el); out.scrollTop = out.scrollHeight; return el; };
+const line = (text = '', cls = '') => { const el = h('div', { class: `term__row ${cls}` }); el.textContent = String(text); out.appendChild(el); out.scrollTop = out.scrollHeight; return el; };
 const ok = t => line(t, 'term__ok');
 const warn = t => line(t, 'term__warn');
 const err = t => line(t, 'term__err');
@@ -25,7 +25,8 @@ const dim = t => line(t, 'term__dim');
 function table(head, rows) {
   const widths = head.map((c, i) => Math.max(String(c).length, ...rows.map(r => String(r[i]).length)));
   const fmtRow = r => r.map((c, i) => (i === 0 ? String(c).padEnd(widths[i]) : String(c).padStart(widths[i]))).join('  ');
-  const pre = h('pre', { class: 'term__table' }, [fmtRow(head), widths.map(w => '─'.repeat(w)).join('  '), ...rows.map(fmtRow)].join('\n'));
+  const pre = h('pre', { class: 'term__table' });
+  pre.textContent = [fmtRow(head), widths.map(w => '─'.repeat(w)).join('  '), ...rows.map(fmtRow)].join('\n');
   out.appendChild(pre); out.scrollTop = out.scrollHeight;
 }
 function chart(title, x, series, { log = false } = {}) {

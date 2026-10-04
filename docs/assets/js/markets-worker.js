@@ -2,6 +2,8 @@
 import { fitAll, compareFacts, MODEL_IDS } from '../../engine/models.js';
 
 self.onmessage = ev => {
+  // Dedicated-worker messages come only from the page that created this worker (origin '' or our own origin).
+  if (ev.origin && ev.origin !== self.location.origin) return;
   const { id, x, nSims, seed } = ev.data;
   try {
     const t0 = performance.now();
