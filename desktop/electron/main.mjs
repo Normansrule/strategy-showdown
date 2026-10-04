@@ -24,6 +24,8 @@ import { fileURLToPath } from 'node:url';
 import { MIME, pageCsp, securityHeaders } from '../server.mjs';
 import { SCHEME, HOST, START_URL, mapAppUrl, isAllowedRequest, isExternalLinkAllowed, isFrenchDownloadUrl } from './routes.mjs';
 import { FRENCH_FILES, FRENCH_LIBRARY_URL, loadFrenchFiles } from '../../docs/engine/data/loaders.js';
+import { SHILLER_SOURCE, parseShillerCsv } from '../../docs/engine/data/shiller.js';
+import { sha256Hex } from '../../docs/engine/hash.js';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const DOCS_ROOT = path.resolve(HERE, '..', '..', 'docs');
@@ -140,13 +142,37 @@ async function downloadFrenchData() {
   }
 }
 
+async function downloadShillerData() {
+  const { response } = await dialog.showMessageBox(mainWindow, {
+    type: 'question', buttons: ['Download', 'Cancel'], defaultId: 0, cancelId: 1, title: 'Download data',
+    message: 'Download Robert Shiller’s monthly S&P Composite data (1871–2023)?',
+    detail: `From the open-data package ${SHILLER_SOURCE.repo} on GitHub, pinned to commit ${SHILLER_SOURCE.commit.slice(0, 7)} and checked against its SHA-256. Saved only on this computer.\n\n${SHILLER_SOURCE.licence}`,
+  });
+  if (response !== 0) return;
+  try {
+    const res = await session.fromPartition('french-downloads').fetch(SHILLER_SOURCE.url, { bypassCustomProtocolHandlers: true });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const bytes = new Uint8Array(await res.arrayBuffer());
+    if (bytes.length > MAX_DOWNLOAD_BYTES) throw new Error('file larger than expected');
+    if (sha256Hex(bytes) !== SHILLER_SOURCE.sha256) throw new Error('the file does not match the pinned SHA-256');
+    parseShillerCsv(new TextDecoder().decode(bytes)); // refuse anything that does not parse
+    await fsp.mkdir(dataRoot(), { recursive: true });
+    await fsp.writeFile(path.join(dataRoot(), 'shiller.csv'), bytes);
+    await dialog.showMessageBox(mainWindow, { type: 'info', message: 'Shiller data saved on this computer.', detail: path.join(dataRoot(), 'shiller.csv') });
+    mainWindow.webContents.reloadIgnoringCache();
+  } catch (err) {
+    dialog.showErrorBox('Download failed', err.message);
+  }
+}
+
 async function removeFrenchData() {
   const { response } = await dialog.showMessageBox(mainWindow, {
     type: 'warning', buttons: ['Remove', 'Cancel'], defaultId: 1, cancelId: 1,
-    message: 'Remove the downloaded data from this computer?',
+    message: 'Remove all downloaded data (French and Shiller) from this computer?',
   });
   if (response !== 0) return;
   await fsp.rm(datasetPath(), { force: true });
+  await fsp.rm(path.join(dataRoot(), 'shiller.csv'), { force: true });
   mainWindow.webContents.reloadIgnoringCache();
 }
 
@@ -158,6 +184,7 @@ function buildMenu() {
       label: 'Data',
       submenu: [
         { label: 'Download French Data Library files…', click: () => downloadFrenchData() },
+        { label: 'Download Shiller S&P Composite data…', click: () => downloadShillerData() },
         { label: 'Show data folder', click: async () => { await fsp.mkdir(dataRoot(), { recursive: true }); shell.openPath(dataRoot()); } },
         { label: 'Remove downloaded data…', click: () => removeFrenchData() },
         { type: 'separator' },

@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://raw.githubusercontent.com/datasets/s-and-p-500/07b81e6af68239acd65b901a11844d6d95db6ead/data/data.csv; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>Algorithm atlas</title>
+  <meta name="description" content="The main families of market algorithms, with equations, verified sources and where each one runs in this project.">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <script src="assets/js/theme-init.js"></script>
+  <script src="vendor/katex/katex.min.js" defer></script>
+  <script src="vendor/echarts/echarts.min.js" defer></script>
+  <script type="module" src="assets/js/atlas.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand" href="index.html"><img src="assets/img/favicon.svg" alt="" width="26" height="26">Strategy Showdown</a>
+      <nav class="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="index.html">Showdown</a></li>
+          <li><a href="strategies.html">Strategies</a></li>
+          <li><a href="markets.html">How markets move</a></li>
+          <li><a href="timing.html">Market timing</a></li>
+          <li><a href="overfitting.html">Overfitting</a></li>
+          <li><a href="market-making.html">Market making</a></li>
+          <li><a href="atlas.html" aria-current="page">Algorithm atlas</a></li>
+          <li><a href="terminal.html">Terminal</a></li>
+          <li><a href="metrics.html">Metrics</a></li>
+          <li><a href="open-source.html">Open source</a></li>
+          <li><a href="sources.html">Sources</a></li>
+          <li><a href="disclaimer.html">Disclaimer</a></li>
+        </ul>
+      </nav>
+      <button type="button" class="theme-toggle" id="theme-toggle">Dark theme</button>
+    </div>
+  </header>
+  <div class="notice" role="note">
+    <div class="notice__inner">Educational tool · hypothetical results · not investment advice · no trading. <a href="disclaimer.html">Read the disclaimer</a></div>
+  </div>
+
+  <main id="main">
+    <div class="wrap">
+      <div class="page-intro">
+        <h1>Algorithm atlas</h1>
+        <p>The main families of algorithms used in markets, from index investing to market making and order execution. Each entry gives the idea in plain words, its core equation, the published source, and whether you can run it here. These are the public, textbook versions of each idea: no firm publishes the algorithms it actually trades, and none is shown or imitated here.</p>
+      </div>
+      <section class="panel" aria-labelledby="at-filter-h">
+        <div class="panel__head"><h2 id="at-filter-h">Filter</h2></div>
+        <div class="inline-controls">
+          <div class="field"><label for="at-family">Family</label><select id="at-family"><option value="">All families</option></select></div>
+          <div class="field"><span class="field__label" id="at-status-label">Where it runs</span>
+            <div class="segmented" role="group" aria-labelledby="at-status-label" id="at-status">
+              <button type="button" data-status="" aria-pressed="true">All</button>
+              <button type="button" data-status="runs" aria-pressed="false">Real data here</button>
+              <button type="button" data-status="simulated" aria-pressed="false">Simulated here</button>
+              <button type="button" data-status="explained" aria-pressed="false">Explained only</button>
+            </div></div>
+        </div>
+        <p class="small" id="at-count"></p>
+      </section>
+      <div id="atlas"></div>
+
+      <section class="fig" id="execution" aria-labelledby="ex-h">
+        <div class="fig__head"><div>
+          <h2 class="fig__title" id="ex-h">Execution, simulated: sell a big order fast or slow?</h2>
+          <p class="fig__sub">Almgren &amp; Chriss (2000): selling quickly pushes the price down (market impact); selling slowly leaves you exposed to price moves for longer. For each level of risk aversion λ there is a best schedule. Parameters are the paper’s own numerical example: 1,000,000 shares at $50 over 5 days, 30% annual volatility (Table 1 of the authors’ 2000 manuscript).</p>
+        </div><span class="chip chip--sim">Simulation</span></div>
+        <div class="inline-controls">
+          <div class="field"><label for="ex-lambda">Risk aversion λ = <output id="ex-lambda-out" for="ex-lambda">1e−6</output> per $</label><input type="range" id="ex-lambda" min="-8" max="-4" step="0.1" value="-6"></div>
+        </div>
+        <div class="stat-row" id="ex-stats"></div>
+        <div class="two-up">
+          <div class="chart" id="chart-traj" role="img" aria-label="Shares still held each day under different schedules"></div>
+          <div class="chart" id="chart-frontier" role="img" aria-label="Efficient frontier of expected cost against its variance"></div>
+        </div>
+        <p class="small">Equations (8), (5) and (17) of the manuscript; impact parameters ε = $0.0625/share, η = 2.5×10⁻⁶, γ = 2.5×10⁻⁷, σ = 0.95 $/share/day½. With λ = 10⁻⁶ the paper reports κ ≈ 0.6 per day; this simulation’s value is shown above. Read from the authors’ preprint; the published Journal of Risk version was not read.</p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>Strategy Showdown: open-source and educational. Hypothetical results; not investment advice; no trading.</span>
+      <a href="sources.html">Sources</a>
+      <a href="disclaimer.html">Disclaimer and data attribution</a>
+    </div>
+  </footer>
+</body>
+</html>

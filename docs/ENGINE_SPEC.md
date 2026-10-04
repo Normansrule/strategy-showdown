@@ -117,6 +117,7 @@ no small-sample correction). `R² = 1 − SSR/SST`.
 | `st-reversal` (n=3) | 1 | as xs-momentum with J=1, K=1, skip=0 but direction reversed (−1/n on top n, +1/n on bottom n) |
 | `mean-variance` (M=120) | M | excess returns of each asset over rows `t−M+1..t`; `μ̂` = sample mean; `Σ̂` = sample covariance (ddof=1); `raw = Σ̂⁻¹μ̂`; `w = raw / Σ raw` (singular = Gaussian elimination with partial pivoting meets a pivot with absolute value < 1e−14 → hold 1/N; if `|Σ raw| < 1e−12`: all 0) |
 | `ggr-pairs` (F=12, Tr=6, n=5, k=2) | F+Tr−1 | see §6.1 |
+| `inverse-vol` (M=36) | M | `sd_j` = sample sd (ddof = 1) of asset j's returns over rows `t−M+1..t`; `w_j = (1/sd_j) / Σ_i (1/sd_i)` (an asset with sd 0 gets 0; if every sd is 0: 1/N) |
 
 Note on the ranking in `rankLongShort`: sort by score descending, ties by lower index first; top = first n,
 bottom = last n. A weight may receive both +1/n and −1/n only if 2n > N.
@@ -178,3 +179,74 @@ Input: a T×N matrix of per-period excess returns (column n = trial n, all on th
    least-squares line `R̄_{n*} = α + β·R_{n*}` across combinations (with R²).
 Sharpe values are reported per period; display code annualizes by √12. Under pure noise the expected PBO is
 `(N+1)/(2N)` for odd N (the median rank gives λ = 0, counted as overfit) and ½ for even N.
+
+## 9. Price models and stylized facts (docs/engine/models.js)
+
+Input: monthly simple returns `r_t`; models work on log returns `x_t = ln(1 + r_t)`, T months.
+
+### 9.1 Stylized facts of a series x
+`m`, `s` = mean and sample sd (ddof = 1). `ρ_k(y)` = sample autocorrelation (autocovariance and variance both divided by n).
+- `volAnn = √12·s`; `skew`, `exKurt = kurtosisRaw − 3` (biased moment estimators, as in `mathx.js`)
+- `tail3` = share of months with `|x_t − m| > 3s`
+- `acf1 = ρ_1(x)`; `q12` = Ljung–Box `T(T+2)Σ_{k=1..12} ρ_k²/(T−k)`
+- `absAcf` = mean of `ρ_k(|x|)` over k = 1..12; `leverage` = Pearson correlation of `x_t` with `|x_{t+1}|`
+- `kurt12` = excess kurtosis of NON-overlapping 12-month sums (starting at month 0; a partial final block is dropped)
+- `vr12` = variance (ddof 1) of OVERLAPPING 12-month sums / (12·s²)
+- `maxDD` = largest fall of `exp(cumulative x)` from its running peak (peak starts at 1)
+
+### 9.2 Models, likelihoods and fitting
+All fits find a LOCAL maximum of the exact log-likelihood with Nelder–Mead (the jump and regime mixtures have unbounded likelihoods at degenerate points, so no global maximum exists) (reflection 1, expansion 2, contraction ½, shrink ½)
+from the listed starts, each restarted once from its end point; the best end point wins. Parameters are
+transformed to keep them valid (logs for scales, logistic for probabilities and persistence).
+- `rw`: x ~ N(μ, σ²) i.i.d.; closed-form MLE (σ divides by T).
+- `t`: x = μ + s·t_ν, ν > 2 (ν = 2 + e^θ).
+- `jump` (Merton): density Σ_{k=0..K} Poisson(k; λ)·N(x; μ + kμ_J, σ² + kσ_J²), K = max(8, ⌈λ + 8√λ + 2⌉).
+- `garch`: σ₁² = sample variance (divide by T); σ_t² = ω + α(x_{t−1} − μ)² + βσ_{t−1}²; α + β = 0.999·logistic(θ).
+- `gjr`: as garch plus γ(x_{t−1} − μ)²·1[x_{t−1} < μ]; α + γ/2 + β < 0.999.
+- `regime`: two Gaussian states, Markov switching with p₁₁, p₂₂; Hamilton filter started at the ergodic
+  probabilities; state 1 is constrained to the lower σ (labels: calm, turbulent).
+- `AIC = 2k − 2LL`, `BIC = k ln T − 2LL`.
+
+### 9.3 Comparison
+Each fitted model is simulated nSims times (default 200) for T months with `makeRng(seed + 7919·modelIndex)`;
+GARCH-type models start at their unconditional variance, regime models at a state drawn from the ergodic
+probabilities. For each fact the 5th, 50th and 95th percentiles across simulations are computed (linear
+interpolation); the real value is "inside" if `lo ≤ real ≤ hi`, else "above"/"below". Tests check parameter
+recovery for every estimator on long simulated samples and that a monthly-averaged random walk shows
+lag-1 autocorrelation of about 0.25.
+
+## 10. Shiller data (docs/engine/data/shiller.js)
+
+Source: `datasets/s-and-p-500` on GitHub, file `data/data.csv`, pinned to commit
+`07b81e6af68239acd65b901a11844d6d95db6ead` with SHA-256 `3a45dffa…ecac6`; never bundled. Rows are read until the
+first row whose CPI or dividend is 0 or whose earnings are 0 (the packager's FRED-only extension after 2023-06);
+`PE10 = 0` is read as missing. Total return `r_t = (P_t + D_t/12)/P_{t−1} − 1` (Shiller's notes: prices are monthly
+averages of daily closes, as written for the data through January 2000; dividends are four-quarter totals since 1926,
+annual Cowles totals before, interpolated to months). Cash return = 0 (no short rate in the data).
+
+## 11. Market-timing simulations (docs/engine/timing.js)
+
+Series: `ret[t]`, `cash[t]` per month (a leading null is skipped as 0 in rule contexts). Positions are 0 (cash) or
+1 (market). Switching cost `c` bps per change of position, charged in the month the new position is held.
+- **Skill timers:** each month, with probability p hold the better of (market, cash) for that month, else the
+  worse; one `makeRng(seed)` stream for all timers. Share beating buy-and-hold = share with higher total
+  log wealth. Break-even accuracy: the 50% crossing of that share on the grid p = 0.50, 0.51, …, 1.00 (the
+  page interpolates linearly between grid points).
+- **Missing months:** months ranked by `ret − cash`; the n best (or worst, or both) months earn cash instead.
+- **Rules** (decide at the end of month t using rows ≤ t; for CAPE, a six-month lag REDUCES but may not remove look-ahead from interpolated earnings and late-published CPI; the context arrays grow by one row per step, so later
+  rows cannot be read): `sma` (Faber: index of the last L = 10 returns above its own mean), `momentum` (12-month
+  compounded return above compounded cash), `cape` (CAPE six months earlier below the median of all CAPE values
+  up to that month, at least 120 values), `random` (one coin flip per month, `makeRng(7)`), `buy-hold`.
+  All rules share one window starting at the first month every rule has a position.
+- **Placebo:** random walks with the data's mean and sd of log returns (sd × √(3/2) when averaging, so the
+  averaged series has about the data's variance), either month-end or averaged over 21 daily steps; the
+  rules' CAGR minus buy-and-hold CAGR is summarized over the simulations.
+- **Lump sum vs DCA:** for every window of M months, DCA invests 1/k of the money at the start of each of the
+  first k months; uninvested money earns cash.
+
+## 12. Optimal execution (docs/engine/execution.js)
+
+Almgren & Chriss (2000), authors' December 2000 manuscript: `E(x) = ½γX² + εΣ|n_k| + (η̃/τ)Σn_k²` with
+`η̃ = η − ½γτ` (eq. 8); `V(x) = σ²Σ_{k=1..N} τ x_k²` (eq. 5); optimal `x_j = sinh(κ(T − t_j))/sinh(κT)·X` (eq. 17)
+with `(2/τ²)(cosh κτ − 1) = λσ²/η̃`; λ = 0 gives the straight line. Tests check the straight-line closed forms
+(eqs. 10–11) and the paper's κ ≈ 0.6/day for its Table 1 parameters.

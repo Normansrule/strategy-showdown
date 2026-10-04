@@ -40,6 +40,7 @@ DEFAULT_PARAMS = {
     "st-reversal": {"n": 3},
     "mean-variance": {"M": 120},
     "ggr-pairs": {"F": 12, "Tr": 6, "n": 5, "k": 2.0},
+    "inverse-vol": {"M": 36},
 }
 STRATEGY_IDS = list(DEFAULT_PARAMS)
 
@@ -166,6 +167,8 @@ def warmup(sid: str, p: dict) -> int:
         return p["M"]
     if sid == "ggr-pairs":
         return p["F"] + p["Tr"] - 1
+    if sid == "inverse-vol":
+        return p["M"]
     raise KeyError(sid)
 
 
@@ -317,6 +320,17 @@ def w_ggr_pairs(R, rf, p):
     return w
 
 
+def w_inverse_vol(R, rf, p):
+    """Spec §6: w_j ∝ 1/sd_j over the last M rows (ddof = 1); all-zero sd → 1/N."""
+    M = p["M"]
+    X = R[-M:, 1:]
+    sd = X.std(axis=0, ddof=1)
+    inv = np.where(sd > 0, 1.0 / np.where(sd > 0, sd, 1.0), 0.0)
+    w = np.zeros(R.shape[1])
+    w[1:] = inv / inv.sum() if inv.sum() > 0 else 1.0 / (R.shape[1] - 1)
+    return w
+
+
 STRATEGY_FUNCS = {
     "buy-hold-market": w_buy_hold_market,
     "equal-weight": w_equal_weight,
@@ -326,6 +340,7 @@ STRATEGY_FUNCS = {
     "st-reversal": w_st_reversal,
     "mean-variance": w_mean_variance,
     "ggr-pairs": w_ggr_pairs,
+    "inverse-vol": w_inverse_vol,
 }
 
 

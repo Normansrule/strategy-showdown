@@ -6,8 +6,8 @@ authors:
   - family-names: Norman
     given-names: Aleksander
 license: MIT
-version: 0.2.0
-date-released: "2026-10-02"
+version: 0.3.0
+date-released: "2026-10-04"
 repository-code: "https://github.com/Normansrule/strategy-showdown"
 url: "https://normansrule.github.io/strategy-showdown/"
 abstract: >-

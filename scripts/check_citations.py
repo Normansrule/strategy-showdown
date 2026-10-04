@@ -38,7 +38,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 CITATIONS = ROOT / "docs" / "data" / "citations.json"
 ENGINE_FILES = [ROOT / "docs/engine/strategies/index.js", ROOT / "docs/engine/metrics.js"]
-ENGINE_GLOBS = ["docs/engine/sims/*.js"]
+ENGINE_GLOBS = ["docs/engine/sims/*.js", "docs/engine/*.js"]
+PAGE_GLOBS = ["docs/assets/js/*.js"]  # only `cite: [...]` / `refs: [...]` arrays are read here
 REQUIRED = ("key", "title", "authors", "year", "verification")
 VERIFICATION_VALUES = {"crossref", "publisher", "secondary", "unverified", "manual"}
 DOI_RE = re.compile(r"^10\.\d{4,9}/\S+$")
@@ -133,15 +134,16 @@ def compare_entry(entry: dict, msg: dict) -> tuple[list[str], list[str]]:
 def referenced_keys() -> dict[str, list[str]]:
     """Map source key -> files that reference it."""
     files = list(ENGINE_FILES)
-    for g in ENGINE_GLOBS:
-        files += sorted(ROOT.glob(g))
+    for g in ENGINE_GLOBS + PAGE_GLOBS:
+        files += [f for f in sorted(ROOT.glob(g)) if f not in files]
     refs: dict[str, list[str]] = {}
     for f in files:
         if not f.exists():
             continue
         src = f.read_text(encoding="utf-8")
-        keys = set(re.findall(r"\bkey:\s*['\"]([A-Za-z0-9_]+)['\"]", src))
-        for m in re.finditer(r"\bsources:\s*\[([^\]]*)\]", src):
+        page = any(f.match(g) for g in PAGE_GLOBS)
+        keys = set() if page else set(re.findall(r"\bkey:\s*['\"]([A-Za-z0-9_]+)['\"]", src))
+        for m in re.finditer(r"\b(?:cite|refs):\s*\[([^\]]*)\]" if page else r"\b(?:sources|cite|refs):\s*\[([^\]]*)\]", src):
             keys.update(re.findall(r"^\s*['\"]([A-Za-z0-9_]+)['\"]\s*$", m.group(1).replace(",", "\n"), re.M))
         for k in keys:
             refs.setdefault(k, []).append(str(f.relative_to(ROOT)))

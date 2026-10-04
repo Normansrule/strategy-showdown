@@ -1,6 +1,6 @@
 {
   "name": "strategy-showdown",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Side-by-side backtests of publicly documented trading algorithms, with honest metrics and verified sources.",
   "scripts": {
     "test": "node --test \"tests/js/**/*.test.mjs\"",
