@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://raw.githubusercontent.com/datasets/s-and-p-500/07b81e6af68239acd65b901a11844d6d95db6ead/data/data.csv; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>Open-source terminals and tools</title>
+  <meta name="description" content="Open-source counterparts to market terminals: research platforms, backtesting, analytics, pricing and charting, with each licence read from the project itself.">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <script src="assets/js/theme-init.js"></script>
+  <script src="vendor/katex/katex.min.js" defer></script>
+  <script src="vendor/echarts/echarts.min.js" defer></script>
+  <script type="module" src="assets/js/open-source.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand" href="index.html"><img src="assets/img/favicon.svg" alt="" width="26" height="26">Strategy Showdown</a>
+      <nav class="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="index.html">Showdown</a></li>
+          <li><a href="strategies.html">Strategies</a></li>
+          <li><a href="markets.html">How markets move</a></li>
+          <li><a href="timing.html">Market timing</a></li>
+          <li><a href="overfitting.html">Overfitting</a></li>
+          <li><a href="market-making.html">Market making</a></li>
+          <li><a href="atlas.html">Algorithm atlas</a></li>
+          <li><a href="terminal.html">Terminal</a></li>
+          <li><a href="metrics.html">Metrics</a></li>
+          <li><a href="open-source.html" aria-current="page">Open source</a></li>
+          <li><a href="sources.html">Sources</a></li>
+          <li><a href="disclaimer.html">Disclaimer</a></li>
+        </ul>
+      </nav>
+      <button type="button" class="theme-toggle" id="theme-toggle">Dark theme</button>
+    </div>
+  </header>
+  <div class="notice" role="note">
+    <div class="notice__inner">Educational tool · hypothetical results · not investment advice · no trading. <a href="disclaimer.html">Read the disclaimer</a></div>
+  </div>
+
+  <main id="main">
+    <div class="wrap">
+      <div class="page-intro">
+        <h1>Open-source terminals and tools</h1>
+        <p>Professional market terminals are expensive and closed. A lot of what they do, research platforms, backtesting engines, analytics, pricing libraries and charting, now has open-source counterparts. This page lists the main ones, including the projects Bloomberg itself publishes as open source, with each licence read from the project’s own licence file.</p>
+      </div>
+      <div class="callout" role="note"><p><b>How to read the licence column.</b> Permissive licences (MIT, BSD, Apache-2.0) let you reuse code with attribution. Copyleft licences (GPL, AGPL, LGPL) require you to share changes, and AGPL extends that to software offered over a network. “Custom” means extra conditions beyond a standard licence: read them before using the code. Licences were checked on the date shown and can change; this is not legal advice.</p></div>
+
+      <section class="fig" aria-labelledby="bbg-h">
+        <h2 class="fig__title" id="bbg-h">What Bloomberg open-sources, and what it does not</h2>
+        <div id="bbg"></div>
+      </section>
+
+      <section class="fig" aria-labelledby="oss-h">
+        <div class="fig__head"><div>
+          <h2 class="fig__title" id="oss-h">The wider ecosystem</h2>
+          <p class="fig__sub" id="oss-sub"></p>
+        </div></div>
+        <div class="inline-controls">
+          <div class="field"><label for="oss-cat">Category</label><select id="oss-cat"><option value="">All categories</option></select></div>
+        </div>
+        <div class="table-scroll" id="oss-table"></div>
+      </section>
+
+      <section class="fig" aria-labelledby="ours-h">
+        <h2 class="fig__title" id="ours-h">What this project uses</h2>
+        <ul class="prose">
+          <li><b>Apache ECharts</b> (Apache-2.0) draws every chart; <b>KaTeX</b> (MIT) typesets the equations. Both are vendored with their licence files and checked against pinned SHA-256 hashes.</li>
+          <li><b>Electron</b> (MIT) wraps the same pages as the desktop app.</li>
+          <li>No code is copied from the projects above. Ideas such as metric definitions (QuantStats), engine structure (backtesting.py, Zipline) and data-provider patterns (OpenBB) are re-implemented from the published papers and our own specification, so copyleft licences such as AGPL do not apply to this project.</li>
+        </ul>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>Strategy Showdown: open-source and educational. Hypothetical results; not investment advice; no trading.</span>
+      <a href="sources.html">Sources</a>
+      <a href="disclaimer.html">Disclaimer and data attribution</a>
+    </div>
+  </footer>
+</body>
+</html>

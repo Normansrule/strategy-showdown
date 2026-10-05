@@ -52,7 +52,7 @@ async function main() {
     t.append(h('caption', { class: 'visually-hidden' }, 'Confirmation level of each parameter'),
       h('thead', {}, h('tr', {}, h('th', { scope: 'col' }, 'Where used'), h('th', { scope: 'col', class: 'txt' }, 'Detail'), h('th', { scope: 'col', class: 'txt' }, 'Value'), h('th', { scope: 'col', class: 'txt' }, 'Confirmed by'), h('th', { scope: 'col', class: 'txt' }, 'Where it was checked'))),
       h('tbody', {}, rows.map(c => h('tr', {},
-        h('td', { class: 'txt' }, c.group === 'metrics' ? h('a', { href: 'metrics.html' }, GROUP_LABEL[c.group]) : c.group === 'overfitting' ? h('a', { href: 'overfitting.html' }, GROUP_LABEL[c.group]) : h('a', { href: 'strategies.html#' + c.group }, GROUP_LABEL[c.group])),
+        h('td', { class: 'txt' }, c.group === 'metrics' ? h('a', { href: 'metrics.html' }, GROUP_LABEL[c.group]) : c.group === 'overfitting' ? h('a', { href: 'overfitting.html' }, GROUP_LABEL[c.group]) : c.group === 'models' ? h('a', { href: 'markets.html' }, GROUP_LABEL[c.group]) : c.group === 'timing' ? h('a', { href: 'timing.html' }, GROUP_LABEL[c.group]) : c.group === 'execution' ? h('a', { href: 'atlas.html#execution' }, GROUP_LABEL[c.group]) : h('a', { href: 'strategies.html#' + c.group }, GROUP_LABEL[c.group])),
         h('td', { class: 'txt' }, c.item), h('td', { class: 'txt' }, c.value),
         h('td', { class: 'txt' }, h('span', { class: `chip chip--level-${c.level}`, title: LEVELS[c.level].explain }, LEVELS[c.level].label)),
         h('td', { class: 'txt' }, c.where)))));

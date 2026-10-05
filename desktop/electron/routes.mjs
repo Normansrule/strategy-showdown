@@ -2,11 +2,12 @@
 //
 // The desktop window loads the SAME files as the website, from docs/, over a private app:// scheme:
 //   app://showdown/<path>            → <docs>/<path>            (read-only, bundled with the app)
-//   app://showdown/data/local/<f>    → <userData>/data/<f>      (the user's own French data, never bundled)
-// Everything else (http, https, file, ws …) is blocked by the main process. Paths are resolved with the same
+//   app://showdown/data/local/<f>    → <userData>/data/<f>      (the user's own downloaded data, never bundled)
+// Everything else (http, https, file, ws …) is blocked by the main process, except the one pinned Shiller CSV. Paths are resolved with the same
 // traversal/dotfile rules as the local web server (desktop/server.mjs → resolveSafe).
 import path from 'node:path';
 import { resolveSafe } from '../server.mjs';
+import { SHILLER_SOURCE } from '../../docs/engine/data/shiller.js';
 
 export const SCHEME = 'app';
 export const HOST = 'showdown';
@@ -32,9 +33,10 @@ export function mapAppUrl(url, { docsRoot, dataRoot }) {
   return resolveSafe(path.resolve(docsRoot), p);
 }
 
-/** Requests the window may make: its own app:// origin, plus inline data:/blob: URLs created by the page. */
+/** Requests the window may make: its own app:// origin, page-made data:/blob: URLs, and the pinned Shiller CSV. */
 export function isAllowedRequest(url) {
   if (url.startsWith('data:') || url.startsWith('blob:')) return true;
+  if (url === SHILLER_SOURCE.url) return true; // the one pinned, hash-checked dataset a page may fetch on request
   if (url.startsWith('devtools:') || url.startsWith('chrome-extension:')) return true; // only reachable with devtools open
   try { const u = new URL(url); return u.protocol === `${SCHEME}:` && u.host === HOST; } catch { return false; }
 }

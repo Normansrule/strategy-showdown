@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://raw.githubusercontent.com/datasets/s-and-p-500/07b81e6af68239acd65b901a11844d6d95db6ead/data/data.csv; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>How markets move</title>
+  <meta name="description" content="Six textbook models of stock returns fitted to the same history and checked against the stylized facts of real markets.">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <script src="assets/js/theme-init.js"></script>
+  <script src="vendor/katex/katex.min.js" defer></script>
+  <script src="vendor/echarts/echarts.min.js" defer></script>
+  <script type="module" src="assets/js/markets.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand" href="index.html"><img src="assets/img/favicon.svg" alt="" width="26" height="26">Strategy Showdown</a>
+      <nav class="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="index.html">Showdown</a></li>
+          <li><a href="strategies.html">Strategies</a></li>
+          <li><a href="markets.html" aria-current="page">How markets move</a></li>
+          <li><a href="timing.html">Market timing</a></li>
+          <li><a href="overfitting.html">Overfitting</a></li>
+          <li><a href="market-making.html">Market making</a></li>
+          <li><a href="atlas.html">Algorithm atlas</a></li>
+          <li><a href="terminal.html">Terminal</a></li>
+          <li><a href="metrics.html">Metrics</a></li>
+          <li><a href="open-source.html">Open source</a></li>
+          <li><a href="sources.html">Sources</a></li>
+          <li><a href="disclaimer.html">Disclaimer</a></li>
+        </ul>
+      </nav>
+      <button type="button" class="theme-toggle" id="theme-toggle">Dark theme</button>
+    </div>
+  </header>
+  <div class="notice" role="note">
+    <div class="notice__inner">Educational tool · hypothetical results · not investment advice · no trading. <a href="disclaimer.html">Read the disclaimer</a></div>
+  </div>
+
+  <main id="main">
+    <div class="wrap">
+      <div class="page-intro">
+        <h1>How markets move</h1>
+        <p>Stock prices wiggle in ways that look random, but not <i>purely</i> random. Researchers have catalogued a handful of patterns that show up in almost every market, the “stylized facts” (Cont 2001): fat tails, calm and stormy spells, sharper falls than rises. This page fits six textbook models of monthly returns to the same history, simulates each one hundreds of times, and checks which facts each model can and cannot reproduce.</p>
+      </div>
+
+      <section class="panel" aria-labelledby="mk-data-h">
+        <div class="panel__head"><h2 id="mk-data-h">Data</h2><span class="chip chip--hyp">Past data; models are simplifications</span></div>
+        <div id="market-picker"></div>
+        <div class="mm-controls">
+          <div class="field">
+            <label for="nsims">Simulated histories per model</label>
+            <select id="nsims"><option value="100">100 (fast)</option><option value="200" selected>200</option><option value="500">500</option></select>
+            <span class="field__hint">Each simulated history has as many months as the real one.</span>
+          </div>
+          <div class="field">
+            <label for="seed">Random seed</label>
+            <input type="number" id="seed" min="1" max="999999" step="1" value="1">
+          </div>
+        </div>
+        <p class="results-status" id="mk-status" data-state="idle" role="status" aria-live="polite"><span class="dot" aria-hidden="true"></span><span id="mk-status-text">Ready</span></p>
+      </section>
+
+      <div class="stat-row" id="stats"></div>
+      <div id="mk-error" class="error-box" role="alert"></div>
+
+      <div class="figs">
+        <figure class="fig" aria-labelledby="growth-h">
+          <div class="fig__head"><div>
+            <h2 class="fig__title" id="growth-h">The real record: growth of $1</h2>
+            <p class="fig__sub">Log scale, so equal vertical distances are equal percentage changes. Total return (price plus dividends), before taxes and costs.</p>
+          </div><span class="chip chip--hyp">Past data</span></div>
+          <div class="chart" id="chart-growth" role="img" aria-label="Growth of one dollar invested in the market"></div>
+        </figure>
+
+        <section class="fig" aria-labelledby="facts-h">
+          <div class="fig__head"><div>
+            <h2 class="fig__title" id="facts-h">Which model reproduces which fact?</h2>
+            <p class="fig__sub">Each model is fitted to the real returns by maximum likelihood, then simulated. ✓ means the real value lies inside the middle 90% of the model’s simulated histories; ↑ or ↓ means the real value is above or below that range, so the model rarely produces it. Lower AIC and BIC mean a better fit after penalizing extra parameters.</p>
+          </div></div>
+          <div class="table-scroll" id="facts-table"></div>
+        </section>
+
+        <figure class="fig" aria-labelledby="hist-h">
+          <div class="fig__head"><div>
+            <h2 class="fig__title" id="hist-h">Fat tails: real monthly returns against a bell curve</h2>
+            <p class="fig__sub">Bars: how often each monthly log return occurred. Lines: the fitted normal (random walk) and Student-t densities. The square-root scale makes the rare extreme months visible.</p>
+          </div></div>
+          <div class="chart" id="chart-hist" role="img" aria-label="Histogram of monthly returns with fitted normal and t densities"></div>
+        </figure>
+
+        <figure class="fig" aria-labelledby="acf-h">
+          <div class="fig__head"><div>
+            <h2 class="fig__title" id="acf-h">Volatility clustering: do big moves follow big moves?</h2>
+            <p class="fig__sub">Correlation between the size of this month’s move, |return|, and the size of the move k months earlier. Bars: real data. Lines: average over each model’s simulated histories. Models with independent months stay near zero.</p>
+          </div></div>
+          <div class="chart" id="chart-acf" role="img" aria-label="Autocorrelation of absolute returns, real and models"></div>
+        </figure>
+
+        <section class="fig" aria-labelledby="paths-h">
+          <div class="fig__head"><div>
+            <h2 class="fig__title" id="paths-h">One simulated history from each model</h2>
+            <p class="fig__sub">Grey: the real growth of $1. Colour: one random history from the model, same length, log scale. Each is only one draw; run again with another seed to see how much they vary.</p>
+          </div><span class="chip chip--sim">Simulation</span></div>
+          <div class="small-multiples" id="paths"></div>
+        </section>
+
+        <section class="fig" aria-labelledby="cards-h">
+          <h2 class="fig__title" id="cards-h">The six models</h2>
+          <div class="model-cards" id="model-cards"></div>
+        </section>
+
+        <section class="fig" aria-labelledby="notes-h">
+          <h2 class="fig__title" id="notes-h">How to read this honestly</h2>
+          <ul class="prose">
+            <li>All six models are deliberately simple and describe returns month by month. None of them knows anything about earnings, interest rates or the economy, so none can tell you what happens next.</li>
+            <li>“✓” only means a model is not contradicted by that one statistic over this history. Each check uses a 90% range, so even a correct model is expected to miss about one of the ten checks by chance.</li>
+            <li>With Shiller’s prices, which his notes describe as monthly <b>averages</b> of daily closes, the lag-1 autocorrelation and the 12-month variance ratio are pushed up by the averaging itself: a pure random walk averaged within each month shows a lag-1 autocorrelation of about 0.25 (Working 1960; checked by simulation in this project’s tests). Use month-end data (the French series) to judge predictability.</li>
+            <li>Exact definitions of every statistic and estimator: <a href="https://github.com/Normansrule/strategy-showdown/blob/main/docs/ENGINE_SPEC.md#9-price-models-and-stylized-facts-docsenginemodelsjs">ENGINE_SPEC §9</a>.</li>
+          </ul>
+          <ul class="small refs" id="mk-refs"></ul>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>Strategy Showdown: open-source and educational. Hypothetical results; not investment advice; no trading.</span>
+      <a href="sources.html">Sources</a>
+      <a href="disclaimer.html">Disclaimer and data attribution</a>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,450 +1,1284 @@
 [
-  {
-    "key": "demiguel2009naive",
-    "authors": [{"family": "DeMiguel", "given": "Victor"}, {"family": "Garlappi", "given": "Lorenzo"}, {"family": "Uppal", "given": "Raman"}],
-    "title": "Optimal Versus Naive Diversification: How Inefficient is the 1/N Portfolio Strategy?",
-    "journal": "Review of Financial Studies",
-    "year": 2009,
-    "volume": "22",
-    "issue": "5",
-    "pages": "1915-1953",
-    "doi": "10.1093/rfs/hhm075",
-    "url": "https://academic.oup.com/rfs/article-abstract/22/5/1915/1592901",
-    "verification": "crossref",
-    "notes": "Crossref: published-print May 2009; 'issued' (advance online) 2007-12-03. RePEc/EconPapers agrees on vol/issue/pages. Full text of published version not readable; 2006 NBER SI working paper ('1/N', June 2006) used for Part B."
-  },
-  {
-    "key": "faber2007tactical",
-    "authors": [{"family": "Faber", "given": "Mebane T."}],
-    "title": "A Quantitative Approach to Tactical Asset Allocation",
-    "journal": "The Journal of Wealth Management",
-    "year": 2007,
-    "volume": "9",
-    "issue": "4",
-    "pages": "69-79",
-    "doi": "10.3905/jwm.2007.674809",
-    "url": "https://mebfaber.com/wp-content/uploads/2016/05/SSRN-id962461.pdf",
-    "verification": "crossref",
-    "notes": "A DOI does exist (Crossref-confirmed). SSRN id 962461 supported by the author-hosted PDF filename 'SSRN-id962461.pdf'; the SSRN landing page itself could not be verified (the fetch returned an unrelated record). The free PDF read is the February 2013 update, not the 2007 journal text."
-  },
-  {
-    "key": "moskowitz2012tsmom",
-    "authors": [{"family": "Moskowitz", "given": "Tobias J."}, {"family": "Ooi", "given": "Yao Hua"}, {"family": "Pedersen", "given": "Lasse Heje"}],
-    "title": "Time series momentum",
-    "journal": "Journal of Financial Economics",
-    "year": 2012,
-    "volume": "104",
-    "issue": "2",
-    "pages": "228-250",
-    "doi": "10.1016/j.jfineco.2011.11.003",
-    "url": "https://w4.stern.nyu.edu/facdir/lpederse/papers/TimeSeriesMomentum.pdf",
-    "verification": "crossref",
-    "notes": "Free PDF on NYU Stern is the published JFE version."
-  },
-  {
-    "key": "hurst2017century",
-    "authors": [{"family": "Hurst", "given": "Brian"}, {"family": "Ooi", "given": "Yao Hua"}, {"family": "Pedersen", "given": "Lasse Heje"}],
-    "title": "A Century of Evidence on Trend-Following Investing",
-    "journal": "The Journal of Portfolio Management",
-    "year": 2017,
-    "volume": "44",
-    "issue": "1",
-    "pages": "15-29",
-    "doi": "10.3905/jpm.2017.44.1.015",
-    "url": "https://doi.org/10.3905/jpm.2017.44.1.015",
-    "verification": "crossref",
-    "notes": "Crossref date 2017-10-31 (Fall 2017 issue)."
-  },
-  {
-    "key": "jegadeesh1993winners",
-    "authors": [{"family": "Jegadeesh", "given": "Narasimhan"}, {"family": "Titman", "given": "Sheridan"}],
-    "title": "Returns to Buying Winners and Selling Losers: Implications for Stock Market Efficiency",
-    "journal": "The Journal of Finance",
-    "year": 1993,
-    "volume": "48",
-    "issue": "1",
-    "pages": "65-91",
-    "doi": "10.1111/j.1540-6261.1993.tb04702.x",
-    "url": "https://www.bauer.uh.edu/rsusmel/phd/jegadeesh-titman93.pdf",
-    "verification": "crossref",
-    "notes": "Full title has subtitle ': Implications for Stock Market Efficiency'. Free PDF is JSTOR scan of published version."
-  },
-  {
-    "key": "carhart1997persistence",
-    "authors": [{"family": "Carhart", "given": "Mark M."}],
-    "title": "On Persistence in Mutual Fund Performance",
-    "journal": "The Journal of Finance",
-    "year": 1997,
-    "volume": "52",
-    "issue": "1",
-    "pages": "57-82",
-    "doi": "10.1111/j.1540-6261.1997.tb03808.x",
-    "url": "https://benchmarkfg.com/wp-content/uploads/2025/05/Persistence-in-Mutual-Fund-Performance-4.pdf",
-    "verification": "crossref",
-    "notes": "March 1997 issue."
-  },
-  {
-    "key": "moskowitz1999industries",
-    "authors": [{"family": "Moskowitz", "given": "Tobias J."}, {"family": "Grinblatt", "given": "Mark"}],
-    "title": "Do Industries Explain Momentum?",
-    "journal": "The Journal of Finance",
-    "year": 1999,
-    "volume": "54",
-    "issue": "4",
-    "pages": "1249-1290",
-    "doi": "10.1111/0022-1082.00146",
-    "url": "https://doi.org/10.1111/0022-1082.00146",
-    "verification": "crossref",
-    "notes": "August 1999 issue. Full text could not be fetched (host redirect loop); Part B facts from secondary sources."
-  },
-  {
-    "key": "jegadeesh1990predictable",
-    "authors": [{"family": "Jegadeesh", "given": "Narasimhan"}],
-    "title": "Evidence of Predictable Behavior of Security Returns",
-    "journal": "The Journal of Finance",
-    "year": 1990,
-    "volume": "45",
-    "issue": "3",
-    "pages": "881-898",
-    "doi": "10.1111/j.1540-6261.1990.tb05110.x",
-    "url": "https://doi.org/10.1111/j.1540-6261.1990.tb05110.x",
-    "verification": "crossref",
-    "notes": ""
-  },
-  {
-    "key": "lehmann1990fads",
-    "authors": [{"family": "Lehmann", "given": "Bruce N."}],
-    "title": "Fads, Martingales, and Market Efficiency",
-    "journal": "The Quarterly Journal of Economics",
-    "year": 1990,
-    "volume": "105",
-    "issue": "1",
-    "pages": "1-28",
-    "doi": "10.2307/2937816",
-    "url": "https://econpapers.repec.org/RePEc:oup:qjecon:v:105:y:1990:i:1:p:1-28.",
-    "verification": "crossref",
-    "notes": "Crossref gives first page only (1); end page 28 from RePEc/EconPapers."
-  },
-  {
-    "key": "gatev2006pairs",
-    "authors": [{"family": "Gatev", "given": "Evan"}, {"family": "Goetzmann", "given": "William N."}, {"family": "Rouwenhorst", "given": "K. Geert"}],
-    "title": "Pairs Trading: Performance of a Relative-Value Arbitrage Rule",
-    "journal": "Review of Financial Studies",
-    "year": 2006,
-    "volume": "19",
-    "issue": "3",
-    "pages": "797-827",
-    "doi": "10.1093/rfs/hhj020",
-    "url": "https://doi.org/10.1093/rfs/hhj020",
-    "verification": "crossref",
-    "notes": "Full title includes subtitle ': Performance of a Relative-Value Arbitrage Rule'."
-  },
-  {
-    "key": "engle1987cointegration",
-    "authors": [{"family": "Engle", "given": "Robert F."}, {"family": "Granger", "given": "C. W. J."}],
-    "title": "Co-Integration and Error Correction: Representation, Estimation, and Testing",
-    "journal": "Econometrica",
-    "year": 1987,
-    "volume": "55",
-    "issue": "2",
-    "pages": "251-276",
-    "doi": "10.2307/1913236",
-    "url": "https://doi.org/10.2307/1913236",
-    "verification": "crossref",
-    "notes": "Crossref gives first page only (251); end page 276 from RePEc/EconPapers. Full title includes subtitle."
-  },
-  {
-    "key": "avellaneda2010statarb",
-    "authors": [{"family": "Avellaneda", "given": "Marco"}, {"family": "Lee", "given": "Jeong-Hyun"}],
-    "title": "Statistical arbitrage in the US equities market",
-    "journal": "Quantitative Finance",
-    "year": 2010,
-    "volume": "10",
-    "issue": "7",
-    "pages": "761-782",
-    "doi": "10.1080/14697680903124632",
-    "url": "https://doi.org/10.1080/14697680903124632",
-    "verification": "crossref",
-    "notes": ""
-  },
-  {
-    "key": "avellaneda2008hft",
-    "authors": [{"family": "Avellaneda", "given": "Marco"}, {"family": "Stoikov", "given": "Sasha"}],
-    "title": "High-frequency trading in a limit order book",
-    "journal": "Quantitative Finance",
-    "year": 2008,
-    "volume": "8",
-    "issue": "3",
-    "pages": "217-224",
-    "doi": "10.1080/14697680701381228",
-    "url": "https://math.nyu.edu/inmemoriam/avellaneda//HighFrequencyTrading.pdf",
-    "verification": "crossref",
-    "notes": "April 2008 issue. Free NYU PDF header matches the published version (received 24 April 2006; final form 3 April 2007)."
-  },
-  {
-    "key": "glosten1985bidask",
-    "authors": [{"family": "Glosten", "given": "Lawrence R."}, {"family": "Milgrom", "given": "Paul R."}],
-    "title": "Bid, ask and transaction prices in a specialist market with heterogeneously informed traders",
-    "journal": "Journal of Financial Economics",
-    "year": 1985,
-    "volume": "14",
-    "issue": "1",
-    "pages": "71-100",
-    "doi": "10.1016/0304-405X(85)90044-3",
-    "url": "https://doi.org/10.1016/0304-405X(85)90044-3",
-    "verification": "crossref",
-    "notes": "March 1985 issue. No title was given in the request; this title is from Crossref."
-  },
-  {
-    "key": "kyle1985continuous",
-    "authors": [{"family": "Kyle", "given": "Albert S."}],
-    "title": "Continuous Auctions and Insider Trading",
-    "journal": "Econometrica",
-    "year": 1985,
-    "volume": "53",
-    "issue": "6",
-    "pages": "1315-1335",
-    "doi": "10.2307/1913210",
-    "url": "https://doi.org/10.2307/1913210",
-    "verification": "crossref",
-    "notes": "Crossref gives first page only (1315); end page 1335 from RePEc/EconPapers."
-  },
-  {
-    "key": "budish2015arms",
-    "authors": [{"family": "Budish", "given": "Eric"}, {"family": "Cramton", "given": "Peter"}, {"family": "Shim", "given": "John"}],
-    "title": "The High-Frequency Trading Arms Race: Frequent Batch Auctions as a Market Design Response",
-    "journal": "The Quarterly Journal of Economics",
-    "year": 2015,
-    "volume": "130",
-    "issue": "4",
-    "pages": "1547-1621",
-    "doi": "10.1093/qje/qjv027",
-    "url": "https://doi.org/10.1093/qje/qjv027",
-    "verification": "crossref",
-    "notes": "Full title includes subtitle ': Frequent Batch Auctions as a Market Design Response'. Online 2015-07-23; print 2015-11-01."
-  },
-  {
-    "key": "fama1993common",
-    "authors": [{"family": "Fama", "given": "Eugene F."}, {"family": "French", "given": "Kenneth R."}],
-    "title": "Common risk factors in the returns on stocks and bonds",
-    "journal": "Journal of Financial Economics",
-    "year": 1993,
-    "volume": "33",
-    "issue": "1",
-    "pages": "3-56",
-    "doi": "10.1016/0304-405X(93)90023-5",
-    "url": "https://doi.org/10.1016/0304-405X(93)90023-5",
-    "verification": "crossref",
-    "notes": ""
-  },
-  {
-    "key": "fama2015fivefactor",
-    "authors": [{"family": "Fama", "given": "Eugene F."}, {"family": "French", "given": "Kenneth R."}],
-    "title": "A five-factor asset pricing model",
-    "journal": "Journal of Financial Economics",
-    "year": 2015,
-    "volume": "116",
-    "issue": "1",
-    "pages": "1-22",
-    "doi": "10.1016/j.jfineco.2014.10.010",
-    "url": "https://doi.org/10.1016/j.jfineco.2014.10.010",
-    "verification": "crossref",
-    "notes": ""
-  },
-  {
-    "key": "markowitz1952portfolio",
-    "authors": [{"family": "Markowitz", "given": "Harry"}],
-    "title": "Portfolio Selection",
-    "journal": "The Journal of Finance",
-    "year": 1952,
-    "volume": "7",
-    "issue": "1",
-    "pages": "77-91",
-    "doi": "10.1111/j.1540-6261.1952.tb01525.x",
-    "url": "https://doi.org/10.1111/j.1540-6261.1952.tb01525.x",
-    "verification": "crossref",
-    "notes": "Crossref title is stored as 'PORTFOLIO SELECTION*' (all caps plus footnote asterisk); normalized here."
-  },
-  {
-    "key": "sharpe1966mutual",
-    "authors": [{"family": "Sharpe", "given": "William F."}],
-    "title": "Mutual Fund Performance",
-    "journal": "The Journal of Business",
-    "year": 1966,
-    "volume": "39",
-    "issue": "S1",
-    "pages": "119-138",
-    "doi": "10.1086/294846",
-    "url": "https://doi.org/10.1086/294846",
-    "verification": "crossref",
-    "notes": "Crossref: issue 'S1' (supplement; usually cited as No. 1, Part 2), first page 119 only. End page 138 comes from several secondary reference lists and is not confirmed in Crossref. RePEc wrongly gives the year as 1965."
-  },
-  {
-    "key": "sortino1994downside",
-    "authors": [{"family": "Sortino", "given": "Frank A."}, {"family": "Price", "given": "Lee N."}],
-    "title": "Performance Measurement in a Downside Risk Framework",
-    "journal": "The Journal of Investing",
-    "year": 1994,
-    "volume": "3",
-    "issue": "3",
-    "pages": "59-64",
-    "doi": "10.3905/joi.3.3.59",
-    "url": "https://doi.org/10.3905/joi.3.3.59",
-    "verification": "crossref",
-    "notes": "Page range in other sources differs: R PerformanceAnalytics docs cite 59-65; Wikipedia cites 50-8. Crossref value used. Full text not read."
-  },
-  {
-    "key": "lo2002sharpe",
-    "authors": [{"family": "Lo", "given": "Andrew W."}],
-    "title": "The Statistics of Sharpe Ratios",
-    "journal": "Financial Analysts Journal",
-    "year": 2002,
-    "volume": "58",
-    "issue": "4",
-    "pages": "36-52",
-    "doi": "10.2469/faj.v58.n4.2453",
-    "url": "https://traders.studentorg.berkeley.edu/papers/The-Statistics-of-Sharpe-Ratios.pdf",
-    "verification": "crossref",
-    "notes": "July/August 2002. Free PDF is the published FAJ layout."
-  },
-  {
-    "key": "ledoit2008robust",
-    "authors": [{"family": "Ledoit", "given": "Olivier"}, {"family": "Wolf", "given": "Michael"}],
-    "title": "Robust performance hypothesis testing with the Sharpe ratio",
-    "journal": "Journal of Empirical Finance",
-    "year": 2008,
-    "volume": "15",
-    "issue": "5",
-    "pages": "850-859",
-    "doi": "10.1016/j.jempfin.2008.03.002",
-    "url": "https://ideas.repec.org/p/zur/iewwpx/320.html",
-    "verification": "crossref",
-    "notes": "Crossref (as fetched) spells the given name 'Oliver'. The author's own homepage (ledoit.net) and his UZH papers use 'Olivier', which is used here. Working paper: IEW Zurich WP 320. No full text could be fetched (robots/timeout on every host tried)."
-  },
-  {
-    "key": "bailey2014deflated",
-    "authors": [{"family": "Bailey", "given": "David H."}, {"family": "López de Prado", "given": "Marcos"}],
-    "title": "The Deflated Sharpe Ratio: Correcting for Selection Bias, Backtest Overfitting, and Non-Normality",
-    "journal": "The Journal of Portfolio Management",
-    "year": 2014,
-    "volume": "40",
-    "issue": "5",
-    "pages": "94-107",
-    "doi": "10.3905/jpm.2014.40.5.094",
-    "url": "https://www.davidhbailey.com/dhbpapers/deflated-sharpe.pdf",
-    "verification": "crossref",
-    "notes": "Full title has subtitle. Free PDF is the preprint dated July 31, 2014 ('forthcoming' in JPM)."
-  },
-  {
-    "key": "bailey2012frontier",
-    "authors": [{"family": "Bailey", "given": "David H."}, {"family": "López de Prado", "given": "Marcos"}],
-    "title": "The Sharpe ratio efficient frontier",
-    "journal": "The Journal of Risk",
-    "year": 2012,
-    "volume": "15",
-    "issue": "2",
-    "pages": "3-44",
-    "doi": "10.21314/JOR.2012.255",
-    "url": "https://www.davidhbailey.com/dhbpapers/sharpe-frontier.pdf",
-    "verification": "crossref",
-    "notes": "Crossref lists the first author as 'Bailey, David'. Issue is dated December 2012 (risk.net issue listing title). The PSR is defined in this paper (Eq. 11 in the July 2012 preprint). The free PDF is the July 2012 preprint (first version May 2008)."
-  },
-  {
-    "key": "bailey2017pbo",
-    "authors": [{"family": "Bailey", "given": "David H."}, {"family": "Borwein", "given": "Jonathan M."}, {"family": "López de Prado", "given": "Marcos"}, {"family": "Zhu", "given": "Qiji Jim"}],
-    "title": "The probability of backtest overfitting",
-    "journal": "The Journal of Computational Finance",
-    "year": 2017,
-    "volume": "20",
-    "issue": "4",
-    "pages": null,
-    "doi": "10.21314/JCF.2016.322",
-    "url": "https://www.davidhbailey.com/dhbpapers/backtest-prob.pdf",
-    "verification": "crossref",
-    "notes": "Crossref confirms DOI, title and 4 authors but has no volume/issue/pages and an 'issued' date of Sept 2016. Vol 20 No 4 (April 2017) confirmed from the risk.net issue listing (publisher) and the WMU ScholarWorks record. Page range unverified: WMU shows only '36', which looks like a page count."
-  },
-  {
-    "key": "almgren2001execution",
-    "authors": [{"family": "Almgren", "given": "Robert"}, {"family": "Chriss", "given": "Neil"}],
-    "title": "Optimal execution of portfolio transactions",
-    "journal": "The Journal of Risk",
-    "year": 2001,
-    "volume": "3",
-    "issue": "2",
-    "pages": "5-39",
-    "doi": "10.21314/JOR.2001.041",
-    "url": "https://doi.org/10.21314/JOR.2001.041",
-    "verification": "crossref",
-    "notes": "Crossref year 2001 (print and issued). The 2000 date in circulation belongs to the working paper / Winter 2000-01 issue label; cite 2001."
-  },
-  {
-    "key": "kelly1956information",
-    "authors": [{"family": "Kelly", "given": "J. L., Jr."}],
-    "title": "A New Interpretation of Information Rate",
-    "journal": "Bell System Technical Journal",
-    "year": 1956,
-    "volume": "35",
-    "issue": "4",
-    "pages": "917-926",
-    "doi": "10.1002/j.1538-7305.1956.tb03809.x",
-    "url": "https://doi.org/10.1002/j.1538-7305.1956.tb03809.x",
-    "verification": "crossref",
-    "notes": "July 1956. Crossref gives the author as 'Kelly, J. L., Jr.' (John Larry Kelly Jr.)."
-  },
-  {
-    "key": "newey1987hac",
-    "authors": [{"family": "Newey", "given": "Whitney K."}, {"family": "West", "given": "Kenneth D."}],
-    "title": "A Simple, Positive Semi-Definite, Heteroskedasticity and Autocorrelation Consistent Covariance Matrix",
-    "journal": "Econometrica",
-    "year": 1987,
-    "volume": "55",
-    "issue": "3",
-    "pages": "703-708",
-    "doi": "10.2307/1913610",
-    "url": "https://doi.org/10.2307/1913610",
-    "verification": "crossref",
-    "notes": "Crossref gives first page only (703); end page 708 from RePEc/EconPapers."
-  },
-  {
-    "key": "newey1994lag",
-    "authors": [{"family": "Newey", "given": "Whitney K."}, {"family": "West", "given": "Kenneth D."}],
-    "title": "Automatic Lag Selection in Covariance Matrix Estimation",
-    "journal": "The Review of Economic Studies",
-    "year": 1994,
-    "volume": "61",
-    "issue": "4",
-    "pages": "631-653",
-    "doi": "10.2307/2297912",
-    "url": "https://doi.org/10.2307/2297912",
-    "verification": "crossref",
-    "notes": "Crossref gives the authors as initials only ('W. K.', 'K. D.'); full given names added to match the 1987 record. NBER Technical WP t0144 exists, but its PDF has no text layer."
-  },
-  {
-    "key": "harvey2016crosssection",
-    "authors": [{"family": "Harvey", "given": "Campbell R."}, {"family": "Liu", "given": "Yan"}, {"family": "Zhu", "given": "Heqing"}],
-    "title": "... and the Cross-Section of Expected Returns",
-    "journal": "Review of Financial Studies",
-    "year": 2016,
-    "volume": "29",
-    "issue": "1",
-    "pages": "5-68",
-    "doi": "10.1093/rfs/hhv059",
-    "url": "https://doi.org/10.1093/rfs/hhv059",
-    "verification": "crossref",
-    "notes": "Online 2015-10-09; print January 2016."
-  },
-  {
-    "key": "french_data_library",
-    "authors": [{"family": "French", "given": "Kenneth R."}],
-    "title": "Kenneth R. French - Data Library",
-    "journal": null,
-    "year": null,
-    "volume": null,
-    "issue": null,
-    "pages": null,
-    "doi": null,
-    "url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html",
-    "verification": "publisher",
-    "notes": "Momentum factor detail page: https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library/det_mom_factor.html. Terms: the visible page shows no explicit licence, redistribution terms or citation request. An HTML source comment says images and code are Ken French's property and that reuse needs permission from French or Dimensional Fund Advisors. The page notes that full return histories are rebuilt at every monthly update and can change when CRSP revises its data, so record the download date and do not treat vintages as fixed. Data are built from CRSP (and Compustat links). Page showed data through August 2026 at access (2026-09-30). Redistribution rights for the data files are therefore unclear; safest to have users download them themselves and to cite the library."
-  }
+ {
+  "key": "demiguel2009naive",
+  "authors": [
+   {
+    "family": "DeMiguel",
+    "given": "Victor"
+   },
+   {
+    "family": "Garlappi",
+    "given": "Lorenzo"
+   },
+   {
+    "family": "Uppal",
+    "given": "Raman"
+   }
+  ],
+  "title": "Optimal Versus Naive Diversification: How Inefficient is the 1/N Portfolio Strategy?",
+  "journal": "Review of Financial Studies",
+  "year": 2009,
+  "volume": "22",
+  "issue": "5",
+  "pages": "1915-1953",
+  "doi": "10.1093/rfs/hhm075",
+  "url": "https://academic.oup.com/rfs/article-abstract/22/5/1915/1592901",
+  "verification": "crossref",
+  "notes": "Crossref: published-print May 2009; 'issued' (advance online) 2007-12-03. RePEc/EconPapers agrees on vol/issue/pages. Full text of published version not readable; 2006 NBER SI working paper ('1/N', June 2006) used for Part B."
+ },
+ {
+  "key": "faber2007tactical",
+  "authors": [
+   {
+    "family": "Faber",
+    "given": "Mebane T."
+   }
+  ],
+  "title": "A Quantitative Approach to Tactical Asset Allocation",
+  "journal": "The Journal of Wealth Management",
+  "year": 2007,
+  "volume": "9",
+  "issue": "4",
+  "pages": "69-79",
+  "doi": "10.3905/jwm.2007.674809",
+  "url": "https://mebfaber.com/wp-content/uploads/2016/05/SSRN-id962461.pdf",
+  "verification": "crossref",
+  "notes": "A DOI does exist (Crossref-confirmed). SSRN id 962461 supported by the author-hosted PDF filename 'SSRN-id962461.pdf'; the SSRN landing page itself could not be verified (the fetch returned an unrelated record). The free PDF read is the February 2013 update, not the 2007 journal text."
+ },
+ {
+  "key": "moskowitz2012tsmom",
+  "authors": [
+   {
+    "family": "Moskowitz",
+    "given": "Tobias J."
+   },
+   {
+    "family": "Ooi",
+    "given": "Yao Hua"
+   },
+   {
+    "family": "Pedersen",
+    "given": "Lasse Heje"
+   }
+  ],
+  "title": "Time series momentum",
+  "journal": "Journal of Financial Economics",
+  "year": 2012,
+  "volume": "104",
+  "issue": "2",
+  "pages": "228-250",
+  "doi": "10.1016/j.jfineco.2011.11.003",
+  "url": "https://w4.stern.nyu.edu/facdir/lpederse/papers/TimeSeriesMomentum.pdf",
+  "verification": "crossref",
+  "notes": "Free PDF on NYU Stern is the published JFE version."
+ },
+ {
+  "key": "hurst2017century",
+  "authors": [
+   {
+    "family": "Hurst",
+    "given": "Brian"
+   },
+   {
+    "family": "Ooi",
+    "given": "Yao Hua"
+   },
+   {
+    "family": "Pedersen",
+    "given": "Lasse Heje"
+   }
+  ],
+  "title": "A Century of Evidence on Trend-Following Investing",
+  "journal": "The Journal of Portfolio Management",
+  "year": 2017,
+  "volume": "44",
+  "issue": "1",
+  "pages": "15-29",
+  "doi": "10.3905/jpm.2017.44.1.015",
+  "url": "https://doi.org/10.3905/jpm.2017.44.1.015",
+  "verification": "crossref",
+  "notes": "Crossref date 2017-10-31 (Fall 2017 issue)."
+ },
+ {
+  "key": "jegadeesh1993winners",
+  "authors": [
+   {
+    "family": "Jegadeesh",
+    "given": "Narasimhan"
+   },
+   {
+    "family": "Titman",
+    "given": "Sheridan"
+   }
+  ],
+  "title": "Returns to Buying Winners and Selling Losers: Implications for Stock Market Efficiency",
+  "journal": "The Journal of Finance",
+  "year": 1993,
+  "volume": "48",
+  "issue": "1",
+  "pages": "65-91",
+  "doi": "10.1111/j.1540-6261.1993.tb04702.x",
+  "url": "https://www.bauer.uh.edu/rsusmel/phd/jegadeesh-titman93.pdf",
+  "verification": "crossref",
+  "notes": "Full title has subtitle ': Implications for Stock Market Efficiency'. Free PDF is JSTOR scan of published version."
+ },
+ {
+  "key": "carhart1997persistence",
+  "authors": [
+   {
+    "family": "Carhart",
+    "given": "Mark M."
+   }
+  ],
+  "title": "On Persistence in Mutual Fund Performance",
+  "journal": "The Journal of Finance",
+  "year": 1997,
+  "volume": "52",
+  "issue": "1",
+  "pages": "57-82",
+  "doi": "10.1111/j.1540-6261.1997.tb03808.x",
+  "url": "https://benchmarkfg.com/wp-content/uploads/2025/05/Persistence-in-Mutual-Fund-Performance-4.pdf",
+  "verification": "crossref",
+  "notes": "March 1997 issue."
+ },
+ {
+  "key": "moskowitz1999industries",
+  "authors": [
+   {
+    "family": "Moskowitz",
+    "given": "Tobias J."
+   },
+   {
+    "family": "Grinblatt",
+    "given": "Mark"
+   }
+  ],
+  "title": "Do Industries Explain Momentum?",
+  "journal": "The Journal of Finance",
+  "year": 1999,
+  "volume": "54",
+  "issue": "4",
+  "pages": "1249-1290",
+  "doi": "10.1111/0022-1082.00146",
+  "url": "https://doi.org/10.1111/0022-1082.00146",
+  "verification": "crossref",
+  "notes": "August 1999 issue. Full text could not be fetched (host redirect loop); Part B facts from secondary sources."
+ },
+ {
+  "key": "jegadeesh1990predictable",
+  "authors": [
+   {
+    "family": "Jegadeesh",
+    "given": "Narasimhan"
+   }
+  ],
+  "title": "Evidence of Predictable Behavior of Security Returns",
+  "journal": "The Journal of Finance",
+  "year": 1990,
+  "volume": "45",
+  "issue": "3",
+  "pages": "881-898",
+  "doi": "10.1111/j.1540-6261.1990.tb05110.x",
+  "url": "https://doi.org/10.1111/j.1540-6261.1990.tb05110.x",
+  "verification": "crossref",
+  "notes": ""
+ },
+ {
+  "key": "lehmann1990fads",
+  "authors": [
+   {
+    "family": "Lehmann",
+    "given": "Bruce N."
+   }
+  ],
+  "title": "Fads, Martingales, and Market Efficiency",
+  "journal": "The Quarterly Journal of Economics",
+  "year": 1990,
+  "volume": "105",
+  "issue": "1",
+  "pages": "1-28",
+  "doi": "10.2307/2937816",
+  "url": "https://econpapers.repec.org/RePEc:oup:qjecon:v:105:y:1990:i:1:p:1-28.",
+  "verification": "crossref",
+  "notes": "Crossref gives first page only (1); end page 28 from RePEc/EconPapers."
+ },
+ {
+  "key": "gatev2006pairs",
+  "authors": [
+   {
+    "family": "Gatev",
+    "given": "Evan"
+   },
+   {
+    "family": "Goetzmann",
+    "given": "William N."
+   },
+   {
+    "family": "Rouwenhorst",
+    "given": "K. Geert"
+   }
+  ],
+  "title": "Pairs Trading: Performance of a Relative-Value Arbitrage Rule",
+  "journal": "Review of Financial Studies",
+  "year": 2006,
+  "volume": "19",
+  "issue": "3",
+  "pages": "797-827",
+  "doi": "10.1093/rfs/hhj020",
+  "url": "https://doi.org/10.1093/rfs/hhj020",
+  "verification": "crossref",
+  "notes": "Full title includes subtitle ': Performance of a Relative-Value Arbitrage Rule'."
+ },
+ {
+  "key": "engle1987cointegration",
+  "authors": [
+   {
+    "family": "Engle",
+    "given": "Robert F."
+   },
+   {
+    "family": "Granger",
+    "given": "C. W. J."
+   }
+  ],
+  "title": "Co-Integration and Error Correction: Representation, Estimation, and Testing",
+  "journal": "Econometrica",
+  "year": 1987,
+  "volume": "55",
+  "issue": "2",
+  "pages": "251-276",
+  "doi": "10.2307/1913236",
+  "url": "https://doi.org/10.2307/1913236",
+  "verification": "crossref",
+  "notes": "Crossref gives first page only (251); end page 276 from RePEc/EconPapers. Full title includes subtitle."
+ },
+ {
+  "key": "avellaneda2010statarb",
+  "authors": [
+   {
+    "family": "Avellaneda",
+    "given": "Marco"
+   },
+   {
+    "family": "Lee",
+    "given": "Jeong-Hyun"
+   }
+  ],
+  "title": "Statistical arbitrage in the US equities market",
+  "journal": "Quantitative Finance",
+  "year": 2010,
+  "volume": "10",
+  "issue": "7",
+  "pages": "761-782",
+  "doi": "10.1080/14697680903124632",
+  "url": "https://doi.org/10.1080/14697680903124632",
+  "verification": "crossref",
+  "notes": ""
+ },
+ {
+  "key": "avellaneda2008hft",
+  "authors": [
+   {
+    "family": "Avellaneda",
+    "given": "Marco"
+   },
+   {
+    "family": "Stoikov",
+    "given": "Sasha"
+   }
+  ],
+  "title": "High-frequency trading in a limit order book",
+  "journal": "Quantitative Finance",
+  "year": 2008,
+  "volume": "8",
+  "issue": "3",
+  "pages": "217-224",
+  "doi": "10.1080/14697680701381228",
+  "url": "https://math.nyu.edu/inmemoriam/avellaneda//HighFrequencyTrading.pdf",
+  "verification": "crossref",
+  "notes": "April 2008 issue. Free NYU PDF header matches the published version (received 24 April 2006; final form 3 April 2007)."
+ },
+ {
+  "key": "glosten1985bidask",
+  "authors": [
+   {
+    "family": "Glosten",
+    "given": "Lawrence R."
+   },
+   {
+    "family": "Milgrom",
+    "given": "Paul R."
+   }
+  ],
+  "title": "Bid, ask and transaction prices in a specialist market with heterogeneously informed traders",
+  "journal": "Journal of Financial Economics",
+  "year": 1985,
+  "volume": "14",
+  "issue": "1",
+  "pages": "71-100",
+  "doi": "10.1016/0304-405X(85)90044-3",
+  "url": "https://doi.org/10.1016/0304-405X(85)90044-3",
+  "verification": "crossref",
+  "notes": "March 1985 issue. No title was given in the request; this title is from Crossref."
+ },
+ {
+  "key": "kyle1985continuous",
+  "authors": [
+   {
+    "family": "Kyle",
+    "given": "Albert S."
+   }
+  ],
+  "title": "Continuous Auctions and Insider Trading",
+  "journal": "Econometrica",
+  "year": 1985,
+  "volume": "53",
+  "issue": "6",
+  "pages": "1315-1335",
+  "doi": "10.2307/1913210",
+  "url": "https://doi.org/10.2307/1913210",
+  "verification": "crossref",
+  "notes": "Crossref gives first page only (1315); end page 1335 from RePEc/EconPapers."
+ },
+ {
+  "key": "budish2015arms",
+  "authors": [
+   {
+    "family": "Budish",
+    "given": "Eric"
+   },
+   {
+    "family": "Cramton",
+    "given": "Peter"
+   },
+   {
+    "family": "Shim",
+    "given": "John"
+   }
+  ],
+  "title": "The High-Frequency Trading Arms Race: Frequent Batch Auctions as a Market Design Response",
+  "journal": "The Quarterly Journal of Economics",
+  "year": 2015,
+  "volume": "130",
+  "issue": "4",
+  "pages": "1547-1621",
+  "doi": "10.1093/qje/qjv027",
+  "url": "https://doi.org/10.1093/qje/qjv027",
+  "verification": "crossref",
+  "notes": "Full title includes subtitle ': Frequent Batch Auctions as a Market Design Response'. Online 2015-07-23; print 2015-11-01."
+ },
+ {
+  "key": "fama1993common",
+  "authors": [
+   {
+    "family": "Fama",
+    "given": "Eugene F."
+   },
+   {
+    "family": "French",
+    "given": "Kenneth R."
+   }
+  ],
+  "title": "Common risk factors in the returns on stocks and bonds",
+  "journal": "Journal of Financial Economics",
+  "year": 1993,
+  "volume": "33",
+  "issue": "1",
+  "pages": "3-56",
+  "doi": "10.1016/0304-405X(93)90023-5",
+  "url": "https://doi.org/10.1016/0304-405X(93)90023-5",
+  "verification": "crossref",
+  "notes": ""
+ },
+ {
+  "key": "fama2015fivefactor",
+  "authors": [
+   {
+    "family": "Fama",
+    "given": "Eugene F."
+   },
+   {
+    "family": "French",
+    "given": "Kenneth R."
+   }
+  ],
+  "title": "A five-factor asset pricing model",
+  "journal": "Journal of Financial Economics",
+  "year": 2015,
+  "volume": "116",
+  "issue": "1",
+  "pages": "1-22",
+  "doi": "10.1016/j.jfineco.2014.10.010",
+  "url": "https://doi.org/10.1016/j.jfineco.2014.10.010",
+  "verification": "crossref",
+  "notes": ""
+ },
+ {
+  "key": "markowitz1952portfolio",
+  "authors": [
+   {
+    "family": "Markowitz",
+    "given": "Harry"
+   }
+  ],
+  "title": "Portfolio Selection",
+  "journal": "The Journal of Finance",
+  "year": 1952,
+  "volume": "7",
+  "issue": "1",
+  "pages": "77-91",
+  "doi": "10.1111/j.1540-6261.1952.tb01525.x",
+  "url": "https://doi.org/10.1111/j.1540-6261.1952.tb01525.x",
+  "verification": "crossref",
+  "notes": "Crossref title is stored as 'PORTFOLIO SELECTION*' (all caps plus footnote asterisk); normalized here."
+ },
+ {
+  "key": "sharpe1966mutual",
+  "authors": [
+   {
+    "family": "Sharpe",
+    "given": "William F."
+   }
+  ],
+  "title": "Mutual Fund Performance",
+  "journal": "The Journal of Business",
+  "year": 1966,
+  "volume": "39",
+  "issue": "S1",
+  "pages": "119-138",
+  "doi": "10.1086/294846",
+  "url": "https://doi.org/10.1086/294846",
+  "verification": "crossref",
+  "notes": "Crossref: issue 'S1' (supplement; usually cited as No. 1, Part 2), first page 119 only. End page 138 comes from several secondary reference lists and is not confirmed in Crossref. RePEc wrongly gives the year as 1965."
+ },
+ {
+  "key": "sortino1994downside",
+  "authors": [
+   {
+    "family": "Sortino",
+    "given": "Frank A."
+   },
+   {
+    "family": "Price",
+    "given": "Lee N."
+   }
+  ],
+  "title": "Performance Measurement in a Downside Risk Framework",
+  "journal": "The Journal of Investing",
+  "year": 1994,
+  "volume": "3",
+  "issue": "3",
+  "pages": "59-64",
+  "doi": "10.3905/joi.3.3.59",
+  "url": "https://doi.org/10.3905/joi.3.3.59",
+  "verification": "crossref",
+  "notes": "Page range in other sources differs: R PerformanceAnalytics docs cite 59-65; Wikipedia cites 50-8. Crossref value used. Full text not read."
+ },
+ {
+  "key": "lo2002sharpe",
+  "authors": [
+   {
+    "family": "Lo",
+    "given": "Andrew W."
+   }
+  ],
+  "title": "The Statistics of Sharpe Ratios",
+  "journal": "Financial Analysts Journal",
+  "year": 2002,
+  "volume": "58",
+  "issue": "4",
+  "pages": "36-52",
+  "doi": "10.2469/faj.v58.n4.2453",
+  "url": "https://traders.studentorg.berkeley.edu/papers/The-Statistics-of-Sharpe-Ratios.pdf",
+  "verification": "crossref",
+  "notes": "July/August 2002. Free PDF is the published FAJ layout."
+ },
+ {
+  "key": "ledoit2008robust",
+  "authors": [
+   {
+    "family": "Ledoit",
+    "given": "Olivier"
+   },
+   {
+    "family": "Wolf",
+    "given": "Michael"
+   }
+  ],
+  "title": "Robust performance hypothesis testing with the Sharpe ratio",
+  "journal": "Journal of Empirical Finance",
+  "year": 2008,
+  "volume": "15",
+  "issue": "5",
+  "pages": "850-859",
+  "doi": "10.1016/j.jempfin.2008.03.002",
+  "url": "https://ideas.repec.org/p/zur/iewwpx/320.html",
+  "verification": "crossref",
+  "notes": "Crossref (as fetched) spells the given name 'Oliver'. The author's own homepage (ledoit.net) and his UZH papers use 'Olivier', which is used here. Working paper: IEW Zurich WP 320. No full text could be fetched (robots/timeout on every host tried)."
+ },
+ {
+  "key": "bailey2014deflated",
+  "authors": [
+   {
+    "family": "Bailey",
+    "given": "David H."
+   },
+   {
+    "family": "López de Prado",
+    "given": "Marcos"
+   }
+  ],
+  "title": "The Deflated Sharpe Ratio: Correcting for Selection Bias, Backtest Overfitting, and Non-Normality",
+  "journal": "The Journal of Portfolio Management",
+  "year": 2014,
+  "volume": "40",
+  "issue": "5",
+  "pages": "94-107",
+  "doi": "10.3905/jpm.2014.40.5.094",
+  "url": "https://www.davidhbailey.com/dhbpapers/deflated-sharpe.pdf",
+  "verification": "crossref",
+  "notes": "Full title has subtitle. Free PDF is the preprint dated July 31, 2014 ('forthcoming' in JPM)."
+ },
+ {
+  "key": "bailey2012frontier",
+  "authors": [
+   {
+    "family": "Bailey",
+    "given": "David H."
+   },
+   {
+    "family": "López de Prado",
+    "given": "Marcos"
+   }
+  ],
+  "title": "The Sharpe ratio efficient frontier",
+  "journal": "The Journal of Risk",
+  "year": 2012,
+  "volume": "15",
+  "issue": "2",
+  "pages": "3-44",
+  "doi": "10.21314/JOR.2012.255",
+  "url": "https://www.davidhbailey.com/dhbpapers/sharpe-frontier.pdf",
+  "verification": "crossref",
+  "notes": "Crossref lists the first author as 'Bailey, David'. Issue is dated December 2012 (risk.net issue listing title). The PSR is defined in this paper (Eq. 11 in the July 2012 preprint). The free PDF is the July 2012 preprint (first version May 2008)."
+ },
+ {
+  "key": "bailey2017pbo",
+  "authors": [
+   {
+    "family": "Bailey",
+    "given": "David H."
+   },
+   {
+    "family": "Borwein",
+    "given": "Jonathan M."
+   },
+   {
+    "family": "López de Prado",
+    "given": "Marcos"
+   },
+   {
+    "family": "Zhu",
+    "given": "Qiji Jim"
+   }
+  ],
+  "title": "The probability of backtest overfitting",
+  "journal": "The Journal of Computational Finance",
+  "year": 2017,
+  "volume": "20",
+  "issue": "4",
+  "pages": null,
+  "doi": "10.21314/JCF.2016.322",
+  "url": "https://www.davidhbailey.com/dhbpapers/backtest-prob.pdf",
+  "verification": "crossref",
+  "notes": "Crossref confirms DOI, title and 4 authors but has no volume/issue/pages and an 'issued' date of Sept 2016. Vol 20 No 4 (April 2017) confirmed from the risk.net issue listing (publisher) and the WMU ScholarWorks record. Page range unverified: WMU shows only '36', which looks like a page count."
+ },
+ {
+  "key": "almgren2001execution",
+  "authors": [
+   {
+    "family": "Almgren",
+    "given": "Robert"
+   },
+   {
+    "family": "Chriss",
+    "given": "Neil"
+   }
+  ],
+  "title": "Optimal execution of portfolio transactions",
+  "journal": "The Journal of Risk",
+  "year": 2001,
+  "volume": "3",
+  "issue": "2",
+  "pages": "5-39",
+  "doi": "10.21314/JOR.2001.041",
+  "url": "https://doi.org/10.21314/JOR.2001.041",
+  "verification": "crossref",
+  "notes": "Crossref year 2001 (print and issued). The 2000 date in circulation belongs to the working paper / Winter 2000-01 issue label; cite 2001."
+ },
+ {
+  "key": "kelly1956information",
+  "authors": [
+   {
+    "family": "Kelly",
+    "given": "J. L., Jr."
+   }
+  ],
+  "title": "A New Interpretation of Information Rate",
+  "journal": "Bell System Technical Journal",
+  "year": 1956,
+  "volume": "35",
+  "issue": "4",
+  "pages": "917-926",
+  "doi": "10.1002/j.1538-7305.1956.tb03809.x",
+  "url": "https://doi.org/10.1002/j.1538-7305.1956.tb03809.x",
+  "verification": "crossref",
+  "notes": "July 1956. Crossref gives the author as 'Kelly, J. L., Jr.' (John Larry Kelly Jr.)."
+ },
+ {
+  "key": "newey1987hac",
+  "authors": [
+   {
+    "family": "Newey",
+    "given": "Whitney K."
+   },
+   {
+    "family": "West",
+    "given": "Kenneth D."
+   }
+  ],
+  "title": "A Simple, Positive Semi-Definite, Heteroskedasticity and Autocorrelation Consistent Covariance Matrix",
+  "journal": "Econometrica",
+  "year": 1987,
+  "volume": "55",
+  "issue": "3",
+  "pages": "703-708",
+  "doi": "10.2307/1913610",
+  "url": "https://doi.org/10.2307/1913610",
+  "verification": "crossref",
+  "notes": "Crossref gives first page only (703); end page 708 from RePEc/EconPapers."
+ },
+ {
+  "key": "newey1994lag",
+  "authors": [
+   {
+    "family": "Newey",
+    "given": "Whitney K."
+   },
+   {
+    "family": "West",
+    "given": "Kenneth D."
+   }
+  ],
+  "title": "Automatic Lag Selection in Covariance Matrix Estimation",
+  "journal": "The Review of Economic Studies",
+  "year": 1994,
+  "volume": "61",
+  "issue": "4",
+  "pages": "631-653",
+  "doi": "10.2307/2297912",
+  "url": "https://doi.org/10.2307/2297912",
+  "verification": "crossref",
+  "notes": "Crossref gives the authors as initials only ('W. K.', 'K. D.'); full given names added to match the 1987 record. NBER Technical WP t0144 exists, but its PDF has no text layer."
+ },
+ {
+  "key": "harvey2016crosssection",
+  "authors": [
+   {
+    "family": "Harvey",
+    "given": "Campbell R."
+   },
+   {
+    "family": "Liu",
+    "given": "Yan"
+   },
+   {
+    "family": "Zhu",
+    "given": "Heqing"
+   }
+  ],
+  "title": "... and the Cross-Section of Expected Returns",
+  "journal": "Review of Financial Studies",
+  "year": 2016,
+  "volume": "29",
+  "issue": "1",
+  "pages": "5-68",
+  "doi": "10.1093/rfs/hhv059",
+  "url": "https://doi.org/10.1093/rfs/hhv059",
+  "verification": "crossref",
+  "notes": "Online 2015-10-09; print January 2016."
+ },
+ {
+  "key": "french_data_library",
+  "authors": [
+   {
+    "family": "French",
+    "given": "Kenneth R."
+   }
+  ],
+  "title": "Kenneth R. French - Data Library",
+  "journal": null,
+  "year": null,
+  "volume": null,
+  "issue": null,
+  "pages": null,
+  "doi": null,
+  "url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html",
+  "verification": "publisher",
+  "notes": "Momentum factor detail page: https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library/det_mom_factor.html. Terms: the visible page shows no explicit licence, redistribution terms or citation request. An HTML source comment says images and code are Ken French's property and that reuse needs permission from French or Dimensional Fund Advisors. The page notes that full return histories are rebuilt at every monthly update and can change when CRSP revises its data, so record the download date and do not treat vintages as fixed. Data are built from CRSP (and Compustat links). Page showed data through August 2026 at access (2026-09-30). Redistribution rights for the data files are therefore unclear; safest to have users download them themselves and to cite the library."
+ },
+ {
+  "key": "cont2001stylized",
+  "authors": [
+   {
+    "family": "Cont",
+    "given": "R."
+   }
+  ],
+  "title": "Empirical properties of asset returns: stylized facts and statistical issues",
+  "journal": "Quantitative Finance",
+  "year": 2001,
+  "volume": "1",
+  "issue": "2",
+  "pages": "223-236",
+  "doi": "10.1080/713665670",
+  "url": "https://doi.org/10.1080/713665670",
+  "verification": "crossref",
+  "notes": "Crossref: issued/published-print 2001-02; publisher Informa UK. Crossref gives only the initial 'R.' for the author's given name."
+ },
+ {
+  "key": "bachelier1900",
+  "authors": [
+   {
+    "family": "Bachelier",
+    "given": "L."
+   }
+  ],
+  "title": "Théorie de la spéculation",
+  "journal": "Annales scientifiques de l'École normale supérieure",
+  "year": 1900,
+  "volume": "17",
+  "issue": null,
+  "pages": "21-86",
+  "doi": "10.24033/asens.476",
+  "url": "https://doi.org/10.24033/asens.476",
+  "verification": "crossref",
+  "notes": "Crossref: no issue number; container-title uses lower-case 'normale supérieure'; publisher Société Mathématique de France. Crossref gives only the initial 'L.'. Series 3, vol. 17 (series number not in Crossref record)."
+ },
+ {
+  "key": "samuelson1965proof",
+  "authors": [
+   {
+    "family": "Samuelson",
+    "given": "Paul A."
+   }
+  ],
+  "title": "Proof that Properly Anticipated Prices Fluctuate Randomly",
+  "journal": "Industrial Management Review",
+  "year": 1965,
+  "volume": "6",
+  "issue": "2",
+  "pages": "41-49",
+  "doi": null,
+  "url": "https://doi.org/10.1142/9789814566926_0002",
+  "verification": "unverified",
+  "notes": "No DOI found for the 1965 original; original journal/vol/issue/pages NOT verified against a primary source (only secondary listings, e.g. scirp.org reference page, give 'Industrial Management Review, 6, 41-49'). A Crossref-confirmed reprint exists: book chapter in The World Scientific Handbook of Futures Markets (World Scientific, issued 2015-08-23), pp. 25-38, DOI 10.1142/9789814566926_0002 (title and author 'Paul A. Samuelson' taken from that Crossref record; the record has no note linking it to the 1965 original). URL points to a Crossref-registered reprint (World Scientific, 2015, pp. 25–38); the record does not link back to the 1965 original, whose volume/pages come from secondary listings only."
+ },
+ {
+  "key": "fama1965behavior",
+  "authors": [
+   {
+    "family": "Fama",
+    "given": "Eugene F."
+   }
+  ],
+  "title": "The Behavior of Stock-Market Prices",
+  "journal": "The Journal of Business",
+  "year": 1965,
+  "volume": "38",
+  "issue": "1",
+  "pages": "34-105",
+  "doi": "10.1086/294743",
+  "url": "https://doi.org/10.1086/294743",
+  "verification": "crossref",
+  "notes": "Crossref lists first page only (34); end page 105 from the JSTOR cover page of a hosted copy ('The Journal of Business, Vol. 38, No. 1 (Jan., 1965), pp. 34-105', stable URL jstor.org/stable/2350752). Publisher University of Chicago Press."
+ },
+ {
+  "key": "mandelbrot1963variation",
+  "authors": [
+   {
+    "family": "Mandelbrot",
+    "given": "Benoit"
+   }
+  ],
+  "title": "The Variation of Certain Speculative Prices",
+  "journal": "The Journal of Business",
+  "year": 1963,
+  "volume": "36",
+  "issue": "4",
+  "pages": "394-419",
+  "doi": "10.1086/294632",
+  "url": "https://doi.org/10.1086/294632",
+  "verification": "crossref",
+  "notes": "Crossref lists first page only (394) and a placeholder month (1963-01); JSTOR cover page of a hosted copy reads 'Vol. 36, No. 4 (Oct., 1963), pp. 394-419', stable URL jstor.org/stable/2350970."
+ },
+ {
+  "key": "blattberg1974student",
+  "authors": [
+   {
+    "family": "Blattberg",
+    "given": "Robert C."
+   },
+   {
+    "family": "Gonedes",
+    "given": "Nicholas J."
+   }
+  ],
+  "title": "A Comparison of the Stable and Student Distributions as Statistical Models for Stock Prices",
+  "journal": "The Journal of Business",
+  "year": 1974,
+  "volume": "47",
+  "issue": "2",
+  "pages": "244-280",
+  "doi": "10.1086/295634",
+  "url": "https://doi.org/10.1086/295634",
+  "verification": "crossref",
+  "notes": "Crossref lists first page only (244); end page 280 from a secondary reference listing (scirp.org), not a primary page."
+ },
+ {
+  "key": "merton1976jumps",
+  "authors": [
+   {
+    "family": "Merton",
+    "given": "Robert C."
+   }
+  ],
+  "title": "Option pricing when underlying stock returns are discontinuous",
+  "journal": "Journal of Financial Economics",
+  "year": 1976,
+  "volume": "3",
+  "issue": "1-2",
+  "pages": "125-144",
+  "doi": "10.1016/0304-405X(76)90022-2",
+  "url": "https://doi.org/10.1016/0304-405X(76)90022-2",
+  "verification": "crossref",
+  "notes": "Crossref returns the DOI in lower case (10.1016/0304-405x(76)90022-2); DOIs are case-insensitive. Issue '1-2' per Crossref."
+ },
+ {
+  "key": "engle1982arch",
+  "authors": [
+   {
+    "family": "Engle",
+    "given": "Robert F."
+   }
+  ],
+  "title": "Autoregressive Conditional Heteroscedasticity with Estimates of the Variance of United Kingdom Inflation",
+  "journal": "Econometrica",
+  "year": 1982,
+  "volume": "50",
+  "issue": "4",
+  "pages": "987-1007",
+  "doi": "10.2307/1912773",
+  "url": "https://doi.org/10.2307/1912773",
+  "verification": "crossref",
+  "notes": "Crossref (JSTOR DOI) lists first page only (987), published-print 1982-07; end page 1007 from IDEAS/RePEc record ecm/emetrp/v50y1982i4p987-1007."
+ },
+ {
+  "key": "bollerslev1986garch",
+  "authors": [
+   {
+    "family": "Bollerslev",
+    "given": "Tim"
+   }
+  ],
+  "title": "Generalized autoregressive conditional heteroskedasticity",
+  "journal": "Journal of Econometrics",
+  "year": 1986,
+  "volume": "31",
+  "issue": "3",
+  "pages": "307-327",
+  "doi": "10.1016/0304-4076(86)90063-1",
+  "url": "https://doi.org/10.1016/0304-4076(86)90063-1",
+  "verification": "crossref",
+  "notes": "Crossref: published-print 1986-04."
+ },
+ {
+  "key": "hamilton1989regime",
+  "authors": [
+   {
+    "family": "Hamilton",
+    "given": "James D."
+   }
+  ],
+  "title": "A New Approach to the Economic Analysis of Nonstationary Time Series and the Business Cycle",
+  "journal": "Econometrica",
+  "year": 1989,
+  "volume": "57",
+  "issue": "2",
+  "pages": "357-384",
+  "doi": "10.2307/1912559",
+  "url": "https://doi.org/10.2307/1912559",
+  "verification": "crossref",
+  "notes": "Crossref (JSTOR DOI) lists first page only (357); end page 384 from the Econometric Society publication page (March 1989, pp. 357-384)."
+ },
+ {
+  "key": "lo1988variance",
+  "authors": [
+   {
+    "family": "Lo",
+    "given": "Andrew W."
+   },
+   {
+    "family": "MacKinlay",
+    "given": "A. Craig"
+   }
+  ],
+  "title": "Stock Market Prices Do Not Follow Random Walks: Evidence from a Simple Specification Test",
+  "journal": "Review of Financial Studies",
+  "year": 1988,
+  "volume": "1",
+  "issue": "1",
+  "pages": "41-66",
+  "doi": "10.1093/rfs/1.1.41",
+  "url": "https://doi.org/10.1093/rfs/1.1.41",
+  "verification": "crossref",
+  "notes": "Crossref: published-print 1988-01."
+ },
+ {
+  "key": "working1960averages",
+  "authors": [
+   {
+    "family": "Working",
+    "given": "Holbrook"
+   }
+  ],
+  "title": "Note on the Correlation of First Differences of Averages in a Random Chain",
+  "journal": "Econometrica",
+  "year": 1960,
+  "volume": "28",
+  "issue": "4",
+  "pages": "916-918",
+  "doi": "10.2307/1907574",
+  "url": "https://doi.org/10.2307/1907574",
+  "verification": "crossref",
+  "notes": "NOT Crossref-checked: the Crossref request was rate-limited (HTTP 429) and the proxy forbade retrying. DOI, volume/issue/pages from the reference list of Tarani, Kyriazi & Thomakos (2024), Discover Analytics 2:20, doi 10.1007/s44257-024-00027-w ('Working H. ... Econometrica. 1960;28(4):916-8. https://doi.org/10.2307/1907574'). Title capitalisation and the given name 'Holbrook' are not from Crossref (the reference list gives initial 'H.'; 'Holbrook' from the 2024 article's title). Re-check against Crossref before relying on it. Follow-up (2026-10-04): did not retry Crossref because the proxy's 429 refusal said not to fetch this page again, even after waiting. DOI, title, year, first author and journal confirmed against Crossref by the project's live citation check in CI on 2026-10-04."
+ },
+ {
+  "key": "sharpe1975timing",
+  "authors": [
+   {
+    "family": "Sharpe",
+    "given": "William F."
+   }
+  ],
+  "title": "Likely Gains from Market Timing",
+  "journal": "Financial Analysts Journal",
+  "year": 1975,
+  "volume": "31",
+  "issue": "2",
+  "pages": "60-69",
+  "doi": "10.2469/faj.v31.n2.60",
+  "url": "https://doi.org/10.2469/faj.v31.n2.60",
+  "verification": "crossref",
+  "notes": "Crossref: published-print 1975-03; published-online 2018-12-31 (Taylor & Francis re-hosting)."
+ },
+ {
+  "key": "campbell1998valuation",
+  "authors": [
+   {
+    "family": "Campbell",
+    "given": "John Y."
+   },
+   {
+    "family": "Shiller",
+    "given": "Robert J."
+   }
+  ],
+  "title": "Valuation Ratios and the Long-Run Stock Market Outlook",
+  "journal": "The Journal of Portfolio Management",
+  "year": 1998,
+  "volume": "24",
+  "issue": "2",
+  "pages": "11-26",
+  "doi": "10.3905/jpm.24.2.11",
+  "url": "https://doi.org/10.3905/jpm.24.2.11",
+  "verification": "crossref",
+  "notes": "Crossref date 1998-01-31 (print/online/issued all the same, a placeholder-style date); publisher listed as With Intelligence LLC."
+ },
+ {
+  "key": "shiller2000exuberance",
+  "authors": [
+   {
+    "family": "Shiller",
+    "given": "Robert J."
+   }
+  ],
+  "title": "Irrational Exuberance",
+  "journal": null,
+  "year": 2000,
+  "volume": null,
+  "issue": null,
+  "pages": null,
+  "doi": null,
+  "url": "https://archive.org/details/irrationalexuber00shil",
+  "verification": "secondary",
+  "notes": "Book, Princeton University Press, Princeton, 2000; ISBN 0-691-05062-7 (978-0-691-05062-1). Not checked on a Princeton UP page. Sources fetched: Internet Archive catalogue record (publisher Princeton University Press, 2000, ISBN 0691050627/9780691050621, 330 pages incl. front matter) and IDEAS/RePEc record of H. O. Stekler's review in International Journal of Forecasting 17(2):295-297, whose title gives 'Princeton University Press, Princeton, 2000. Hardcover, 296 pages, ISBN 0-691-05062-7'. Shiller's data notes (as quoted in datasets/s-and-p-500 README) cite 'Princeton University Press 2000, Broadway Books 2001, 2nd ed., 2005'."
+ },
+ {
+  "key": "shiller_data",
+  "authors": [
+   {
+    "family": "Shiller",
+    "given": "Robert J."
+   }
+  ],
+  "title": "Online Data - Robert Shiller",
+  "journal": null,
+  "year": null,
+  "volume": null,
+  "issue": null,
+  "pages": null,
+  "doi": null,
+  "url": "http://www.econ.yale.edu/~shiller/data.htm",
+  "verification": "secondary",
+  "notes": "Could NOT fetch econ.yale.edu/~shiller/data.htm (WebFetch http/https redirect loop; host blocked from shell); page title 'Online Data - Robert Shiller' is from a search result only. Fetched instead: https://shillerdata.com/ (maintained by Robert J. Shiller), describing 'US Stock Price, Earnings and Dividends as well as Interest Rates and Cyclically Adjusted Price Earnings Ratio (CAPE) since 1871'; no licence, only a disclaimer that Shiller, Yale and involved parties make 'no express or implied warranty or representation'. Tidied CSV: https://github.com/datasets/s-and-p-500 (maintainer Rufus Pollock per datapackage.json). Its README: 'No exact statement on license of original data but given size and factual nature believe one can assume these are public domain (and I, the maintainer, explicitly license under the ODC Public Domain Dedication and License (PDDL))'; datapackage.json lists ODC-PDDL-1.0. IMPORTANT: README says the Shiller series in the package currently ends at 2023-06; later months are filled from FRED SP500 with Dividend, Earnings, CPI, Long Interest Rate, Real Price/Dividend/Earnings and PE10 set to 0 from 2023-07 onward, and PE10 is 0 for 1871-01 to 1880-12."
+ },
+ {
+  "key": "black1973pricing",
+  "authors": [
+   {
+    "family": "Black",
+    "given": "Fischer"
+   },
+   {
+    "family": "Scholes",
+    "given": "Myron"
+   }
+  ],
+  "title": "The Pricing of Options and Corporate Liabilities",
+  "journal": "Journal of Political Economy",
+  "year": 1973,
+  "volume": "81",
+  "issue": "3",
+  "pages": "637-654",
+  "doi": "10.1086/260062",
+  "url": "https://doi.org/10.1086/260062",
+  "verification": "crossref",
+  "notes": "Crossref: published-print 1973-05."
+ },
+ {
+  "key": "black1992global",
+  "authors": [
+   {
+    "family": "Black",
+    "given": "Fischer"
+   },
+   {
+    "family": "Litterman",
+    "given": "Robert"
+   }
+  ],
+  "title": "Global Portfolio Optimization",
+  "journal": "Financial Analysts Journal",
+  "year": 1992,
+  "volume": "48",
+  "issue": "5",
+  "pages": "28-43",
+  "doi": "10.2469/faj.v48.n5.28",
+  "url": "https://doi.org/10.2469/faj.v48.n5.28",
+  "verification": "crossref",
+  "notes": "Crossref: published-print 1992-09; published-online 2018-12-31 (re-hosting)."
+ },
+ {
+  "key": "maillard2010erc",
+  "authors": [
+   {
+    "family": "Maillard",
+    "given": "Sébastien"
+   },
+   {
+    "family": "Roncalli",
+    "given": "Thierry"
+   },
+   {
+    "family": "Teïletche",
+    "given": "Jérôme"
+   }
+  ],
+  "title": "The Properties of Equally Weighted Risk Contribution Portfolios",
+  "journal": "The Journal of Portfolio Management",
+  "year": 2010,
+  "volume": "36",
+  "issue": "4",
+  "pages": "60-70",
+  "doi": "10.3905/jpm.2010.36.4.060",
+  "url": "https://doi.org/10.3905/jpm.2010.36.4.060",
+  "verification": "crossref",
+  "notes": "Crossref date 2010-07-31; publisher With Intelligence LLC."
+ },
+ {
+  "key": "moreira2017volmanaged",
+  "authors": [
+   {
+    "family": "Moreira",
+    "given": "Alan"
+   },
+   {
+    "family": "Muir",
+    "given": "Tyler"
+   }
+  ],
+  "title": "Volatility-Managed Portfolios",
+  "journal": "The Journal of Finance",
+  "year": 2017,
+  "volume": "72",
+  "issue": "4",
+  "pages": "1611-1644",
+  "doi": "10.1111/jofi.12513",
+  "url": "https://doi.org/10.1111/jofi.12513",
+  "verification": "crossref",
+  "notes": "Crossref: published-online 2017-05-15, published-print 2017-08. Crossref title uses a Unicode hyphen (U+2010) and authors in upper case; normalised here."
+ },
+ {
+  "key": "gu2020ml",
+  "authors": [
+   {
+    "family": "Gu",
+    "given": "Shihao"
+   },
+   {
+    "family": "Kelly",
+    "given": "Bryan"
+   },
+   {
+    "family": "Xiu",
+    "given": "Dacheng"
+   }
+  ],
+  "title": "Empirical Asset Pricing via Machine Learning",
+  "journal": "The Review of Financial Studies",
+  "year": 2020,
+  "volume": "33",
+  "issue": "5",
+  "pages": "2223-2273",
+  "doi": "10.1093/rfs/hhaa009",
+  "url": "https://doi.org/10.1093/rfs/hhaa009",
+  "verification": "crossref",
+  "notes": "Crossref: published-online 2020-02-26 (Crossref 'issued'), published-print 2020-05-01."
+ },
+ {
+  "key": "perold1988shortfall",
+  "authors": [
+   {
+    "family": "Perold",
+    "given": "André F."
+   }
+  ],
+  "title": "The implementation shortfall: Paper versus reality",
+  "journal": "The Journal of Portfolio Management",
+  "year": 1988,
+  "volume": "14",
+  "issue": "3",
+  "pages": "4-9",
+  "doi": "10.3905/jpm.1988.409150",
+  "url": "https://doi.org/10.3905/jpm.1988.409150",
+  "verification": "crossref",
+  "notes": "Crossref splits title 'The implementation shortfall' and subtitle 'Paper versus reality'. Crossref date 1988-04-30."
+ },
+ {
+  "key": "berkowitz1988vwap",
+  "authors": [
+   {
+    "family": "Berkowitz",
+    "given": "Stephen A."
+   },
+   {
+    "family": "Logue",
+    "given": "Dennis E."
+   },
+   {
+    "family": "Noser",
+    "given": "Eugene A."
+   }
+  ],
+  "title": "The Total Cost of Transactions on the NYSE",
+  "journal": "The Journal of Finance",
+  "year": 1988,
+  "volume": "43",
+  "issue": "1",
+  "pages": "97-112",
+  "doi": "10.1111/j.1540-6261.1988.tb02591.x",
+  "url": "https://doi.org/10.1111/j.1540-6261.1988.tb02591.x",
+  "verification": "crossref",
+  "notes": "Crossref: published-print 1988-03, online 2012-04-30. Crossref has author names in upper case (normalised here) and suffix 'Jr.' for Noser (i.e. Eugene A. Noser, Jr.)."
+ },
+ {
+  "key": "dichev2007dollar",
+  "authors": [
+   {
+    "family": "Dichev",
+    "given": "Ilia D."
+   }
+  ],
+  "title": "What Are Stock Investors' Actual Historical Returns? Evidence from Dollar-Weighted Returns",
+  "journal": "American Economic Review",
+  "year": 2007,
+  "volume": "97",
+  "issue": "1",
+  "pages": "386-401",
+  "doi": "10.1257/aer.97.1.386",
+  "url": "https://doi.org/10.1257/aer.97.1.386",
+  "verification": "crossref",
+  "notes": "Crossref: published-print 2007-02-01. Crossref given name is 'Ilia D' (no period). Key changed from requested 'dalbar_or_dichev' to dichev2007dollar as instructed."
+ },
+ {
+  "key": "ljung1978",
+  "authors": [
+   {
+    "family": "Ljung",
+    "given": "G. M."
+   },
+   {
+    "family": "Box",
+    "given": "G. E. P."
+   }
+  ],
+  "title": "On a measure of lack of fit in time series models",
+  "journal": "Biometrika",
+  "year": 1978,
+  "volume": "65",
+  "issue": "2",
+  "pages": "297-303",
+  "doi": "10.1093/biomet/65.2.297",
+  "url": "https://doi.org/10.1093/biomet/65.2.297",
+  "verification": "crossref",
+  "notes": "Crossref: published-print 1978-08-01; author names upper case in Crossref (normalised); Crossref gives initials only."
+ },
+ {
+  "key": "glosten1993gjr",
+  "authors": [
+   {
+    "family": "Glosten",
+    "given": "Lawrence R."
+   },
+   {
+    "family": "Jagannathan",
+    "given": "Ravi"
+   },
+   {
+    "family": "Runkle",
+    "given": "David E."
+   }
+  ],
+  "title": "On the Relation between the Expected Value and the Volatility of the Nominal Excess Return on Stocks",
+  "journal": "The Journal of Finance",
+  "year": 1993,
+  "volume": "48",
+  "issue": "5",
+  "pages": "1779-1801",
+  "doi": "10.1111/j.1540-6261.1993.tb05128.x",
+  "url": "https://doi.org/10.1111/j.1540-6261.1993.tb05128.x",
+  "verification": "crossref",
+  "notes": "Crossref: published-print 1993-12, published-online 2012-04-30 (Wiley re-hosting). Crossref author names are upper case; normalised here."
+ }
 ]

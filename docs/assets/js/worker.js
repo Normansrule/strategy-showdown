@@ -45,6 +45,7 @@ function slimRun(run) {
 }
 
 self.onmessage = ev => {
+  if (ev.origin && ev.origin !== self.location.origin) return; // dedicated worker: only our own page posts here
   const msg = ev.data;
   try {
     if (msg.type === 'dataset') {

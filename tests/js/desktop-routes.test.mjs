@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import path from 'node:path';
 import { mapAppUrl, isAllowedRequest, isExternalLinkAllowed, isFrenchDownloadUrl } from '../../desktop/electron/routes.mjs';
 import { FRENCH_FILES } from '../../docs/engine/data/loaders.js';
+import { SHILLER_SOURCE } from '../../docs/engine/data/shiller.js';
 
 const roots = { docsRoot: path.resolve('/app/docs'), dataRoot: path.resolve('/user/data') };
 
@@ -30,6 +31,8 @@ test('traversal, dotfiles, encoded slashes, other hosts and schemes are refused'
 test('only the app origin (and page-made data:/blob:) may be requested', () => {
   assert.ok(isAllowedRequest('app://showdown/index.html'));
   assert.ok(isAllowedRequest('data:image/png;base64,AAAA'));
+  assert.ok(isAllowedRequest(SHILLER_SOURCE.url), 'the pinned Shiller CSV');
+  assert.ok(!isAllowedRequest(SHILLER_SOURCE.url.replace(SHILLER_SOURCE.commit, 'main')), 'but not another revision');
   for (const u of ['https://example.com/', 'http://127.0.0.1:8080/', 'file:///etc/passwd', 'ws://x', 'app://evil/x']) assert.ok(!isAllowedRequest(u), u);
 });
 

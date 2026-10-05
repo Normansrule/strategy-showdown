@@ -24,7 +24,8 @@ export function h(tag, attrs = {}, ...children) {
 function append(el, children) {
   for (const c of children) {
     if (c === null || c === undefined || c === false) continue;
-    if (Array.isArray(c)) append(el, c);
+    if (typeof c === 'string' || typeof c === 'number' || typeof c === 'boolean') el.appendChild(document.createTextNode(String(c))); // text is never parsed as HTML
+    else if (Array.isArray(c)) append(el, c);
     else if (c instanceof Node) el.appendChild(c);
     else el.appendChild(document.createTextNode(String(c)));
   }

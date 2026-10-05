@@ -251,6 +251,42 @@ export const STRATEGIES = [
     },
   },
   {
+    id: 'inverse-vol',
+    name: 'Inverse-volatility weights (naive risk parity)',
+    family: 'Portfolio construction',
+    evidence: 'published-data-restricted',
+    summary: 'Hold every industry, with weights inversely proportional to its recent volatility, so calmer industries get more money and, when correlations are similar, each contributes a similar amount of risk.',
+    intuition: 'Equal money is not equal risk: a volatile industry dominates an equal-weight portfolio’s ups and downs. Scaling each holding by 1/volatility evens out the risk contributions. When all correlations are equal this is exactly the equal-risk-contribution portfolio.',
+    equations: [
+      { tex: 'w_{j,t} = \\frac{1/\\hat\\sigma_{j,t}}{\\sum_{i=1}^{N} 1/\\hat\\sigma_{i,t}}', where: 'σ̂ = sample standard deviation (ddof = 1) of each asset’s monthly returns over the last M months; fully invested, long only.' },
+      { tex: 'w_i\\,\\frac{\\partial \\sigma_p}{\\partial w_i} = w_j\\,\\frac{\\partial \\sigma_p}{\\partial w_j}\\ \\ \\forall i,j', where: 'Equal risk contribution (ERC), the full risk-parity condition. Maillard, Roncalli & Teïletche (2010) show inverse-volatility weights solve it when all pairwise correlations are equal.' },
+    ],
+    sources: [
+      { key: 'maillard2010erc', where: 'Equal risk contribution portfolios; the inverse-volatility special case' },
+      { key: 'demiguel2009naive', where: 'Comparison point: 1/N' },
+    ],
+    deviations: [
+      'This is the inverse-volatility shortcut, not a numerical ERC solution that uses the full covariance matrix.',
+      'The 36-month window is our choice; the paper does not prescribe an estimation window for this use.',
+      'Commercial “risk parity” funds usually lever a balanced stock/bond portfolio; here it is unlevered and stocks only.',
+    ],
+    failureModes: ['Volatility estimates lag sudden regime changes', 'Calm assets can be calm until they are not (concentration in “safe” sectors)'],
+    params: {
+      M: { default: 36, min: 12, max: 120, step: 1, label: 'Volatility window M (months)', source: 'Our choice (stated)' },
+    },
+    warmup: p => p.M,
+    weights: (ctx, p) => {
+      const inv = ctx.assets.map(r => {
+        const xs = r.slice(ctx.t - p.M + 1, ctx.t + 1);
+        const m = mean(xs);
+        const sd = Math.sqrt(xs.reduce((a, x) => a + (x - m) ** 2, 0) / (p.M - 1));
+        return sd > 0 ? 1 / sd : 0;
+      });
+      const tot = inv.reduce((a, b) => a + b, 0);
+      return { assets: tot > 0 ? inv.map(v => v / tot) : new Array(ctx.nAssets).fill(1 / ctx.nAssets) };
+    },
+  },
+  {
     id: 'mean-variance',
     name: 'Sample mean-variance (Markowitz)',
     family: 'Optimization',

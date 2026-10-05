@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://raw.githubusercontent.com/datasets/s-and-p-500/07b81e6af68239acd65b901a11844d6d95db6ead/data/data.csv; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>Market timing</title>
+  <meta name="description" content="Simulations on real history: how accurate a market timer must be, the cost of missing the best months, timing rules side by side, and lump sum versus dollar-cost averaging.">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <script src="assets/js/theme-init.js"></script>
+  <script src="vendor/katex/katex.min.js" defer></script>
+  <script src="vendor/echarts/echarts.min.js" defer></script>
+  <script type="module" src="assets/js/timing.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand" href="index.html"><img src="assets/img/favicon.svg" alt="" width="26" height="26">Strategy Showdown</a>
+      <nav class="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="index.html">Showdown</a></li>
+          <li><a href="strategies.html">Strategies</a></li>
+          <li><a href="markets.html">How markets move</a></li>
+          <li><a href="timing.html" aria-current="page">Market timing</a></li>
+          <li><a href="overfitting.html">Overfitting</a></li>
+          <li><a href="market-making.html">Market making</a></li>
+          <li><a href="atlas.html">Algorithm atlas</a></li>
+          <li><a href="terminal.html">Terminal</a></li>
+          <li><a href="metrics.html">Metrics</a></li>
+          <li><a href="open-source.html">Open source</a></li>
+          <li><a href="sources.html">Sources</a></li>
+          <li><a href="disclaimer.html">Disclaimer</a></li>
+        </ul>
+      </nav>
+      <button type="button" class="theme-toggle" id="theme-toggle">Dark theme</button>
+    </div>
+  </header>
+  <div class="notice" role="note">
+    <div class="notice__inner">Educational tool · hypothetical results · not investment advice · no trading. <a href="disclaimer.html">Read the disclaimer</a></div>
+  </div>
+
+  <main id="main">
+    <div class="wrap">
+      <div class="page-intro">
+        <h1>Can you time the market?</h1>
+        <p>Market timing means moving between stocks and cash to dodge the falls and catch the rises. These simulations use real history to ask four questions: how often would a timer need to be right, what does being out on the wrong months cost, how have simple timing rules done side by side, and does spreading a lump sum over time help?</p>
+      </div>
+      <div class="callout callout--caution" role="note"><p><b>Educational simulations, not advice.</b> Every number here is hypothetical and computed on past data. Nothing on this page predicts future returns or recommends buying, selling or timing anything.</p></div>
+
+      <section class="panel" aria-labelledby="tm-data-h">
+        <div class="panel__head"><h2 id="tm-data-h">Data</h2><span class="chip chip--hyp">Hypothetical</span></div>
+        <div id="market-picker"></div>
+        <p class="results-status" id="tm-status" data-state="idle" role="status" aria-live="polite"><span class="dot" aria-hidden="true"></span><span id="tm-status-text">Ready</span></p>
+      </section>
+      <div id="tm-error" class="error-box" role="alert"></div>
+
+      <div class="figs">
+        <section class="fig" aria-labelledby="skill-h">
+          <div class="fig__head"><div>
+            <h2 class="fig__title" id="skill-h">1. How often would you need to be right?</h2>
+            <p class="fig__sub">Imagine a timer who, at the end of every month, guesses whether stocks or cash will do better next month and is right with probability p. Each simulated timer makes its own random mistakes. The chart shows what share of timers end up with more money than simply holding stocks.</p>
+          </div><span class="chip chip--sim">Simulation</span></div>
+          <div class="inline-controls">
+            <div class="field"><label for="skill-p">Accuracy p = <output id="skill-p-out" for="skill-p">60%</output></label><input type="range" id="skill-p" min="0.5" max="0.85" step="0.01" value="0.6"></div>
+            <div class="field"><label for="skill-cost">Cost per switch</label><select id="skill-cost"><option value="0">0 bps</option><option value="10" selected>10 bps</option><option value="50">50 bps</option></select></div>
+          </div>
+          <div class="stat-row" id="skill-stats"></div>
+          <div class="two-up">
+            <div class="chart" id="chart-breakeven" role="img" aria-label="Share of timers beating buy-and-hold against accuracy"></div>
+            <div class="chart" id="chart-skill" role="img" aria-label="Distribution of final wealth relative to buy-and-hold for timers with the chosen accuracy"></div>
+          </div>
+          <p class="small">Context: Sharpe (1975) studied switching once a year between stocks and cash equivalents (1929–1972) and concluded, as reported by later authors, that a timer needs to be right roughly 7 years out of 10 to gain (secondary sources; the original text was not available to us). The simulation here switches monthly and uses your chosen data.</p>
+        </section>
+
+        <figure class="fig" aria-labelledby="miss-h">
+          <div class="fig__head"><div>
+            <h2 class="fig__title" id="miss-h">2. Missing the best months, or the worst</h2>
+            <p class="fig__sub">Final value of $1 if you had been in cash during the n best months (left bars) or the n worst months (right bars), with perfect hindsight. Both are impossible to do on purpose; the point is how few months drive the result.</p>
+          </div></div>
+          <div class="chart" id="chart-miss" role="img" aria-label="Final wealth after missing the best or worst months"></div>
+          <p class="small" id="miss-note"></p>
+        </figure>
+
+        <section class="fig" aria-labelledby="rules-h">
+          <div class="fig__head"><div>
+            <h2 class="fig__title" id="rules-h">3. Simple timing rules, side by side</h2>
+            <p class="fig__sub">Each rule decides at the end of a month, with data up to that month only, whether to hold stocks or cash next month. All rules start on the same month (set by the rule that needs the longest history) and pay the same cost per switch.</p>
+          </div><span class="chip chip--hyp">Hypothetical backtest</span></div>
+          <div class="inline-controls">
+            <div class="field"><span class="field__label" id="rules-cost-label">Cost per switch</span>
+              <div class="segmented" role="group" aria-labelledby="rules-cost-label" id="rules-cost">
+                <button type="button" data-bps="0" aria-pressed="false">0 bps</button><button type="button" data-bps="10" aria-pressed="true">10 bps</button><button type="button" data-bps="50" aria-pressed="false">50 bps</button>
+              </div></div>
+          </div>
+          <div class="chart chart--tall" id="chart-rules" role="img" aria-label="Growth of one dollar for each timing rule"></div>
+          <div class="table-scroll" id="rules-table"></div>
+          <p class="small" id="placebo-note"></p>
+        </section>
+
+        <figure class="fig" aria-labelledby="dca-h">
+          <div class="fig__head"><div>
+            <h2 class="fig__title" id="dca-h">4. Invest a lump sum now, or spread it out?</h2>
+            <p class="fig__sub">For every possible starting month: invest everything at once, or in equal monthly slices (dollar-cost averaging) while the rest waits in cash. Compare the values at the end of the period.</p>
+          </div></div>
+          <div class="inline-controls">
+            <div class="field"><label for="dca-months">Holding period</label><select id="dca-months"><option value="60">5 years</option><option value="120" selected>10 years</option><option value="240">20 years</option></select></div>
+            <div class="field"><label for="dca-spread">Spread the purchase over</label><select id="dca-spread"><option value="6">6 months</option><option value="12" selected>12 months</option><option value="24">24 months</option></select></div>
+          </div>
+          <div class="chart" id="chart-dca" role="img" aria-label="Distribution of lump sum versus dollar-cost averaging outcomes"></div>
+          <p class="small" id="dca-note"></p>
+        </figure>
+
+        <section class="fig" aria-labelledby="tm-notes-h">
+          <h2 class="fig__title" id="tm-notes-h">What this does and does not show</h2>
+          <ul class="prose">
+            <li>Real investors also face taxes on every switch and the temptation to switch at the wrong moment. Dichev (2007) found that investors’ actual, dollar-weighted returns were lower than the buy-and-hold returns of the same markets, because of when money flowed in and out.</li>
+            <li>The rules shown are textbook versions applied to one index; see the <a href="strategies.html">strategy cards</a> for how they differ from the papers.</li>
+            <li>Exact definitions: <a href="https://github.com/Normansrule/strategy-showdown/blob/main/docs/ENGINE_SPEC.md#11-market-timing-simulations-docsenginetimingjs">ENGINE_SPEC §11</a>.</li>
+          </ul>
+          <ul class="small refs" id="tm-refs"></ul>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>Strategy Showdown: open-source and educational. Hypothetical results; not investment advice; no trading.</span>
+      <a href="sources.html">Sources</a>
+      <a href="disclaimer.html">Disclaimer and data attribution</a>
+    </div>
+  </footer>
+</body>
+</html>

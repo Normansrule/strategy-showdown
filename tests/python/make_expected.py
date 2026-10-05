@@ -55,6 +55,15 @@ CONFIGS = {
         # explicit trial list (replaces the shown runs' SRs, as the engine's `trials` option does)
         "trials": [0.05, 0.12, -0.03, 0.2, 0.08, 0.15, 0.01],
     },
+    "inverse-vol-realistic": {
+        "specs": [
+            {"id": "buy-hold-market", "params": {}},
+            {"id": "equal-weight", "params": {}},
+            {"id": "inverse-vol", "params": {}},
+            {"id": "inverse-vol", "params": {"M": 12}},
+        ],
+        "costs": "realistic",
+    },
     "pairs-realistic": {
         "specs": [
             {"id": "buy-hold-market", "params": {}},
@@ -76,8 +85,8 @@ PBO_CONFIGS = [
 
 FIXTURE_CONFIGS = {
     "crosscheck": ["defaults-realistic", "defaults-naive", "window-realistic", "nondefault-realistic",
-                   "nondefault-naive-trials", "pairs-realistic"],
-    "stress": ["defaults-realistic", "nondefault-realistic", "pairs-realistic"],
+                   "nondefault-naive-trials", "pairs-realistic", "inverse-vol-realistic"],
+    "stress": ["defaults-realistic", "nondefault-realistic", "pairs-realistic", "inverse-vol-realistic"],
     "singular": ["nondefault-realistic"],
 }
 

@@ -1,0 +1,20 @@
+# gitleaks configuration: the default rules, plus one narrow exception.
+# The default generic-api-key rule flags bibliography keys such as `key: 'faber2007tactical'` (author + year + word)
+# in the citation list, strategy cards and confirmation tables. They are identifiers, not credentials.
+# The exception below extends ONLY that rule, and only for secrets that are a lowercase word, a 19xx/20xx year
+# and a lowercase word (or the two keys without a year). Every other rule, and every other secret shape, still fires.
+title = "strategy-showdown"
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "generic-api-key"
+
+  [[rules.allowlists]]
+  description = "Bibliography keys (author + year + word)"
+  regexTarget = "secret"
+  regexes = [
+    '''^[a-z]+(19|20)\d{2}[a-z]*$''',
+    '''^(french_data_library|shiller_data)$''',
+  ]

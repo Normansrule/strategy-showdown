@@ -18,8 +18,8 @@ How to report a problem: [SECURITY.md](../SECURITY.md).
 ### 2.1 The website (GitHub Pages, `docs/`)
 
 - **Static only.** Plain HTML, CSS and JavaScript modules. No server code runs on the host.
-- **Strict Content Security Policy** required in every page (a `<meta http-equiv="Content-Security-Policy">`; the desktop server copies the policy from `docs/index.html`): scripts, styles, fonts, images and `connect-src` from the
-  same origin only; `object-src 'none'`, `base-uri 'none'`, `form-action 'none'`. No inline scripts, no
+- **Strict Content Security Policy** required in every page (a `<meta http-equiv="Content-Security-Policy">`; the desktop server copies the policy from `docs/index.html`): scripts, styles, fonts and images from the
+  same origin only; `connect-src` the same origin plus ONE exact URL (the pinned, SHA-256-checked Shiller CSV); `object-src 'none'`, `base-uri 'none'`, `form-action 'none'`. No inline scripts, no
   `eval`, no remote CDNs. Third-party libraries (ECharts, KaTeX) are vendored into `docs/vendor/`.
 - **No network calls to third parties**, no cookies, no analytics, no fonts or images from elsewhere.
 - **No redistribution of licensed data.** `docs/data/local/` is gitignored; CI fails if anything under it is
@@ -63,8 +63,9 @@ private `app://showdown/` scheme handled in the main process.
 - **Renderer locked down:** `sandbox: true`, `contextIsolation: true`, `nodeIntegration: false`, no preload script
   and no IPC channel, so page code cannot reach Node.js, the file system or the main process. `app.enableSandbox()`
   sandboxes every renderer.
-- **Network:** every request from the window that is not `app://showdown/…` (or a page-made `data:`/`blob:` URL) is
-  cancelled by `webRequest`, on top of the page CSP (`connect-src 'self'`). The launch test checks that a page
+- **Network:** every request from the window that is not `app://showdown/…` (or a page-made `data:`/`blob:` URL, or the
+  one pinned Shiller CSV URL below) is cancelled by `webRequest`, on top of the page CSP (`connect-src 'self'` plus that
+  one exact URL). The launch test checks that a page
   `fetch('https://…')` fails.
 - **Files served:** read-only from the bundled `docs/` (inside the app's asar archive), plus `/data/local/*`, which maps
   to the user's own app-data folder (`<userData>/data/`). Same traversal/dotfile rules as `desktop/server.mjs`
@@ -75,6 +76,10 @@ private `app://showdown/` scheme handled in the main process.
   made by the main process after the user confirms, to an exact-URL allowlist (`FRENCH_FILES` in
   `docs/engine/data/loaders.js`), in a separate in-memory session, 25 MB cap per file, parsed by the same tested
   code as the browser (zip limits, CSV parser), and saved to `<userData>/data/french.json`. Nothing is uploaded.
+- **Shiller data:** one exact URL (a pinned commit of `datasets/s-and-p-500` on raw.githubusercontent.com) may be
+  fetched, by the page on request or by **Data → Download Shiller S&P Composite data…**; every remote copy must match
+  the pinned SHA-256 before it is parsed. The CSP `connect-src` names that exact URL, so no other GitHub path is
+  reachable. `scripts/site_chrome.py` keeps the CSP identical on every page and CI checks it.
 - **Electron fuses** (set at build time): `RunAsNode` off, `NODE_OPTIONS` and `--inspect` flags ignored, cookie
   encryption on, app loaded only from the asar archive, with asar integrity validation (macOS/Windows).
 - **Dev tools** are available only when running from source (`npm run desktop`), not in packaged builds.

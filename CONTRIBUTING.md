@@ -5,7 +5,7 @@ Thank you for helping. This project has one rule that comes before everything el
 
 ## Setup
 
-Node 22 and Python 3.11.
+Node 22 and Python 3.12 or newer (CI uses 3.13).
 
 ```bash
 npm ci
