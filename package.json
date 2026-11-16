@@ -1,7 +1,7 @@
 {
-  "name": "strategy-showdown",
+  "name": "trading-floor-strategy-showdown",
   "version": "0.3.0",
-  "description": "Side-by-side backtests of publicly documented trading algorithms, with honest metrics and verified sources.",
+  "description": "Trading Floor Strategy Showdown: published trading algorithms tested on real data with honest statistics, plus an open-source, terminal-style desktop trading floor. Paper trading only.",
   "scripts": {
     "test": "node --test \"tests/js/**/*.test.mjs\"",
     "serve": "node desktop/server.mjs",
@@ -24,15 +24,15 @@
   },
   "author": "Aleksander Norman",
   "main": "desktop/electron/main.mjs",
-  "homepage": "https://github.com/Normansrule/strategy-showdown",
+  "homepage": "https://github.com/Normansrule/trading-floor-strategy-showdown",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Normansrule/strategy-showdown.git"
+    "url": "git+https://github.com/Normansrule/trading-floor-strategy-showdown.git"
   },
   "build": {
     "appId": "io.github.normansrule.strategyshowdown",
-    "productName": "Strategy Showdown",
-    "artifactName": "strategy-showdown-${version}-${os}-${arch}.${ext}",
+    "productName": "Trading Floor Strategy Showdown",
+    "artifactName": "trading-floor-strategy-showdown-${version}-${os}-${arch}.${ext}",
     "directories": {
       "output": "dist-desktop",
       "buildResources": "desktop/build"
@@ -64,7 +64,7 @@
       "oneClick": false,
       "perMachine": false,
       "allowToChangeInstallationDirectory": true,
-      "artifactName": "strategy-showdown-${version}-win-${arch}-setup.${ext}"
+      "artifactName": "trading-floor-strategy-showdown-${version}-win-${arch}-setup.${ext}"
     },
     "mac": {
       "target": [
@@ -82,13 +82,13 @@
       "maintainer": "Aleksander Norman",
       "desktop": {
         "entry": {
-          "StartupWMClass": "strategy-showdown"
+          "StartupWMClass": "trading-floor-strategy-showdown"
         }
       }
     },
     "portable": {
-      "artifactName": "strategy-showdown-${version}-win-${arch}-portable.${ext}"
+      "artifactName": "trading-floor-strategy-showdown-${version}-win-${arch}-portable.${ext}"
     }
   },
-  "desktopName": "strategy-showdown.desktop"
+  "desktopName": "trading-floor-strategy-showdown.desktop"
 }

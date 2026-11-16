@@ -5,7 +5,7 @@
 Please **do not open a public issue** for security problems.
 
 Report privately through GitHub: **Security → Report a vulnerability** on
-<https://github.com/Normansrule/strategy-showdown/security/advisories/new>.
+<https://github.com/Normansrule/trading-floor-strategy-showdown/security/advisories/new>.
 
 Please include what you found, how to reproduce it, and what an attacker could do with it. You should get an
 acknowledgement within 7 days. Once a fix is released, the advisory will be published and credit given if you

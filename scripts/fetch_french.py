@@ -29,7 +29,7 @@ import french_csv  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "docs" / "data" / "local" / "french.json"
-USER_AGENT = "strategy-showdown/0.1 (+https://github.com/Normansrule/strategy-showdown; educational backtests)"
+USER_AGENT = "trading-floor-strategy-showdown/0.1 (+https://github.com/Normansrule/trading-floor-strategy-showdown; educational backtests)"
 MAX_DOWNLOAD_BYTES = 20 * 1024 * 1024  # the largest file here is well under 1 MB; anything huge is wrong
 TIMEOUT_S = 60
 PAUSE_S = 1.0  # be polite: one request per second

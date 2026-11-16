@@ -1,6 +1,6 @@
 # Evidence policy
 
-Strategy Showdown has one rule: **nothing unverifiable is presented as fact.** Every strategy, parameter,
+Trading Floor Strategy Showdown has one rule: **nothing unverifiable is presented as fact.** Every strategy, parameter,
 formula and number on the site either points to a source that says it, or is labelled as our own choice,
 an assumption, or unverified.
 
