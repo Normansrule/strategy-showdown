@@ -3,7 +3,7 @@
 # in the citation list, strategy cards and confirmation tables. They are identifiers, not credentials.
 # The exception below extends ONLY that rule, and only for secrets that are a lowercase word, a 19xx/20xx year
 # and a lowercase word (or the two keys without a year). Every other rule, and every other secret shape, still fires.
-title = "strategy-showdown"
+title = "trading-floor-strategy-showdown"
 
 [extend]
 useDefault = true

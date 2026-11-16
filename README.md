@@ -1,12 +1,16 @@
-# Strategy Showdown
+# Trading Floor Strategy Showdown
 
 **Publicly documented trading algorithms, run side by side on the same data, the same months and the same costs. Every rule comes from its published paper or is labelled with how far it could be verified, every number shows its uncertainty, and every citation resolves to a real, checked source.**
 
-[![CI](https://github.com/Normansrule/strategy-showdown/actions/workflows/ci.yml/badge.svg)](https://github.com/Normansrule/strategy-showdown/actions/workflows/ci.yml)
-[![Citations](https://github.com/Normansrule/strategy-showdown/actions/workflows/citations.yml/badge.svg)](https://github.com/Normansrule/strategy-showdown/actions/workflows/citations.yml)
-[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/Normansrule/strategy-showdown/badge)](https://securityscorecards.dev/viewer/?uri=github.com/Normansrule/strategy-showdown)
+[![CI](https://github.com/Normansrule/trading-floor-strategy-showdown/actions/workflows/ci.yml/badge.svg)](https://github.com/Normansrule/trading-floor-strategy-showdown/actions/workflows/ci.yml)
+[![Citations](https://github.com/Normansrule/trading-floor-strategy-showdown/actions/workflows/citations.yml/badge.svg)](https://github.com/Normansrule/trading-floor-strategy-showdown/actions/workflows/citations.yml)
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/Normansrule/trading-floor-strategy-showdown/badge)](https://securityscorecards.dev/viewer/?uri=github.com/Normansrule/trading-floor-strategy-showdown)
 
 > **Educational tool. Not investment advice.** It never recommends trades, never connects to a broker and never moves money. Every backtest is hypothetical; past results do not predict future ones. See [DISCLAIMER](docs/DISCLAIMER.md).
+>
+> "Trading Floor" refers to the terminal-style desktop app being built on the same engine. The project is independent and not affiliated with Bloomberg or any other terminal, broker or data vendor.
+
+> **Renamed in v0.4.0.** Old repository links redirect here; the former name and website address are listed in the [CHANGELOG](CHANGELOG.md).
 
 ![Pick strategies, run them under identical conditions, flip between zero and realistic costs, and watch the ranking change](docs/assets/img/readme/hero.gif)
 
@@ -146,15 +150,15 @@ Three ways, all running the same code in `docs/`:
 
 | | How | Data |
 |---|---|---|
-| **Website** | https://normansrule.github.io/strategy-showdown/ | Synthetic by default; drop the French library zips on the page (parsed in your browser, never uploaded) |
-| **Desktop app** | Installers on the [Releases](https://github.com/Normansrule/strategy-showdown/releases) page: Windows (`-setup.exe` or `-portable.exe`), macOS (`.dmg`), Linux (`.AppImage`, `.deb`) | **Data → Download French Data Library files…** and **Download Shiller S&P Composite data…** save them on your computer only |
+| **Website** | https://normansrule.github.io/trading-floor-strategy-showdown/ | Synthetic by default; drop the French library zips on the page (parsed in your browser, never uploaded) |
+| **Desktop app** | Installers on the [Releases](https://github.com/Normansrule/trading-floor-strategy-showdown/releases) page: Windows (`-setup.exe` or `-portable.exe`), macOS (`.dmg`), Linux (`.AppImage`, `.deb`) | **Data → Download French Data Library files…** and **Download Shiller S&P Composite data…** save them on your computer only |
 | **From source** | see below | `python scripts/fetch_french.py` |
 
-The installers are **not code-signed yet**, so Windows SmartScreen ("More info → Run anyway") and macOS Gatekeeper (right-click → Open) will warn the first time. Every installer is listed in `SHA256SUMS.txt` on the release and carries a build-provenance attestation you can check with `gh attestation verify <file> -R Normansrule/strategy-showdown`.
+The installers are **not code-signed yet**, so Windows SmartScreen ("More info → Run anyway") and macOS Gatekeeper (right-click → Open) will warn the first time. Every installer is listed in `SHA256SUMS.txt` on the release and carries a build-provenance attestation you can check with `gh attestation verify <file> -R Normansrule/trading-floor-strategy-showdown`.
 
 ```bash
-git clone https://github.com/Normansrule/strategy-showdown.git
-cd strategy-showdown
+git clone https://github.com/Normansrule/trading-floor-strategy-showdown.git
+cd trading-floor-strategy-showdown
 npm ci                                   # also downloads the pinned Electron binary for the desktop app
 python3 -m venv .venv && . .venv/bin/activate && pip install --require-hashes -r requirements-dev.txt
 python scripts/fetch_french.py           # your own local copy of the French data

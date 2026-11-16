@@ -1,4 +1,4 @@
-// Strategy Showdown desktop app (Electron main process).
+// Trading Floor Strategy Showdown desktop app (Electron main process).
 //
 // Same code as the website: the window loads docs/ unchanged. What the desktop adds:
 //   • works offline, nothing to host;
@@ -26,10 +26,11 @@ import { SCHEME, HOST, START_URL, mapAppUrl, isAllowedRequest, isExternalLinkAll
 import { FRENCH_FILES, FRENCH_LIBRARY_URL, loadFrenchFiles } from '../../docs/engine/data/loaders.js';
 import { SHILLER_SOURCE, parseShillerCsv } from '../../docs/engine/data/shiller.js';
 import { sha256Hex } from '../../docs/engine/hash.js';
+import { migrateLegacyData } from './migrate.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const DOCS_ROOT = path.resolve(HERE, '..', '..', 'docs');
-const REPO_URL = 'https://github.com/Normansrule/strategy-showdown';
+const REPO_URL = 'https://github.com/Normansrule/trading-floor-strategy-showdown';
 const MAX_DOWNLOAD_BYTES = 25 * 1024 * 1024; // each French zip is well under 1 MB today
 
 const dataRoot = () => path.join(app.getPath('userData'), 'data');
@@ -70,7 +71,7 @@ function createWindow() {
     width: 1360,
     height: 900,
     minWidth: 380,
-    title: 'Strategy Showdown',
+    title: 'Trading Floor Strategy Showdown',
     backgroundColor: '#f7f8fa',
     show: false,
     webPreferences: {
@@ -132,7 +133,7 @@ async function downloadFrenchData() {
   }
   try {
     const dataset = await loadFrenchFiles(files);
-    dataset.provenance = { ...(dataset.provenance || {}), downloadedBy: 'Strategy Showdown desktop app', downloadedAt: new Date().toISOString() };
+    dataset.provenance = { ...(dataset.provenance || {}), downloadedBy: 'Trading Floor Strategy Showdown desktop app', downloadedAt: new Date().toISOString() };
     await fsp.mkdir(dataRoot(), { recursive: true });
     await fsp.writeFile(datasetPath(), JSON.stringify(dataset));
     await dialog.showMessageBox(mainWindow, { type: 'info', message: 'Data saved on this computer.', detail: datasetPath() });
@@ -226,5 +227,14 @@ app.whenReady().then(() => {
   lockDownSession(session.defaultSession);
   protocol.handle(SCHEME, handleAppRequest);
   buildMenu();
+  // v0.4.0 rename: copy data downloaded under the old app name, once (desktop/electron/migrate.mjs).
+  const migration = migrateLegacyData({ appDataDir: app.getPath('appData'), userDataDir: app.getPath('userData') });
   createWindow();
+  if (migration.status === 'migrated') {
+    dialog.showMessageBox({ type: 'info', message: 'Your downloaded data was copied from the previous version.',
+      detail: `Copied ${migration.files.length} file(s) from ${migration.from}. That folder was left untouched; you can delete it.` });
+  } else if (migration.status === 'failed') {
+    dialog.showMessageBox({ type: 'warning', message: 'Your downloaded data could not be copied from the previous version.',
+      detail: `${migration.error}. Nothing was changed in ${migration.from}; you can download the data again from the Data menu.` });
+  }
 });
