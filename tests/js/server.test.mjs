@@ -138,6 +138,21 @@ test('CSP is read from docs/index.html when present', async t => {
   assert.equal(csp, "default-src 'self'; img-src 'self' data:; frame-ancestors 'none'");
 });
 
+test('creating a server whose folder is missing or removed does not leave an unhandled rejection', async () => {
+  // Regression: createServer used to start fs.realpath(root) eagerly with no handler, so removing the folder before
+  // the first request (as the CSP test's cleanup does) raised an unhandledRejection after that test had ended.
+  const seen = [];
+  const onUnhandled = (e) => seen.push(e);
+  process.on('unhandledRejection', onUnhandled);
+  try {
+    createServer({ root: path.join(os.tmpdir(), `ss-missing-${process.pid}-${Date.now()}`), token: 'y'.repeat(32) });
+    for (let i = 0; i < 5; i++) await new Promise((r) => setImmediate(r));
+  } finally {
+    process.off('unhandledRejection', onUnhandled);
+  }
+  assert.deepEqual(seen.map(String), []);
+});
+
 test('resolveSafe: pure path checks', () => {
   const root = '/srv/site';
   assert.equal(resolveSafe(root, '/a/b.js'), '/srv/site/a/b.js');

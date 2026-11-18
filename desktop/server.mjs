@@ -95,7 +95,14 @@ export function resolveSafe(root, rawPath) {
 
 export function createServer({ root = DEFAULT_ROOT, token, port = 0 } = {}) {
   root = path.resolve(root);
-  const realRootPromise = fsp.realpath(root);
+  // Resolved on the first request, not at construction: an eager, unawaited realpath() rejects unhandled (and, under
+  // Node's default policy, crashes the process) if the folder is missing or removed before anyone connects.
+  // A failed lookup is not cached, so the folder can appear later.
+  let realRootPromise = null;
+  const realRootOnce = () => {
+    realRootPromise ??= fsp.realpath(root).catch((e) => { realRootPromise = null; throw e; });
+    return realRootPromise;
+  };
   const csp = pageCsp(root);
   const base = securityHeaders(csp);
   let allowedHosts = new Set();
@@ -129,7 +136,7 @@ export function createServer({ root = DEFAULT_ROOT, token, port = 0 } = {}) {
 
       const file = resolveSafe(root, rawPath);
       if (!file) return send(req, res, 404, 'Not found.\n');
-      const realRoot = await realRootPromise;
+      const realRoot = await realRootOnce();
       let target = file;
       let st;
       try {
