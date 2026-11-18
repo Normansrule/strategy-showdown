@@ -227,7 +227,7 @@
   "doi": "10.1093/rfs/hhj020",
   "url": "https://doi.org/10.1093/rfs/hhj020",
   "verification": "crossref",
-  "notes": "Full title includes subtitle ': Performance of a Relative-Value Arbitrage Rule'."
+  "notes": "Full title includes subtitle ': Performance of a Relative-Value Arbitrage Rule'. Re-checked 2026-11-18 on the OUP article page: vol 19, issue 3, pp. 797-827 confirmed; the visible abstract ('daily data over 1962-2002') does not state the 12/6-month periods or the 2-sigma trigger, and the RFS full text was not readable, so parameters stay sourced from the 1999 NBER working paper."
  },
  {
   "key": "engle1987cointegration",
@@ -591,7 +591,7 @@
   "doi": "10.21314/JCF.2016.322",
   "url": "https://www.davidhbailey.com/dhbpapers/backtest-prob.pdf",
   "verification": "crossref",
-  "notes": "Crossref confirms DOI, title and 4 authors but has no volume/issue/pages and an 'issued' date of Sept 2016. Vol 20 No 4 (April 2017) confirmed from the risk.net issue listing (publisher) and the WMU ScholarWorks record. Page range unverified: WMU shows only '36', which looks like a page count."
+  "notes": "Crossref confirms DOI, title and 4 authors but has no volume/issue/pages and an 'issued' date of Sept 2016. Vol 20 No 4 (April 2017) confirmed from the risk.net issue listing (publisher) and the WMU ScholarWorks record. Page range unverified: WMU shows only '36', which looks like a page count. Re-checked 2026-11-18: CSCV definitions (S even blocks, all C(S,S/2) splits, relative rank r/(N+1), logit, PBO = integral of the logit density over (-inf, 0]) read in Sec. 2.2 of the Feb 27, 2015 revised preprint at the url above; SSRN 2326253 lists it as 'forthcoming'. Journal page range still unverified."
  },
  {
   "key": "almgren2001execution",
@@ -980,7 +980,7 @@
   "doi": "10.2469/faj.v31.n2.60",
   "url": "https://doi.org/10.2469/faj.v31.n2.60",
   "verification": "crossref",
-  "notes": "Crossref: published-print 1975-03; published-online 2018-12-31 (Taylor & Francis re-hosting)."
+  "notes": "Crossref: published-print 1975-03; published-online 2018-12-31 (Taylor & Francis re-hosting). Re-checked 2026-11-18: the DOI and Taylor & Francis abstract pages could not be read (client errors); the article text was not read, so its conclusion stays labelled secondary."
  },
  {
   "key": "campbell1998valuation",
