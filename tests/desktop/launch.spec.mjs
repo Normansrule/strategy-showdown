@@ -33,6 +33,25 @@ try {
   assert.ok(nodeAccess, 'no Node.js in the page');
   await win.screenshot({ path: process.env.SHOT || path.join(userData, 'desktop.png') });
   assert.deepEqual(pageErrors, []);
+
+  // The trading floor: runs on the simulated market with no bridge, no Node and no network.
+  const floorErrors = [];
+  win.on('pageerror', e => floorErrors.push(String(e)));
+  await win.goto('app://showdown/floor.html');
+  await win.waitForSelector('body[data-ready="true"]', { timeout: 30000 });
+  await win.fill('#cmd', 'buy 100 alfa');
+  await win.press('#cmd', 'Enter');
+  await win.waitForFunction(() => /filled/.test(document.querySelector('#cmd-msg')?.textContent || ''), null, { timeout: 10000 });
+  const floor = await win.evaluate(() => ({
+    bridge: typeof window.floorBridge, ipc: typeof window.ipcRenderer, node: typeof require === 'undefined' && typeof process === 'undefined',
+    rows: document.querySelectorAll('#watch-body tr').length, canvas: document.querySelectorAll('#chart canvas').length,
+  }));
+  assert.equal(floor.bridge, 'undefined', 'no preload bridge until ADR 0001 is accepted');
+  assert.equal(floor.ipc, 'undefined');
+  assert.ok(floor.node, 'no Node.js on the floor');
+  assert.equal(floor.rows, 8, 'watchlist rendered');
+  assert.ok(floor.canvas >= 1, 'chart rendered');
+  assert.deepEqual(floorErrors, []);
   console.log('desktop launch OK:', status.trim());
 } finally {
   await app.close();

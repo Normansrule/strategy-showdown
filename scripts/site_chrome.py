@@ -22,6 +22,7 @@ NAV = [
     ("overfitting.html", "Overfitting"),
     ("market-making.html", "Market making"),
     ("atlas.html", "Algorithm atlas"),
+    ("floor.html", "Trading floor"),
     ("terminal.html", "Terminal"),
     ("metrics.html", "Metrics"),
     ("open-source.html", "Open source"),
