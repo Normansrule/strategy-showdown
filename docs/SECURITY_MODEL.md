@@ -57,7 +57,7 @@ Every file is treated as hostile.
 
 ### 2.3b Desktop app (`desktop/electron/`, `npm run desktop`, release installers)
 
-The installer wraps the same `docs/` files in Electron 44. It has **no server and no open port**: pages load from a
+The installer wraps the same `docs/` files in Electron 45. It has **no server and no open port**: pages load from a
 private `app://showdown/` scheme handled in the main process.
 
 - **Renderer locked down:** `sandbox: true`, `contextIsolation: true`, `nodeIntegration: false`, no preload script
@@ -87,6 +87,20 @@ private `app://showdown/` scheme handled in the main process.
   `.deb`) are built in CI from the tagged commit, listed in `SHA256SUMS.txt` and covered by a Sigstore build-provenance
   attestation (`gh attestation verify <file> -R Normansrule/trading-floor-strategy-showdown`). They are **not code-signed** yet, so
   Windows SmartScreen and macOS Gatekeeper will warn on first launch.
+
+### 2.3c Trading floor (`docs/floor.html`) and the planned preload bridge
+
+- **In force now:** the floor runs on a **simulated** market generated in the page (`docs/engine/floor/`). It makes no
+  network requests, stores nothing (paper orders live in memory and vanish with the tab), and writes data values with
+  `textContent` only. `tests/js/floor.test.mjs` fails if any floor module names a remote URL, calls `fetch`,
+  `XMLHttpRequest`, `WebSocket`, `EventSource` or `sendBeacon`, uses `innerHTML`/`eval`, or touches browser storage, and
+  checks the page keeps the shared CSP, the disclaimer and the simulated/paper labels.
+- **Planned, not built:** real delayed data and broker **paper** orders need a preload bridge. Its shape is fixed in
+  [ADR 0001](adr/0001-preload-bridge.md): five named functions through `contextBridge`, arguments validated in the preload
+  and again in the main process, IPC sender checked against `app://showdown/`, keys entered in a main-process dialog and
+  kept with the asynchronous `safeStorage` API, never returned to the page or logged, a paper-only order endpoint fixed
+  in code, and an exact-host allowlist. Until that ADR is accepted, §2.3b ("no preload script and no IPC channel")
+  remains true and is checked by the desktop launch test.
 
 ### 2.4 Supply chain ([OWASP Top 10:2025 A03 Software Supply Chain Failures](https://owasp.org/Top10/2025/A03_2025-Software_Supply_Chain_Failures/))
 
