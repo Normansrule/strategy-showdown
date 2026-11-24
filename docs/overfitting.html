@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://raw.githubusercontent.com/datasets/s-and-p-500/07b81e6af68239acd65b901a11844d6d95db6ead/data/data.csv; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
   <meta name="referrer" content="no-referrer">
-  <title>Backtest overfitting</title>
+  <title>Backtest overfitting · Trading Floor Strategy Showdown</title>
   <meta name="description" content="How likely is it that the best of many backtests is a fluke? The probability of backtest overfitting (CSCV) and the deflated Sharpe ratio, run live.">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/css/site.css">
@@ -18,7 +18,7 @@
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
     <div class="site-header__inner">
-      <a class="brand" href="index.html"><img src="assets/img/favicon.svg" alt="" width="26" height="26">Strategy Showdown</a>
+      <a class="brand" href="index.html"><img src="assets/img/favicon.svg" alt="" width="26" height="26">Trading Floor Strategy Showdown</a>
       <nav class="site-nav" aria-label="Main">
         <ul>
           <li><a href="index.html">Showdown</a></li>
@@ -122,7 +122,7 @@
             <div class="eq"><div id="eq-omega"></div><p class="eq__where">For one split: n* is the setting with the best in-sample Sharpe ratio; ρ is its rank (1 = worst) among the N settings on the out-of-sample months; ω is that rank as a fraction; λ is its logit.</p></div>
             <div class="eq"><div id="eq-pbo"></div><p class="eq__where">PBO is the share of all C(S, S/2) splits in which the in-sample winner ranks in the bottom half out of sample. With pure noise it is about 50% (slightly more with an odd number of settings); a genuinely better setting pushes it towards 0.</p></div>
           </div>
-          <p class="small">The panel above also shows the <a href="metrics.html">deflated Sharpe ratio</a> of the best setting over the full period, which discounts it for the number of settings tried (Bailey &amp; López de Prado 2014). Neighbouring settings are highly correlated, so counting each one as a separate try overstates the number of independent tries and makes that discount conservative. Exact steps, including how ties and leftover months are handled: <a href="https://github.com/Normansrule/strategy-showdown/blob/main/docs/ENGINE_SPEC.md#8-probability-of-backtest-overfitting-docsengineoverfitjs">ENGINE_SPEC §8</a>.</p>
+          <p class="small">The panel above also shows the <a href="metrics.html">deflated Sharpe ratio</a> of the best setting over the full period, which discounts it for the number of settings tried (Bailey &amp; López de Prado 2014). Neighbouring settings are highly correlated, so counting each one as a separate try overstates the number of independent tries and makes that discount conservative. Exact steps, including how ties and leftover months are handled: <a href="https://github.com/Normansrule/trading-floor-strategy-showdown/blob/main/docs/ENGINE_SPEC.md#8-probability-of-backtest-overfitting-docsengineoverfitjs">ENGINE_SPEC §8</a>.</p>
           <div class="callout callout--caution" role="note"><p><b>How firmly this is confirmed.</b> The steps follow Bailey, Borwein, López de Prado &amp; Zhu (2017), Sec. 2. They were checked against Sec. 2.2 of the authors’ February 2015 revised preprint (read 2026-11-18), which counts λ = 0 as overfit (PBO is the area of the λ density over (−∞, 0]); the 2017 journal text was not read. How ties in rank are broken was not checked and stays labelled “secondary source” on the <a href="sources.html">Sources</a> page. Two independent implementations (JavaScript here, Python in the tests) agree to 1e−9 on every split of the tested sweeps (S = 6 to 16, synthetic test data).</p></div>
           <p class="small">Source: <a href="sources.html#ref-bailey2017pbo">Bailey, Borwein, López de Prado &amp; Zhu (2017), Journal of Computational Finance 20(4)</a>; <a href="sources.html#ref-bailey2014deflated">Bailey &amp; López de Prado (2014)</a>.</p>
         </section>
@@ -132,7 +132,7 @@
 
   <footer class="site-footer">
     <div class="wrap">
-      <span>Strategy Showdown: open-source and educational. Hypothetical results; not investment advice; no trading.</span>
+      <span>Trading Floor Strategy Showdown: open-source and educational. Hypothetical results; not investment advice; no trading.</span>
       <a href="sources.html">Sources</a>
       <a href="disclaimer.html">Disclaimer and data attribution</a>
     </div>

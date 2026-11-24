@@ -227,7 +227,7 @@ async function main() {
   try { port = await listen(); } catch (e) { console.error(`Could not start the server: ${e.message}`); process.exit(1); }
   const url = `http://127.0.0.1:${port}/?token=${token}`;
   const local = existsSync(path.join(DEFAULT_ROOT, 'data', 'local', 'french.json'));
-  console.log('Strategy Showdown (desktop mode) — only this computer can connect.');
+  console.log('Trading Floor Strategy Showdown (desktop mode) — only this computer can connect.');
   console.log(`Open: ${url}`);
   console.log(local
     ? 'Local French dataset found: docs/data/local/french.json'

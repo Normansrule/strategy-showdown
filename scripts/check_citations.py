@@ -204,7 +204,7 @@ class Crossref:
     def __init__(self, mailto: str | None):
         self.mailto = mailto
         self.last = 0.0
-        ua = "strategy-showdown-citation-check/0.1 (+https://github.com/Normansrule/strategy-showdown"
+        ua = "trading-floor-strategy-showdown-citation-check/0.1 (+https://github.com/Normansrule/trading-floor-strategy-showdown"
         self.ua = ua + (f"; mailto:{mailto})" if mailto else ")")
 
     def work(self, doi: str) -> dict | None:

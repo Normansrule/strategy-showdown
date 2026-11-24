@@ -94,7 +94,7 @@ test('spawned server: loopback only, token -> cookie -> 200, 403 otherwise, head
     '/..%5cpackage.json', '/engine/hash.js%00.png', '/%00', '/..\\package.json', '/.gitignore', '//etc/passwd', '/%zz']) {
     const r = await request(port, p, { headers: { Cookie: cookie } });
     assert.ok([400, 404].includes(r.status), `${p} -> ${r.status}`);
-    assert.doesNotMatch(r.body, /"name": "strategy-showdown"|root:/);
+    assert.doesNotMatch(r.body, /"name": "trading-floor-strategy-showdown"|root:/);
   }
 
   // DNS rebinding: a foreign Host header is refused even with the cookie

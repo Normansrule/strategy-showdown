@@ -1,6 +1,6 @@
 # Security model
 
-Strategy Showdown is a static, local-first web page plus an optional local server. It has no accounts, no
+Trading Floor Strategy Showdown is a static, local-first web page plus an optional local server. It has no accounts, no
 database, no back end and no analytics. This page lists what could go wrong and what stops it.
 How to report a problem: [SECURITY.md](../SECURITY.md).
 
@@ -85,7 +85,7 @@ private `app://showdown/` scheme handled in the main process.
 - **Dev tools** are available only when running from source (`npm run desktop`), not in packaged builds.
 - **Releases:** installers for Windows (NSIS setup and portable `.exe`), macOS (`.dmg`) and Linux (`.AppImage`,
   `.deb`) are built in CI from the tagged commit, listed in `SHA256SUMS.txt` and covered by a Sigstore build-provenance
-  attestation (`gh attestation verify <file> -R Normansrule/strategy-showdown`). They are **not code-signed** yet, so
+  attestation (`gh attestation verify <file> -R Normansrule/trading-floor-strategy-showdown`). They are **not code-signed** yet, so
   Windows SmartScreen and macOS Gatekeeper will warn on first launch.
 
 ### 2.4 Supply chain ([OWASP Top 10:2025 A03 Software Supply Chain Failures](https://owasp.org/Top10/2025/A03_2025-Software_Supply_Chain_Failures/))
@@ -104,7 +104,7 @@ private `app://showdown/` scheme handled in the main process.
 | Releases: source zip from `git archive`, SPDX SBOM, SHA-256 checksums, signed build-provenance attestation | `release.yml` |
 | Citation integrity: DOIs checked against Crossref weekly | `citations.yml` |
 
-Verify a release: `gh attestation verify strategy-showdown-vX.Y.Z.zip --repo Normansrule/strategy-showdown`
+Verify a release: `gh attestation verify trading-floor-strategy-showdown-vX.Y.Z.zip --repo Normansrule/trading-floor-strategy-showdown`
 and `sha256sum --check SHA256SUMS.txt`.
 
 ## 3. Out of scope

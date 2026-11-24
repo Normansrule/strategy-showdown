@@ -1,6 +1,6 @@
 # Disclaimer
 
-**Strategy Showdown is an educational tool. It is not investment advice.**
+**Trading Floor Strategy Showdown is an educational tool. It is not investment advice.**
 
 - **No recommendations.** Nothing here recommends buying, selling or holding any security, fund or strategy,
   or says a strategy is suitable for you.

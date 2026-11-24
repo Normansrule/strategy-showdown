@@ -23,7 +23,7 @@ OUT = ROOT / "docs/data/local/shiller.csv"
 
 
 def main() -> int:
-    req = urllib.request.Request(URL, headers={"User-Agent": "strategy-showdown (educational backtests)"})
+    req = urllib.request.Request(URL, headers={"User-Agent": "trading-floor-strategy-showdown (educational backtests)"})
     with urllib.request.urlopen(req, timeout=60) as r:  # noqa: S310 (fixed https URL)
         data = r.read(3 * 1024 * 1024)
     got = hashlib.sha256(data).hexdigest()

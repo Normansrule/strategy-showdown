@@ -258,7 +258,7 @@ document.addEventListener('keydown', e => { if (e.key === 'k' && (e.ctrlKey || e
 
 (async () => {
   if (typeof echarts === 'undefined') await new Promise(res => window.addEventListener('load', res, { once: true }));
-  ok('Strategy Showdown terminal. Educational, hypothetical results; not investment advice.');
+  ok('Trading Floor Strategy Showdown terminal. Educational, hypothetical results; not investment advice.');
   dim('Try: help · list · run buy-hold-market faber-sma tsmom · models · timing 0.6 · pbo faber · oss');
   await ensureShowdownData();
   dim(`Showdown dataset: ${state.dsLabel}. Market series: ${state.market.title}.`);
