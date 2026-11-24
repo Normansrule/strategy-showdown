@@ -62,6 +62,9 @@ const SIX_BY_NAME = { smallLow: 'SMALL LoPRIOR', smallHigh: 'SMALL HiPRIOR', big
 // Positional fallback, if a vintage renames the columns: order is small (low, mid, high), big (low, mid, high).
 const SIX_BY_POSITION = { smallLow: 0, smallHigh: 2, bigLow: 3, bigHigh: 5 };
 
+// All six columns, for the information-diffusion diagnostics (docs/engine/diffusion.js).
+const SIX_ALL_BY_NAME = { smallLow: 'SMALL LoPRIOR', smallMid: 'ME1 PRIOR2', smallHigh: 'SMALL HiPRIOR', bigLow: 'BIG LoPRIOR', bigMid: 'ME2 PRIOR2', bigHigh: 'BIG HiPRIOR' };
+
 const norm = s => s.trim().toLowerCase().replace(/\s+/g, ' ');
 const sameCols = (a, b) => a.length === b.length && a.every((c, i) => norm(c) === norm(b[i]));
 
@@ -193,6 +196,23 @@ export function momentumReplication(six, mom) {
   };
 }
 
+/** The six series (decimal) on the dataset's months, or a reason why not. Same column rules as momentumReplication. */
+export function sizeMomentumSeries(six, dates) {
+  let mapping = 'by-name';
+  const idx = {};
+  for (const [k, col] of Object.entries(SIX_ALL_BY_NAME)) idx[k] = six.columns.findIndex(c => norm(c) === norm(col));
+  if (Object.values(idx).some(i => i < 0)) {
+    mapping = 'positional';
+    Object.keys(SIX_ALL_BY_NAME).forEach((k, j) => { idx[k] = j; });
+  }
+  const by = new Map(six.rows.map(r => [r.period, r.values]));
+  const missing = dates.filter(p => !by.has(p) || Object.values(idx).some(j => by.get(p)[j] === null));
+  if (missing.length) return { available: false, reason: `The 6 size/momentum file lacks ${missing.length} of the dataset's months (first ${missing[0]}).` };
+  const series = {}, columns = {};
+  for (const [k, j] of Object.entries(idx)) { series[k] = dates.map(p => by.get(p)[j] / 100); columns[k] = six.columns[j]; }
+  return { available: true, mapping, columns, series };
+}
+
 function nextMonth(p) {
   let y = Number(p.slice(0, 4)), m = Number(p.slice(5)) + 1;
   if (m === 13) { m = 1; y++; }
@@ -280,6 +300,7 @@ export function assembleFrenchDataset(items, options = {}) {
     units: 'decimal simple returns',
     dates, rf, market, assets, assetLabels, factors,
     replication,
+    ...(byKind.sizeMomentum6 ? { sizeMomentum: sizeMomentumSeries(byKind.sizeMomentum6.section, best) } : {}),
     provenance: {
       origin: `Kenneth R. French Data Library, ${FRENCH_LIBRARY_URL}`,
       files,

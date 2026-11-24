@@ -365,3 +365,18 @@ test('makeSyntheticDataset: runs end-to-end through compare()', () => {
   assert.equal(res.dataset.synthetic, true);
   assert.equal(res.runs.length, 2);
 });
+
+test('loadFrenchFiles: exposes all six size/momentum series aligned to the dataset months (for diffusion.js)', async () => {
+  const ds = await loadFrenchFiles(zipsNamed(ALL_ZIPS), { now: NOW });
+  const sm = ds.sizeMomentum;
+  assert.equal(sm.available, true);
+  assert.equal(sm.mapping, 'by-name');
+  assert.deepEqual(Object.keys(sm.series), ['smallLow', 'smallMid', 'smallHigh', 'bigLow', 'bigMid', 'bigHigh']);
+  assert.deepEqual(sm.columns, { smallLow: 'SMALL LoPRIOR', smallMid: 'ME1 PRIOR2', smallHigh: 'SMALL HiPRIOR', bigLow: 'BIG LoPRIOR', bigMid: 'ME2 PRIOR2', bigHigh: 'BIG HiPRIOR' });
+  for (const v of Object.values(sm.series)) assert.equal(v.length, ds.dates.length);
+  const six = parseFrenchCsv(fixText('6_Portfolios_ME_Prior_12_2.CSV')).sections[0].rows.find(r => r.period === '2001-06').values;
+  const i = ds.dates.indexOf('2001-06');
+  ['smallLow', 'smallMid', 'smallHigh', 'bigLow', 'bigMid', 'bigHigh'].forEach((k, j) => assert.ok(Math.abs(sm.series[k][i] - six[j] / 100) < 1e-15, k));
+  const without = await loadFrenchFiles(zipsNamed(ALL_ZIPS.slice(0, 3)), { now: NOW });
+  assert.equal(without.sizeMomentum, undefined);
+});
