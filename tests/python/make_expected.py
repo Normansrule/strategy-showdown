@@ -184,6 +184,47 @@ def mathx_expected() -> dict:
     }
 
 
+# Information-diffusion diagnostics (docs/research/INFORMATION_DIFFUSION.md §3). Periods are part of the fixture so
+# the JS test uses exactly these; the engine's own defaults are tested against the spec separately.
+DIFFUSION_MOM_PERIODS = [
+    {"id": "full"},
+    {"id": "hls-sample", "start": "1980-01", "end": "1996-12"},
+    {"id": "post-sample-pre-publication", "start": "1997-01", "end": "2000-01"},
+    {"id": "post-publication", "start": "2000-02"},
+]
+DIFFUSION_LEADLAG_PERIODS = [
+    {"id": "full"},
+    {"id": "before-1990", "end": "1989-12"},
+    {"id": "from-1990", "start": "1990-01"},
+    {"id": "too-short", "start": "2010-01"},
+]
+
+
+def diffusion_dataset() -> dict:
+    """SYNTHETIC six size/momentum series with a planted lead of big over small and a decaying small-stock spread."""
+    rng = np.random.default_rng(20261124)
+    dates = [f"{y:04d}-{m:02d}" for y in range(1975, 2011) for m in range(1, 13)]
+    T = len(dates)
+    big = 0.008 + 0.045 * rng.standard_normal(T)
+    small = np.empty(T); small[0] = 0.01
+    small[1:] = 0.004 + 0.3 * big[:-1] + 0.9 * big[1:] + 0.03 * rng.standard_normal(T - 1)
+    decay = np.array([1.0 if d < "2000-02" else 0.25 for d in dates])
+    ws = 0.009 * decay + 0.04 * rng.standard_normal(T)
+    wb = 0.003 * decay + 0.035 * rng.standard_normal(T)
+    sm = small + 0.01 * rng.standard_normal(T); bm = big + 0.008 * rng.standard_normal(T)
+    six = {"smallLow": small - ws / 2, "smallMid": sm, "smallHigh": small + ws / 2,
+           "bigLow": big - wb / 2, "bigMid": bm, "bigHigh": big + wb / 2}
+    return {"note": "SYNTHETIC - seeded random numbers, not market data.", "dates": dates,
+            "series": {k: np.round(v, 12).tolist() for k, v in six.items()},
+            "momPeriods": DIFFUSION_MOM_PERIODS, "leadLagPeriods": DIFFUSION_LEADLAG_PERIODS}
+
+
+def diffusion_expected(ds: dict) -> dict:
+    return {"note": "Expected values from the independent Python reference (tests/python/reference.py).",
+            "momentumBySize": R.momentum_by_size(ds["dates"], ds["series"], ds["momPeriods"]),
+            "leadLag": R.lead_lag(ds["dates"], ds["series"], ds["leadLagPeriods"])}
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dataset")
@@ -213,6 +254,11 @@ def main():
     p = FIXTURES / "expected-pbo.json"
     p.write_text(json.dumps({"note": "CSCV (spec §8) by the Python reference on its own sweeps of crosscheck-dataset.json, realistic costs.",
                              "cases": pbo}, allow_nan=False) + "\n")
+    print("wrote", p)
+    dds = diffusion_dataset()
+    (FIXTURES / "diffusion-dataset.json").write_text(json.dumps(dds, allow_nan=False) + "\n")
+    p = FIXTURES / "expected-diffusion.json"
+    p.write_text(json.dumps(diffusion_expected(dds), allow_nan=False) + "\n")
     print("wrote", p)
     p = FIXTURES / "mathx-expected.json"
     p.write_text(json.dumps(mathx_expected(), allow_nan=False, indent=1) + "\n")

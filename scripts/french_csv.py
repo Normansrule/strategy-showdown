@@ -46,6 +46,9 @@ INDUSTRY_LABELS = {
 MOM_REPLICATION_FORMULA = "Mom = ½(Small High + Big High) − ½(Small Low + Big Low)"
 SIX_BY_NAME = {"smallLow": "SMALL LoPRIOR", "smallHigh": "SMALL HiPRIOR", "bigLow": "BIG LoPRIOR", "bigHigh": "BIG HiPRIOR"}
 SIX_BY_POSITION = {"smallLow": 0, "smallHigh": 2, "bigLow": 3, "bigHigh": 5}
+# All six columns, for the information-diffusion diagnostics (docs/engine/diffusion.js).
+SIX_ALL_BY_NAME = {"smallLow": "SMALL LoPRIOR", "smallMid": "ME1 PRIOR2", "smallHigh": "SMALL HiPRIOR",
+                   "bigLow": "BIG LoPRIOR", "bigMid": "ME2 PRIOR2", "bigHigh": "BIG HiPRIOR"}
 
 _HEADER_RE = re.compile(r"^\s*,")
 _ROW_RE = re.compile(r"^\s*(\d{4}|\d{6}|\d{8})\s*,(.*)$")
@@ -217,6 +220,22 @@ def _pearson(a, b):
     return sab / (saa * sbb) ** 0.5
 
 
+def size_momentum_series(six: dict, dates: list[str]) -> dict:
+    """The six series (decimal) on the dataset's months, or a reason why not. Mirrors loaders.js sizeMomentumSeries."""
+    mapping = "by-name"
+    idx = {k: next((i for i, c in enumerate(six["columns"]) if _norm(c) == _norm(col)), -1) for k, col in SIX_ALL_BY_NAME.items()}
+    if any(i < 0 for i in idx.values()):
+        mapping = "positional"
+        idx = {k: j for j, k in enumerate(SIX_ALL_BY_NAME)}
+    by = {r["period"]: r["values"] for r in six["rows"]}
+    missing = [p for p in dates if p not in by or any(by[p][j] is None for j in idx.values())]
+    if missing:
+        return {"available": False, "reason": f"The 6 size/momentum file lacks {len(missing)} of the dataset's months (first {missing[0]})."}
+    return {"available": True, "mapping": mapping,
+            "columns": {k: six["columns"][j] for k, j in idx.items()},
+            "series": {k: [by[p][j] / 100 for p in dates] for k, j in idx.items()}}
+
+
 def momentum_replication(six: dict, mom: dict) -> dict:
     mapping = "by-name"
     idx = {}
@@ -364,6 +383,7 @@ def assemble_dataset(items: list[dict], now: str | None = None) -> dict:
         "units": "decimal simple returns",
         "dates": dates, "rf": rf, "market": market, "assets": assets, "assetLabels": labels, "factors": factors,
         "replication": replication,
+        **({"sizeMomentum": size_momentum_series(by_kind["sizeMomentum6"]["section"], dates)} if "sizeMomentum6" in by_kind else {}),
         "provenance": {
             "origin": f"Kenneth R. French Data Library, {FRENCH_LIBRARY_URL}",
             "files": files,

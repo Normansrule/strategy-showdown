@@ -208,3 +208,38 @@ def test_cscv_flat_column_scores_zero():
     assert out["combinations"] == 12870
     with pytest.raises(ValueError):
         R.cscv(M, 22)
+
+
+# ---------------------------------------------------------------- information-diffusion reference (known answers)
+
+def _six_from(small, big, ws, wb):
+    import numpy as np
+    small, big, ws, wb = map(np.asarray, (small, big, ws, wb))
+    return {"smallLow": small - ws / 2, "smallMid": small, "smallHigh": small + ws / 2,
+            "bigLow": big - wb / 2, "bigMid": big, "bigHigh": big + wb / 2}
+
+
+def test_lead_lag_recovers_a_planted_lead():
+    import numpy as np
+    rng = np.random.default_rng(7)
+    T = 3000
+    dates = [f"{1800 + i // 12:04d}-{i % 12 + 1:02d}" for i in range(T)]
+    big = rng.standard_normal(T)
+    small = np.r_[0.0, 0.5 * big[:-1]] + rng.standard_normal(T)
+    r = R.lead_lag(dates, _six_from(small, big, np.zeros(T), np.zeros(T)), [{"id": "all"}])[0]
+    assert abs(r["smallOnLag"]["beta"][1] - 0.5) < 0.06
+    assert r["asymmetry"] > 0.3
+    assert abs(r["corrBigOnLagSmall"]) < 4 * r["corrSE"]
+
+
+def test_momentum_by_size_gap_and_period_boundaries():
+    import numpy as np
+    dates = [f"{1990 + i // 12:04d}-{i % 12 + 1:02d}" for i in range(48)]
+    ws = np.full(48, 0.02); wb = np.full(48, 0.005)
+    ws[::2] += 0.001; wb[::2] += 0.001  # some variance so HAC is defined
+    out = R.momentum_by_size(dates, _six_from(np.zeros(48), np.zeros(48), ws, wb),
+                             [{"id": "a", "end": "1991-12"}, {"id": "b", "start": "1992-01"}, {"id": "c", "start": "1993-06"}])
+    assert [o["T"] for o in out] == [24, 24, 7]
+    assert out[2]["available"] is False
+    assert abs(out[0]["gap"]["mean"] - 0.015) < 1e-12
+    assert abs(out[0]["small"]["annMean"] - 12 * out[0]["small"]["mean"]) < 1e-15

@@ -1280,5 +1280,192 @@
   "url": "https://doi.org/10.1111/j.1540-6261.1993.tb05128.x",
   "verification": "crossref",
   "notes": "Crossref: published-print 1993-12, published-online 2012-04-30 (Wiley re-hosting). Crossref author names are upper case; normalised here."
+ },
+ {
+  "key": "hong1999unified",
+  "authors": [
+   {
+    "family": "Hong",
+    "given": "Harrison"
+   },
+   {
+    "family": "Stein",
+    "given": "Jeremy C."
+   }
+  ],
+  "title": "A Unified Theory of Underreaction, Momentum Trading, and Overreaction in Asset Markets",
+  "journal": "The Journal of Finance",
+  "year": 1999,
+  "volume": "54",
+  "issue": "6",
+  "pages": "2143-2184",
+  "doi": "10.1111/0022-1082.00184",
+  "verification": "crossref",
+  "notes": "Used only for the gradual-information-diffusion idea; full text not read for this card."
+ },
+ {
+  "key": "hong2000badnews",
+  "authors": [
+   {
+    "family": "Hong",
+    "given": "Harrison"
+   },
+   {
+    "family": "Lim",
+    "given": "Terence"
+   },
+   {
+    "family": "Stein",
+    "given": "Jeremy C."
+   }
+  ],
+  "title": "Bad News Travels Slowly: Size, Analyst Coverage, and the Profitability of Momentum Strategies",
+  "journal": "The Journal of Finance",
+  "year": 2000,
+  "volume": "55",
+  "issue": "1",
+  "pages": "265-295",
+  "doi": "10.1111/0022-1082.00206",
+  "url": "https://www.nber.org/papers/w6553",
+  "verification": "crossref",
+  "notes": "Read: abstract of NBER Working Paper 6553 (May 1998). Sample 1980-96 per the NBER Digest, Nov 1998. Full published text not read."
+ },
+ {
+  "key": "lo1990contrarian",
+  "authors": [
+   {
+    "family": "Lo",
+    "given": "Andrew W."
+   },
+   {
+    "family": "MacKinlay",
+    "given": "A. Craig"
+   }
+  ],
+  "title": "When Are Contrarian Profits Due to Stock Market Overreaction?",
+  "journal": "Review of Financial Studies",
+  "year": 1990,
+  "volume": "3",
+  "issue": "2",
+  "pages": "175-205",
+  "doi": "10.1093/rfs/3.2.175",
+  "url": "https://www.nber.org/papers/w2977",
+  "verification": "crossref",
+  "notes": "Read: abstract of NBER Working Paper 2977 (May 1989), which discusses cross-autocovariances. That large stocks lead small stocks, and the weekly size-portfolio design, are NOT confirmed from text read here (unverified)."
+ },
+ {
+  "key": "mclean2016academic",
+  "authors": [
+   {
+    "family": "McLean",
+    "given": "R. David"
+   },
+   {
+    "family": "Pontiff",
+    "given": "Jeffrey"
+   }
+  ],
+  "title": "Does Academic Research Destroy Stock Return Predictability?",
+  "journal": "The Journal of Finance",
+  "year": 2016,
+  "volume": "71",
+  "issue": "1",
+  "pages": "5-32",
+  "doi": "10.1111/jofi.12365",
+  "verification": "crossref",
+  "notes": "26% lower out of sample and 58% lower post-publication (97 predictors) confirmed only from the CFA Institute digest summary, June 2016 (secondary)."
+ },
+ {
+  "key": "martineau2022rest",
+  "authors": [
+   {
+    "family": "Martineau",
+    "given": "Charles"
+   }
+  ],
+  "title": "Rest in Peace Post-Earnings Announcement Drift",
+  "journal": "Critical Finance Review",
+  "year": 2022,
+  "volume": "11",
+  "issue": "3-4",
+  "pages": "613-646",
+  "doi": "10.1561/104.00000122",
+  "url": "https://ideas.repec.org/a/now/jnlcfr/104.00000122.html",
+  "verification": "crossref",
+  "notes": "Abstract (RePEc): PEAD non-existent for large stocks since 2006; only recently gone for microcaps. Full text not read."
+ },
+ {
+  "key": "chordia2018rent",
+  "authors": [
+   {
+    "family": "Chordia",
+    "given": "Tarun"
+   },
+   {
+    "family": "Green",
+    "given": "T. Clifton"
+   },
+   {
+    "family": "Kottimukkalur",
+    "given": "Badrinath"
+   }
+  ],
+  "title": "Rent Seeking by Low-Latency Traders: Evidence from Trading on Macroeconomic Announcements",
+  "journal": "The Review of Financial Studies",
+  "year": 2018,
+  "volume": "31",
+  "issue": "12",
+  "pages": "4650-4687",
+  "doi": "10.1093/rfs/hhy025",
+  "url": "https://ideas.repec.org/a/oup/rfinst/v31y2018i12p4650-4687..html",
+  "verification": "crossref",
+  "notes": "Abstract (RePEc): SPY and E-mini respond within five milliseconds; fast-trading profits about $19,000 (SPY) and $50,000 (E-mini) per event. Used for an explainer only."
+ },
+ {
+  "key": "bernard1989pead",
+  "authors": [
+   {
+    "family": "Bernard",
+    "given": "Victor L."
+   },
+   {
+    "family": "Thomas",
+    "given": "Jacob K."
+   }
+  ],
+  "title": "Post-Earnings-Announcement Drift: Delayed Price Response or Risk Premium?",
+  "journal": "Journal of Accounting Research",
+  "year": 1989,
+  "volume": "27",
+  "pages": "1-36",
+  "doi": "10.2307/2491062",
+  "verification": "crossref",
+  "notes": "Not read; cited only as the origin of the PEAD literature in the research note. Planned for G6."
+ },
+ {
+  "key": "cohen2020lazy",
+  "authors": [
+   {
+    "family": "Cohen",
+    "given": "Lauren"
+   },
+   {
+    "family": "Malloy",
+    "given": "Christopher"
+   },
+   {
+    "family": "Nguyen",
+    "given": "Quoc"
+   }
+  ],
+  "title": "Lazy Prices",
+  "journal": "The Journal of Finance",
+  "year": 2020,
+  "volume": "75",
+  "issue": "3",
+  "pages": "1371-1415",
+  "doi": "10.1111/jofi.12885",
+  "verification": "crossref",
+  "notes": "Not read; G6 candidate (changes in 10-K text). Cited only in the research note."
  }
 ]

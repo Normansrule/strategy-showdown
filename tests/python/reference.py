@@ -659,3 +659,81 @@ def cscv(M: np.ndarray, S: int) -> dict:
     return {"pbo": float(np.sum(lam <= 0) / C), "probLoss": float(np.sum(y < 0) / C), "combinations": C,
             "lambdas": lam.tolist(), "slope": slope, "intercept": float(y.mean() - slope * x.mean()),
             "r2": (sxy * sxy) / (sxx * syy) if sxx > 0 and syy > 0 else 0.0}
+
+
+# ---------------------------------------------------------------- information-diffusion diagnostics
+# Spec: docs/research/INFORMATION_DIFFUSION.md §3. Written from the spec, independently of docs/engine/diffusion.js.
+
+SIX_KEYS = ["smallLow", "smallMid", "smallHigh", "bigLow", "bigMid", "bigHigh"]
+MIN_PERIOD_MONTHS = 24
+
+
+def _period_index(dates: list[str], start, end) -> list[int]:
+    return [i for i, d in enumerate(dates) if (start is None or d >= start) and (end is None or d <= end)]
+
+
+def mean_hac(y) -> dict:
+    """Mean of y with a Newey-West HAC standard error (OLS of y on a constant)."""
+    y = np.asarray(y, float)
+    r = ols_hac(y, np.ones((len(y), 1)))
+    return {"mean": float(r["beta"][0]), "se": float(r["se"][0]), "t": float(r["t"][0]), "lags": int(r["lags"])}
+
+
+def _summary(y) -> dict:
+    y = np.asarray(y, float)
+    m = mean_hac(y)
+    return {"T": len(y), "mean": m["mean"], "annMean": 12 * m["mean"], "se": m["se"], "t": m["t"],
+            "lags": m["lags"], "hitRate": float(np.mean(y > 0))}
+
+
+def momentum_by_size(dates: list[str], six: dict, periods: list[dict]) -> list[dict]:
+    """Winners-minus-losers spread within small and within big stocks, and the small-minus-big gap."""
+    sl, sh = np.asarray(six["smallLow"], float), np.asarray(six["smallHigh"], float)
+    bl, bh = np.asarray(six["bigLow"], float), np.asarray(six["bigHigh"], float)
+    ws, wb = sh - sl, bh - bl
+    out = []
+    for p in periods:
+        idx = _period_index(dates, p.get("start"), p.get("end"))
+        rec = {"id": p["id"], "first": dates[idx[0]] if idx else None, "last": dates[idx[-1]] if idx else None, "T": len(idx)}
+        if len(idx) < MIN_PERIOD_MONTHS:
+            rec["available"] = False
+        else:
+            rec["available"] = True
+            rec["small"] = _summary(ws[idx]); rec["big"] = _summary(wb[idx]); rec["gap"] = _summary(ws[idx] - wb[idx])
+        out.append(rec)
+    return out
+
+
+def _pearson(a, b) -> float:
+    a = np.asarray(a, float); b = np.asarray(b, float)
+    da, db = a - a.mean(), b - b.mean()
+    return float(np.sum(da * db) / math.sqrt(np.sum(da * da) * np.sum(db * db)))
+
+
+def lead_lag(dates: list[str], six: dict, periods: list[dict]) -> list[dict]:
+    """Cross-autocorrelation of small- and big-stock returns at a one-month lag (Lo-MacKinlay style)."""
+    S = np.mean([np.asarray(six[k], float) for k in SIX_KEYS[:3]], axis=0)
+    B = np.mean([np.asarray(six[k], float) for k in SIX_KEYS[3:]], axis=0)
+    out = []
+    for p in periods:
+        idx = _period_index(dates, p.get("start"), p.get("end"))
+        t1 = [i for i in idx[1:] if i - 1 in set(idx)]
+        rec = {"id": p["id"], "first": dates[idx[0]] if idx else None, "last": dates[idx[-1]] if idx else None, "T": len(t1)}
+        if len(t1) < MIN_PERIOD_MONTHS:
+            rec["available"] = False
+            out.append(rec); continue
+        t0 = [i - 1 for i in t1]
+        s1, b1, s0, b0 = S[t1], B[t1], S[t0], B[t0]
+        rec["available"] = True
+        rec["corrSmallOnLagBig"] = _pearson(s1, b0)
+        rec["corrBigOnLagSmall"] = _pearson(b1, s0)
+        rec["autoSmall"] = _pearson(s1, s0)
+        rec["autoBig"] = _pearson(b1, b0)
+        rec["asymmetry"] = rec["corrSmallOnLagBig"] - rec["corrBigOnLagSmall"]
+        rs = ols_hac(s1, np.column_stack([np.ones(len(t1)), b0, s0]))
+        rb = ols_hac(b1, np.column_stack([np.ones(len(t1)), s0, b0]))
+        rec["smallOnLag"] = {"beta": [float(v) for v in rs["beta"]], "t": [float(v) for v in rs["t"]], "r2": float(rs["r2"]), "lags": int(rs["lags"])}
+        rec["bigOnLag"] = {"beta": [float(v) for v in rb["beta"]], "t": [float(v) for v in rb["t"]], "r2": float(rb["r2"]), "lags": int(rb["lags"])}
+        rec["corrSE"] = 1 / math.sqrt(len(t1))
+        out.append(rec)
+    return out
